@@ -1,7 +1,8 @@
 #include "Lexer.hpp"
 
 Void Lexer::Advance() {
-  if (this->Peek() == '\n') {
+  this->peek = this->Peek();
+  if (this->peek == '\n') {
     ++this->point.row;
     this->point.column = 0;
   }

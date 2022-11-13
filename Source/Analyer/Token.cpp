@@ -25,7 +25,10 @@ Token::Flag LiteralT::Lex(Lexer *lexer) {
       lexer->buffer.Put(lexer->peek);
       lexer->Advance();
     } while (Char::IsNumeric(lexer->peek) || lexer->peek == '_');
-    if (lexer->peek != '.') {
+    if (lexer->peek == '.') {
+      if (lexer->peek == '\0') {
+        flags |= static_cast<UInt8>(Token::Flag::EoF);
+      }
       goto END;
     }
     this->kind = LiteralT::Kind::Float;
@@ -41,6 +44,9 @@ Token::Flag LiteralT::Lex(Lexer *lexer) {
         "This float literal token has too many dots."
       ));
     }
+    if (lexer->peek == '\0') {
+      flags |= static_cast<UInt8>(Token::Flag::EoF);
+    }
     goto END;
   case LiteralT::Kind::Character:
     break;
@@ -54,6 +60,9 @@ END:
 Token::Flag KeywordT::Lex(Lexer *lexer) {
   UInt8 flags = 0;
   Char8 *str = &lexer->buffer.buffer[lexer->index - 1];
+  if (lexer->peek == '\0') {
+    flags |= static_cast<UInt8>(Token::Flag::EoF);
+  }
   if (String::Compare(str, "procedure")) {
     this->value = KeywordT::Value::Procedure;
   } else if (String::Compare(str, "datum")) {
@@ -68,16 +77,30 @@ Token::Flag KeywordT::Lex(Lexer *lexer) {
 
 Token::Flag OperT::Lex(Lexer *lexer) {
   UInt8 flags = 0;
-  switch () {
-
+  if (lexer->peek == '\0') {
+    flags |= static_cast<UInt8>(Token::Flag::EoF);
   }
+  switch (lexer->peek) {
+  case '\0':
+  default:
+    break;
+  }
+
   return static_cast<Token::Flag>(flags);
 }
 
 Token::Flag PunctuatorT::Lex(Lexer *lexer) {
   UInt8 flags = 0;
-  switch () {
+  if (lexer->peek == '\0') {
+    flags |= static_cast<UInt8>(Token::Flag::EoF);
+  }
+  return static_cast<Token::Flag>(flags);
+}
 
+Token::Flag ModifierT::Lex(Lexer *lexer) {
+  UInt8 flags = 0;
+  if (lexer->peek == '\0') {
+    flags |= static_cast<UInt8>(Token::Flag::EoF);
   }
   return static_cast<Token::Flag>(flags);
 }
