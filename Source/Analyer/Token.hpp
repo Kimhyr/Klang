@@ -4,25 +4,24 @@
 
 #include "Lexer.hpp"
 
-template<typename TReturn>
 struct Token {
-  enum struct Feed {
-    Success,
-    Error,
-    EoF,
+  enum struct Flag : UInt8 {
+    Error = 0x01,
+    EoF = 0x02,
+    Switch = 0x04,
   };
 
-  virtual Token::Feed Lex(Lexer *lexer, TReturn *out) = 0;
+  virtual Token::Flag Lex(Lexer *lexer);
 };
 
-struct IdentifierT : public Token<IdentifierT> {
+struct IdentifierT : public Token {
   const Char8 *identifier;
 
   Void Destroy();
-  Token::Feed Lex(Lexer *lexer, IdentifierT *out);
+  Token::Flag Lex(Lexer *lexer);
 };
 
-struct LiteralT : public Token<LiteralT> {
+struct LiteralT : public Token {
   enum Flag : UInt8 {
     Bit16 = 0x01,
     Bit32 = 0x02,
@@ -33,6 +32,7 @@ struct LiteralT : public Token<LiteralT> {
   };
 
   enum struct Kind : UInt8 {
+    Void,
     Integer,
     Float,
     Character,
@@ -51,10 +51,10 @@ struct LiteralT : public Token<LiteralT> {
   LiteralT::Value vlaue;
 
   Void Destroy();
-  Token::Feed Lex(Lexer *lexer, LiteralT *out);
+  Token::Flag Lex(Lexer *lexer);
 };
 
-struct KeywordT : public Token<KeywordT> {
+struct KeywordT : public Token {
   enum struct Value {
     Procedure,
     Datum,
@@ -63,10 +63,10 @@ struct KeywordT : public Token<KeywordT> {
 
   KeywordT::Value value;
 
-  Token::Feed Lex(Lexer *lexer, KeywordT *out);
+  Token::Flag Lex(Lexer *lexer);
 };
 
-struct OperT : public Token<OperT> {
+struct OperT : public Token {
   enum struct Value {
     Equal = '=',
     Plus = '+',
@@ -77,10 +77,10 @@ struct OperT : public Token<OperT> {
 
   OperT::Value value;
 
-  Token::Feed Lex(Lexer *lexer, OperT *out);
+  Token::Flag Lex(Lexer *lexer);
 };
 
-struct PunctuatorT : public Token<PunctuatorT> {
+struct PunctuatorT : public Token {
   enum struct Value {
     Semicolon = ';',
     Apostrophe = '\'',
@@ -94,10 +94,10 @@ struct PunctuatorT : public Token<PunctuatorT> {
 
   PunctuatorT::Value value;
 
-  Token::Feed Lex(Lexer *lexer, PunctuatorT *out);
+  Token::Flag Lex(Lexer *lexer);
 };
 
-struct ModifierT : public Token<ModifierT> {
+struct ModifierT : public Token {
   enum Value {
     At = '@',
     Question = '?',
@@ -106,7 +106,7 @@ struct ModifierT : public Token<ModifierT> {
 
   ModifierT::Value value;
 
-  Token::Feed Lex(Lexer *lexer, ModifierT *out);
+  Token::Flag Lex(Lexer *lexer);
 };
 
 #endif  // ANALYER_TOKEN_HPP

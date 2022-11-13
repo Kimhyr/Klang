@@ -14,8 +14,10 @@ struct String {
   Void Put(Char8 value);
   Bool operator==(const Char8 *comparee);
   Bool operator==(const String *comparee);
+  static Bool Compare(const Char8 *str, const Char8 *comparee);
   Void Realloc();
-  virtual Char8 *ToStr() = 0;
+  Char8 *Flush();
+  Char8 *ToStr();
 };
 
 #endif  // UTILS_STRING_HPP

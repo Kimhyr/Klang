@@ -21,6 +21,10 @@ Bool String::operator==(const String *comparee) {
   return strcmp(this->buffer, comparee->buffer) == 0;
 }
 
+Bool String::Compare(const Char8 *str, const Char8 *comparee) {
+  return strcmp(str, comparee) == 0;
+}
+
 Void String::Realloc() {
   Char8 *mlock = new Char8[this->space];
   for (UInt64 i = 0; i < this->size + 1; ++i) {
@@ -38,6 +42,15 @@ Void String::Put(Char8 chr) {
   }
   this->buffer[this->size - 1] = chr;
   this->buffer[this->size] = '\0';
+}
+
+Char8 *String::Flush() {
+  Char8 *str = new Char8[this->size + 1];
+  while (this->size > 0) {
+    --this->size;
+    str[this->size] = this->buffer[this->size];
+  }
+  return str;
 }
 
 Char8 *String::ToStr() {
