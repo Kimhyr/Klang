@@ -1,0 +1,23 @@
+BasedOnStyle: Google
+IndentWidth: 2
+SpaceAfterTemplateKeyword: false
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+IndentCaseLabels: false
+AlwaysBreakAfterReturnType: None
+MaxEmptyLinesToKeep: 1
+NamespaceIndentation: All
+
+AccessModifierOffset: -2
+AlignAfterOpenBracket: BlockIndent
+BreakConstructorInitializers: BeforeComma
+PackConstructorInitializers: BinPack
+AllowAllParametersOfDeclarationOnNextLine: true
+BinPackParameters: true
+
+# Short stuff
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: Never
