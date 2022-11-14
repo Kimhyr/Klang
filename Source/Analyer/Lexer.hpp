@@ -8,12 +8,17 @@
 #include "../Utils/Structs.hpp"
 
 struct Lexer {
+  enum struct Flag : UInt8 {
+
+  };
+
   ErrorBuffer *errBuf;
   Point point;
   UInt64 index;
   const Char8 *source;
   Char8 peek;
   String buffer;
+  // static Table<Lexer::Error, String> ErrorTable;
 
   Lexer(ErrorBuffer *errBuf, const Char8 *source);
   constexpr Char8 Peek(UInt64 offset = 1) {

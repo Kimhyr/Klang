@@ -27,7 +27,7 @@ Token::Flag LiteralT::Lex(Lexer *lexer) {
       lexer->buffer.Put(lexer->peek);
       lexer->Advance();
     } while (Char::IsNumeric(lexer->peek) || lexer->peek == '_');
-    if (lexer->peek == '.') {
+    if (lexer->peek != '.') {
       if (lexer->peek == '\0') {
         flags |= static_cast<UInt8>(Token::Flag::EoF);
       }
@@ -85,6 +85,7 @@ Token::Flag OperT::Lex(Lexer *lexer) {
   switch (lexer->peek) {
   case '\0':
     flags |= static_cast<UInt8>(Token::Flag::EoF);
+    break;
   default:
     break;
   }

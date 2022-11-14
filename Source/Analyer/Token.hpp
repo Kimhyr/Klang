@@ -11,7 +11,20 @@ struct Token {
     Switch = 0x04,
   };
 
+  const Char8 *path;
+  Point start;
+  Point end;
+
   virtual Token::Flag Lex(Lexer *lexer);
+  static constexpr Bool HasError(Token::Flag flag) {
+    return (static_cast<UInt8>(flag) | 0xfe) ^ 0xfe;
+  }
+  static constexpr Bool HasEoF(Token::Flag flag) {
+    return (static_cast<UInt8>(flag) | 0xfd) ^ 0xfd;
+  }
+  static constexpr Bool HasSwitch(Token::Flag flag) {
+    return (static_cast<UInt8>(flag) | 0xfb) ^ 0xfb;
+  }
 };
 
 struct IdentifierT : public Token {

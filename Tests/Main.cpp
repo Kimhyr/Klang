@@ -6,10 +6,3 @@ struct Token {
    EoF = 0x02
   };
 };
-
-int main() {
-  unsigned char flags = 0;
-  flags |= Token::Flag::Error;
-  std::cout << (Token::Flag)flags << '\n';
-  return 0;
-}

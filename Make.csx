@@ -67,7 +67,7 @@ void Clean() {
 }
 
 void Format() {
-  String args = "-i";
+  var args = "-i";
   foreach (var file in Directory.GetFiles(@".\Source", "*", SearchOption.AllDirectories)) {
     args += $" {file}";
   }
