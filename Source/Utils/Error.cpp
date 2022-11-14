@@ -2,16 +2,22 @@
 
 #include <iostream>
 
+Error::Error() {
+}
+
 Void Error::Destroy() {
   delete[] this->message;
 }
 
 ErrorBuffer::ErrorBuffer(UInt64 space)
-  : space(space), size(0), buffer(new Error[space]) {}
+    : space(space)
+    , size(0)
+    , buffer(new Error[space]) {
+}
 
 Void ErrorBuffer::Destroy() {
   while (this->size > 0) {
-    this->buffer[this-> size - 1].Destroy();
+    this->buffer[this->size - 1].Destroy();
     --this->size;
   }
   delete[] this->buffer;

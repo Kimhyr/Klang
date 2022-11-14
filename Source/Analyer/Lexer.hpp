@@ -3,9 +3,9 @@
 #define ANALYER_LEXER_HPP
 
 #include "../Core.hpp"
-#include "../Utils/Structs.hpp"
 #include "../Utils/Error.hpp"
 #include "../Utils/String.hpp"
+#include "../Utils/Structs.hpp"
 
 struct Lexer {
   ErrorBuffer *errBuf;

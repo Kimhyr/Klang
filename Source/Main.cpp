@@ -1,5 +1,9 @@
+
+#include <iostream>
+
 #include "Core.hpp"
 
-Int32 main(const Int32 argc, const Char8 **argv) {
+Int32 main() {
+  std::cout << "Hello, World!\n";
   return 0;
 }

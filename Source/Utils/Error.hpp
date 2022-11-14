@@ -16,7 +16,9 @@ struct Error {
 
   Error();
   constexpr Error(Error::Severity severity, const Char8 *message)
-    : severity(severity), message(message){}
+      : severity(severity)
+      , message(message) {
+  }
   Void Destroy();
 };
 

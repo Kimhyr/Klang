@@ -1,4 +1,5 @@
 #include "Token.hpp"
+
 #include "../Utils/Char.hpp"
 
 Token::Flag IdentifierT::Lex(Lexer *lexer) {
@@ -6,7 +7,8 @@ Token::Flag IdentifierT::Lex(Lexer *lexer) {
   do {
     lexer->buffer.Put(lexer->peek);
     lexer->Advance();
-  } while (Char::IsAlphabetic(lexer->peek) || Char::IsNumeric(lexer->peek) || lexer->peek == '_');
+  } while (Char::IsAlphabetic(lexer->peek) || Char::IsNumeric(lexer->peek) ||
+           lexer->peek == '_');
   if (lexer->peek == '\0') {
     flags |= static_cast<UInt8>(Token::Flag::EoF);
   }
@@ -40,8 +42,8 @@ Token::Flag LiteralT::Lex(Lexer *lexer) {
     if (lexer->peek == '.') {
       flags |= static_cast<UInt8>(Token::Flag::Error);
       lexer->errBuf->Put(Error(
-        Error::Severity::Critical,
-        "This float literal token has too many dots."
+          Error::Severity::Critical,
+          "This float literal token has too many dots."
       ));
     }
     if (lexer->peek == '\0') {
@@ -54,7 +56,7 @@ Token::Flag LiteralT::Lex(Lexer *lexer) {
     break;
   }
 END:
-  return  static_cast<Token::Flag>(flags);
+  return static_cast<Token::Flag>(flags);
 }
 
 Token::Flag KeywordT::Lex(Lexer *lexer) {
@@ -82,6 +84,7 @@ Token::Flag OperT::Lex(Lexer *lexer) {
   }
   switch (lexer->peek) {
   case '\0':
+    flags |= static_cast<UInt8>(Token::Flag::EoF);
   default:
     break;
   }
