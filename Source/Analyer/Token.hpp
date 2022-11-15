@@ -70,7 +70,6 @@ struct PunctuatorT {
   enum struct Value {
     Colon = ':',
     Semicolon = ';',
-    Apostrophe = '\'',
     OParen = '(',
     CParen = ')',
     OBrace = '{',
@@ -94,6 +93,7 @@ struct ModifierT {
 
 struct Token {
   enum struct Kind {
+    None,
     Identifeir,
     Literal,
     Keyword,

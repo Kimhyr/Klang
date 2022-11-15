@@ -15,14 +15,18 @@ Lexer::Flag Lexer::Lex(Token *out) {
     this->Advance();
   }
   if (this->peek == '\0') {
+    out->kind = Token::Kind::None;
     flags |= (UInt8)Lexer::Flag::EoF;
+    goto END;
   }
   if (Char::IsAlphabetic(this->peek)) {
     this->LexWord(out, &flags);
-  }
-  if (Char::IsNumeric(this->peek)) {
+  } else if (Char::IsNumeric(this->peek)) {
     this->LexNumber(out, &flags);
+  } else {
+    this->LexSymbol(out, &flags);
   }
+END:
   return (Lexer::Flag)flags;
 }
 
@@ -90,11 +94,7 @@ Void Lexer::LexSymbol(Token *out, UInt8 *flags) {
       goto DOUBLE;
     }
     out->value.Oper.value = (OperT::Value)this->peek;
-    goto END;
-  case '\'':
-    if (this->Peek(3) == '\'') {
-      out->kind = Token::Kind::Literal;
-    }
+    goto SINGLE;
   case ':':
     if (this->Peek(2) == ':') {
       out->kind = Token::Kind::Oper;
@@ -109,7 +109,7 @@ Void Lexer::LexSymbol(Token *out, UInt8 *flags) {
   case ',':
     out->kind = Token::Kind::Punctuator;
     out->value.Punctuator.value = (PunctuatorT::Value)this->peek;
-    goto END;
+    goto SINGLE;
   case '@':
   case '?':
   case '\\':
@@ -117,13 +117,11 @@ Void Lexer::LexSymbol(Token *out, UInt8 *flags) {
       do {
         this->Advance();
       } while (this->peek != '\n');
-      if (this->peek == '\0') {
-        *flags = (UInt8)Lexer::Flag::EoF;
-      }
       goto END;
     }
     out->value.Modifier.value = (ModifierT::Value)this->peek;
     out->kind = Token::Kind::Modifier;
+    goto SINGLE;
   default:
     *flags |= (UInt8)Lexer::Flag::Error;
     this->errBuf->Put(Error(Error::Severity::Critical, "Unkown symbolic token.")
@@ -131,8 +129,9 @@ Void Lexer::LexSymbol(Token *out, UInt8 *flags) {
   }
 DOUBLE:
   this->Advance();
-END:
+SINGLE:
   this->Advance();
+END:
   if (this->peek == '\0') {
     *flags |= (UInt8)Lexer::Flag::EoF;
   }
