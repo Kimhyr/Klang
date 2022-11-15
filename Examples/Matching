@@ -1,0 +1,13 @@
+procedure Match(input :: Char8) -> UInt8 {
+    if input == '0' => goto ZERO;
+    if input >= '1' => goto GTZERO;
+
+label ZERO :=:
+    Console:Write("Zero.");
+    goto END;
+label GTZERO :=:
+    Console.Write("Greater than zero.");
+    goto END;
+label END :=
+    return 1;
+}

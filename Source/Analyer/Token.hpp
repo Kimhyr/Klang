@@ -116,6 +116,8 @@ struct Token {
   Point end;
   Token::Kind kind;
   Token::Value value;
+
+  Char8 *ToStr();
 };
 
 #endif  // ANALYER_TOKEN_HPP

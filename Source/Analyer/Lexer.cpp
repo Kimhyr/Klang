@@ -27,6 +27,9 @@ Lexer::Flag Lexer::Lex(Token *out) {
     this->LexSymbol(out, &flags);
   }
 END:
+  if (Lexer::HasError((Lexer::Flag)flags)) {
+    out->kind = Token::Kind::None;
+  }
   return (Lexer::Flag)flags;
 }
 
@@ -63,13 +66,15 @@ Void Lexer::LexNumber(Token *out, UInt8 *flags) {
         *flags |= (UInt8)Lexer::Flag::Error;
         this->errBuf->Put(Error(
             Error::Severity::Critical,
-            "This float literal token has too many dots."
+            "Float literal token has too many dots."
         ));
         break;
       }
       out->value.Literal.kind = LiteralT::Kind::Float;
     }
-    this->buffer.Put(this->peek);
+    if (this->peek != '_') {
+      this->buffer.Put(this->peek);
+    }
     this->Advance();
   } while (Char::IsNumeric(this->peek) || this->peek == '_' || this->peek == '.'
   );
@@ -117,7 +122,7 @@ Void Lexer::LexSymbol(Token *out, UInt8 *flags) {
       do {
         this->Advance();
       } while (this->peek != '\n');
-      goto END;
+      goto SINGLE;
     }
     out->value.Modifier.value = (ModifierT::Value)this->peek;
     out->kind = Token::Kind::Modifier;
@@ -131,7 +136,6 @@ DOUBLE:
   this->Advance();
 SINGLE:
   this->Advance();
-END:
   if (this->peek == '\0') {
     *flags |= (UInt8)Lexer::Flag::EoF;
   }
