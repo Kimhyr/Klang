@@ -16,7 +16,7 @@ if (Token::HasError(flags)) {
 std::cout << (UInt8)keyword.value;
 */
 
-Int32 main() {
+Int32 Initiate() {
   std::cout << "Hello, World!\n";
   return 0;
 }

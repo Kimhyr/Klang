@@ -2,6 +2,8 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
+#define Initiate main
+
 using Void = void;
 #define nil nullptr
 

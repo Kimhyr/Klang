@@ -2,39 +2,16 @@
 #ifndef ANALYER_TOKEN_HPP
 #define ANALYER_TOKEN_HPP
 
-#include "Lexer.hpp"
+#include "../Utils/Structs.hpp"
+#include "../Core.hpp"
 
-struct Token {
-  enum struct Flag : UInt8 {
-    Error = 0x01,
-    EoF = 0x02,
-    Switch = 0x04,
-  };
-
-  const Char8 *path;
-  Point start;
-  Point end;
-
-  virtual Token::Flag Lex(Lexer *lexer);
-  static constexpr Bool HasError(Token::Flag flag) {
-    return (static_cast<UInt8>(flag) | 0xfe) ^ 0xfe;
-  }
-  static constexpr Bool HasEoF(Token::Flag flag) {
-    return (static_cast<UInt8>(flag) | 0xfd) ^ 0xfd;
-  }
-  static constexpr Bool HasSwitch(Token::Flag flag) {
-    return (static_cast<UInt8>(flag) | 0xfb) ^ 0xfb;
-  }
-};
-
-struct IdentifierT : public Token {
+struct IdentifierT {
   const Char8 *identifier;
 
   Void Destroy();
-  Token::Flag Lex(Lexer *lexer);
 };
 
-struct LiteralT : public Token {
+struct LiteralT {
   enum Flag : UInt8 {
     Bit16 = 0x01,
     Bit32 = 0x02,
@@ -64,10 +41,9 @@ struct LiteralT : public Token {
   LiteralT::Value vlaue;
 
   Void Destroy();
-  Token::Flag Lex(Lexer *lexer);
 };
 
-struct KeywordT : public Token {
+struct KeywordT {
   enum struct Value {
     Procedure,
     Datum,
@@ -76,10 +52,9 @@ struct KeywordT : public Token {
 
   KeywordT::Value value;
 
-  Token::Flag Lex(Lexer *lexer);
 };
 
-struct OperT : public Token {
+struct OperT {
   enum struct Value {
     Equal = '=',
     Plus = '+',
@@ -90,10 +65,9 @@ struct OperT : public Token {
 
   OperT::Value value;
 
-  Token::Flag Lex(Lexer *lexer);
 };
 
-struct PunctuatorT : public Token {
+struct PunctuatorT {
   enum struct Value {
     Semicolon = ';',
     Apostrophe = '\'',
@@ -107,10 +81,9 @@ struct PunctuatorT : public Token {
 
   PunctuatorT::Value value;
 
-  Token::Flag Lex(Lexer *lexer);
 };
 
-struct ModifierT : public Token {
+struct ModifierT {
   enum Value {
     At = '@',
     Question = '?',
@@ -119,7 +92,32 @@ struct ModifierT : public Token {
 
   ModifierT::Value value;
 
-  Token::Flag Lex(Lexer *lexer);
+};
+
+struct Token {
+  enum struct Kind {
+    Identifeir,
+    Literal,
+    Keyword,
+    Oper,
+    Punctuator,
+    Modifier,
+  };
+
+  union Value {
+    IdentifierT Identifier;
+    LiteralT Literal;
+    KeywordT Keyword;
+    OperT Oper;
+    PunctuatorT Punctuator;
+    ModifierT Modifier;
+  };
+
+  const Char8 *path;
+  Point start;
+  Point end;
+  Token::Kind kind;
+  Token::Value value;
 };
 
 #endif  // ANALYER_TOKEN_HPP
