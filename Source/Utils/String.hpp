@@ -14,7 +14,7 @@ struct String {
   Void Put(Char8 value);
   Bool operator==(const Char8 *comparee);
   Bool operator==(const String *comparee);
-  static Bool Compare(const Char8 *str, const Char8 *comparee);
+  static Char8 Compare(const Char8 *str, const Char8 *comparee);
   Void Realloc();
   Char8 *Flush();
   Char8 *ToStr();

@@ -21,7 +21,7 @@ Bool String::operator==(const String *comparee) {
   return strcmp(this->buffer, comparee->buffer) == 0;
 }
 
-Bool String::Compare(const Char8 *str, const Char8 *comparee) {
+Char8 String::Compare(const Char8 *str, const Char8 *comparee) {
   return strcmp(str, comparee) == 0;
 }
 

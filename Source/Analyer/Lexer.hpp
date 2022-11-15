@@ -26,18 +26,14 @@ struct Lexer {
   Lexer(ErrorBuffer *errBuf, const Char8 *sourcePath, const Char8 *source);
 
   Lexer::Flag Lex(Token *out);
+  Void LexWord(Token *out, UInt8 *flags);
+  Void LexNumber(Token *out, UInt8 *flags);
+  Void LexSymbol(Token *out, UInt8 *flags);
 
   Void Advance();
   constexpr Char8 Peek(UInt64 offset = 1) {
     return this->source[this->index + offset];
   }
-
-  Lexer::Flag LexIdentifier(IdentifierT *out);
-  Lexer::Flag LexLiteral(LiteralT *out);
-  Lexer::Flag LexKeyword(KeywordT *out);
-  Lexer::Flag LexOper(OperT *out);
-  Lexer::Flag LexPunctuator(PunctuatorT *out);
-  Lexer::Flag LexModifier(ModifierT *out);
 
   static constexpr Bool HasError(Lexer::Flag flag) {
     return ((UInt8)flag | 0xfe) ^ 0xfe;

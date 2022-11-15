@@ -2,8 +2,8 @@
 #ifndef ANALYER_TOKEN_HPP
 #define ANALYER_TOKEN_HPP
 
-#include "../Utils/Structs.hpp"
 #include "../Core.hpp"
+#include "../Utils/Structs.hpp"
 
 struct IdentifierT {
   const Char8 *identifier;
@@ -13,12 +13,13 @@ struct IdentifierT {
 
 struct LiteralT {
   enum Flag : UInt8 {
-    Bit16 = 0x01,
-    Bit32 = 0x02,
-    Bit64 = 0x04,
-    Bit128 = 0x08,
-    Signed = 0x10,
-    Cooked = 0x20,
+    Bit8 = 0x01,
+    Bit16 = 0x02,
+    Bit32 = 0x04,
+    Bit64 = 0x08,
+    Bit128 = 0x10,
+    Signed = 0x20,
+    Cooked = 0x40,
   };
 
   enum struct Kind : UInt8 {
@@ -51,7 +52,6 @@ struct KeywordT {
   };
 
   KeywordT::Value value;
-
 };
 
 struct OperT {
@@ -64,11 +64,11 @@ struct OperT {
   };
 
   OperT::Value value;
-
 };
 
 struct PunctuatorT {
   enum struct Value {
+    Colon = ':',
     Semicolon = ';',
     Apostrophe = '\'',
     OParen = '(',
@@ -80,7 +80,6 @@ struct PunctuatorT {
   };
 
   PunctuatorT::Value value;
-
 };
 
 struct ModifierT {
@@ -91,7 +90,6 @@ struct ModifierT {
   };
 
   ModifierT::Value value;
-
 };
 
 struct Token {
