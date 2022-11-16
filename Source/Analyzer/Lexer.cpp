@@ -52,7 +52,7 @@ Lexer::Flag Lexer::Lex(Token *out) {
             Error::Severity::Critical,
             "Float literal token has too many dots."
           ));
-          this->flags |= Lexer::F::Err;
+          this->flags |= (UInt8)Lexer::Flag::Error;
           break;
         }
       }
@@ -99,11 +99,11 @@ Lexer::Flag Lexer::Lex(Token *out) {
         do {
           this->Advance();
           if (this->peek == '\0') {
-            this->flags |= Lexer::F::EoF;
+            this->flags |= (UInt8)Lexer::Flag::EoF;
             goto END;
           }
         } while (this->peek != '\n');
-        this->flags |= Lexer::F::Continue;
+        this->flags |= (UInt8)Lexer::Flag::Continue;
         goto END;
       default:
         break;
@@ -115,7 +115,7 @@ Lexer::Flag Lexer::Lex(Token *out) {
       goto SINGLE;
     default:
       out->kind = Token::Kind::None;
-      this->flags |= Lexer::F::Err;
+      this->flags |= (UInt8)Lexer::Flag::Error;
       goto SINGLE;
       break;
     }
@@ -128,9 +128,9 @@ END:
   out->end = this->point;
   --out->end.column;
   if (this->peek == '\0') {
-    this->flags |= Lexer::F::EoF;
+    this->flags |= (UInt8)Lexer::Flag::EoF;
   }
-  return this->flags;
+  return (Lexer::Flag)this->flags;
 }
 
 Void Lexer::Advance() {

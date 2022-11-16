@@ -21,6 +21,9 @@ all:$(BIN)
 run:$(BIN)
 	$(BIN)
 
+test:$(BIN)
+	$(BIN) /workspaces/KPLC/Tests/Basic.kpl
+
 $(BIN):$(OBJS)
 	$(CC) $^ -o $@
 
@@ -28,7 +31,10 @@ $(OBJ)/%.obj:$(SRC)/%.$(EXT)
 	$(CC) -c $^ -o $@ $(FLGS)
 
 clean:
-	powershell "Get-ChildItem '.\Output\*.*' -Recurse -Force | Remove-Item"
+	rm -rf $(OUT)/*
+	mkdir $(OBJ)
+	mkdir $(foreach D,$(DIRS),$(OBJ)/$(D))
+#	powershell "Get-ChildItem '.\Output\*.*' -Recurse -Force | Remove-Item"
 
 diffs:
 	@git status

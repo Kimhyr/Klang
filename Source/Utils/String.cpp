@@ -1,6 +1,6 @@
 #include "String.hpp"
 
-#include <string>
+#include <string.h>
 
 String::String(UInt64 space) {
   this->space = space;

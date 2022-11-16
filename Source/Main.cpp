@@ -3,11 +3,15 @@
 
 #include "Analyzer/Lexer.hpp"
 
-Int32 Initiate() {
+Int32 Initiate(const Int32 argc, const Char8 **argv) {
+  if (argc <= 1) {
+    return 1;
+  }
+  
   ErrorBuffer errBuf;
   String buffer;
   std::fstream file;
-  file.open("E:\\Projects\\KPLC\\Tests\\A.kpl");
+  file.open(argv[1]);
   if (!file.is_open()) {
     return 1;
   }

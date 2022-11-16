@@ -6,11 +6,16 @@
 #include "../Utils/String.hpp"
 #include "Token.hpp"
 
+/**************************************************************************************************\
+
+
+
+\**************************************************************************************************/
+
 struct Lexer {
-  using Flag = UInt8;
-  enum F {
+  enum struct Flag {
     EoF = 0x01,
-    Err = 0x02,
+    Error = 0x02,
     Continue = 0x04,
   };
 
@@ -34,7 +39,7 @@ struct Lexer {
   Void Advance();
 
   static constexpr Bool FlagHasEoF(Lexer::Flag flags) {
-    return (flags | 0xfe) ^ 0xfe;
+    return ((UInt8)flags | 0xfe) ^ 0xfe;
   }
 };
 
