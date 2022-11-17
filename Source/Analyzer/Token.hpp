@@ -3,13 +3,6 @@
 #define ANALYER_TOKEN_HPP
 
 #include "../Core.hpp"
-#include "../Utils/Structs.hpp"
-
-/**************************************************************************************************\
-
-
-
-\**************************************************************************************************/
 
 struct LiteralT {
   enum struct Flag {
@@ -19,18 +12,16 @@ struct LiteralT {
     Bit32,
     Bit64,
     Bit128,
-  };
-
-  enum struct Kind {
+  } flags;
+  enum struct Kind : UInt8 {
     Integer,
     Float,
     Character,
     String,
-  };
-
-  LiteralT::Flag flags;
-  LiteralT::Kind kind;
+  } kind;
   const Char8 *value;
+
+  const Char8 *ToStr();
 };
 
 enum struct KeywordT {
@@ -63,6 +54,14 @@ enum struct ModifierT {
 };
 
 struct Token {
+  const Char8 *path;
+  struct Point {
+    UInt64 row;
+    UInt64 column;
+
+    const Char8 *ToStr();
+  } start;
+  Token::Point end;
   enum struct Kind {
     None,
     Identifier,
@@ -71,8 +70,7 @@ struct Token {
     Punctuator,
     Oper,
     Modifier,
-  };
-
+  } kind;
   union Value {
     const Char8 *Identifier;
     KeywordT Keyword;
@@ -80,32 +78,82 @@ struct Token {
     PunctuatorT Punctuator;
     OperT Oper;
     ModifierT Modifier;
-  };
+  } value;
 
-  const Char8 *path;
-  Point start;
-  Point end;
-  Token::Kind kind;
-  Token::Value value;
+  constexpr const Char8 *KeywordToStr() {
+    switch (this->value.Keyword) {
+    case KeywordT::Procedure:
+      return "KeywordT::Procedure";
+    case KeywordT::Datum:
+      return "KeywordT::Datum";
+    case KeywordT::Return:
+      return "KeywordT::Return";
+    }
+  }
+
+  constexpr const Char8 *PunctuatorToStr() {
+    switch (this->value.Punctuator) {
+      case PunctuatorT::OParen:
+        return "PunctuatorT::OParen";
+      case PunctuatorT::CParen:
+        return "PunctuatorT::CParen";
+      case PunctuatorT::OCurl:
+        return "PunctuatorT::OCurl";
+      case PunctuatorT::CCurl:
+        return "PunctuatorT::CCurl";
+      case PunctuatorT::Comma:
+        return "PunctuatorT::Comma";
+      case PunctuatorT::Semicolon:
+        return "PunctuatorT::Semicolon";
+    }
+  }
+
+  constexpr const Char8 *OperToStr() {
+    switch (this->value.Oper) {
+    case OperT::Equal:
+      return "OperT::Equal";
+    case OperT::Plus:
+      return "OperT::Plus";
+    case OperT::Minus:
+      return "OperT::Minus";
+    case OperT::DColon:
+      return "OperT::DColon";
+    case OperT::RArrow:
+      return "OperT::RArrow";
+    }
+  }
+
+  constexpr const Char8 *ModifierToStr() {
+    switch (this->value.Modifier) {
+    case ModifierT::Slosh:
+      return "ModifierT::Slosh";
+    case ModifierT::At:
+      return "ModifierT::At";
+    case ModifierT::Question:
+      return "ModifierT::Question";
+    }
+  }
 
   constexpr const Char8 *KindToStr() {
     switch (this->kind) {
     case Kind::None:
-      return "None";
+      return "Token::Kind::None";
     case Kind::Identifier:
-      return "Identifier";
+      return "Token::Kind::Identifier";
     case Kind::Keyword:
-      return "Keyword";
+      return "Token::Kind::Keyword";
     case Kind::Literal:
-      return "Literal";
+      return "Token::Kind::Literal";
     case Kind::Punctuator:
-      return "Punctuator";
+      return "Token::Kind::Punctuator";
     case Kind::Oper:
-      return "Oper";
+      return "Token::Kind::Oper";
     case Kind::Modifier:
-      return "Modifier";
+      return "Token::Kind::Modifier";
     }
   }
+  const Char8 *PointToStr();
+  const Char8 *ToStr();
 };
 
 #endif  // ANALYER_TOKEN_HPP

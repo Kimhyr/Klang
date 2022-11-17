@@ -6,12 +6,6 @@
 #include "../Utils/String.hpp"
 #include "Token.hpp"
 
-/**************************************************************************************************\
-
-
-
-\**************************************************************************************************/
-
 struct Lexer {
   enum struct Flag {
     EoF = 0x01,
@@ -24,7 +18,7 @@ struct Lexer {
   UInt64 index;
   const Char8 *source;
   Char8 peek;
-  Point point;
+  Token::Point point;
   UInt8 flags;
   String buffer;
 

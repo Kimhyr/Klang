@@ -11,4 +11,13 @@ procedure For(n :: UInt64) {
   \\ := backward
   \\ :=: backward and onward
   \\ {} scoped
+
+  datum c :: U8;
+label WHILE_START =:
+	c = Get;
+	if == EoF => jumpto WHILE_END;
+	
+
+	jumpto WHILE_START;
+label WHILE_END :=
 }
