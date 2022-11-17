@@ -3,6 +3,10 @@
 #define ANALYER_TOKEN_HPP
 
 #include "../Core.hpp"
+<<<<<<< HEAD
+=======
+#include "../Utils/Structs.hpp"
+>>>>>>> 6a4716edc27e34ace985e59d311e32fe1db24f8c
 
 struct LiteralT {
   enum struct Flag {

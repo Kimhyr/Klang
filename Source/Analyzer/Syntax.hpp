@@ -3,6 +3,7 @@
 #define ANALYZER_SYNTAX_HPP
 
 #include "../Core.hpp"
+<<<<<<< HEAD
 #include "Token.hpp"
 
 struct Object {};
@@ -103,4 +104,21 @@ namespace S {
     };
 };
 
+=======
+
+/*
+Expressions:
+    - Blocks
+    - Literals:
+        - Integer
+        | Float
+        | Char
+        | String
+        | Array
+
+*/
+
+struct Object {};
+
+>>>>>>> 6a4716edc27e34ace985e59d311e32fe1db24f8c
 #endif  // ANALYZER_SYNTAX_HPP
