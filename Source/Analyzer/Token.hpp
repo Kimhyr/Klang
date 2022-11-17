@@ -3,19 +3,12 @@
 #define ANALYER_TOKEN_HPP
 
 #include "../Core.hpp"
-<<<<<<< HEAD
-=======
-#include "../Utils/Structs.hpp"
->>>>>>> 6a4716edc27e34ace985e59d311e32fe1db24f8c
 
 struct LiteralT {
-  enum struct Flag {
-    Cooked, // Escapable string/character | Signed integer
-    Bit8,
-    Bit16,
-    Bit32,
-    Bit64,
-    Bit128,
+  enum struct Flag : UInt8 {
+    Signed = 0x01,
+    
+    Cooked = 0x04,
   } flags;
   enum struct Kind : UInt8 {
     Integer,

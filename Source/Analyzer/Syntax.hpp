@@ -3,7 +3,7 @@
 #define ANALYZER_SYNTAX_HPP
 
 #include "../Core.hpp"
-<<<<<<< HEAD
+
 #include "Token.hpp"
 
 struct Object {};
@@ -49,6 +49,14 @@ namespace O {
 };
 
 namespace E {
+    struct Binary : public Expression {
+        enum struct Operation {
+            Add,
+        } operation;
+        Expression *first;
+        Expression second;
+    };
+
     struct Literal : public Expression {};
 
     struct Integer : public Literal {
@@ -62,23 +70,34 @@ namespace E {
         UInt64 value;
     };
 
-    struct Float : public Literal {
-        enum struct Flag : UInt8 {
-            Bit32,
-            Bit64,
-            Bit128,
-        } flags;
-        Float128 value;
-    };
+    // struct Float : public Literal {
+    //     enum struct Flag : UInt8 {
+    //         Bit32 = 0x01,
+    //         Bit64 = 0x02,
+    //         Bit128 = 0x04,
+    //     } flags;
+    //     Float128 value;
+    // };
 
-    struct Character : public Literal {
-        enum struct Flag : UInt8 {
-            Bit8,
-            Bit16,
-            Cooked,
-        } flags;
-        Char16 value;
-    };
+    // struct Character : public Literal {
+    //     enum struct Flag : UInt8 {
+    //         Bit8 = 0x01,
+    //         Bit16 = 0x02,
+    //         Cooked = 0x04,
+    //     } flags;
+    //     Char16 value;
+    // };
+
+    // struct String : public Literal {
+    //     E::Character::Flag flags;
+    //     UInt64 length;
+    //     Char16 *value;
+    // };
+
+    // struct List : public Literal {
+    //     UInt64 size;
+    //     Expression *data;
+    // };
 };
 
 namespace S {
@@ -102,23 +121,10 @@ namespace S {
         O::TypePath type;
         O::Body body;
     };
+
+    struct Return : public Statement {
+        Expression value;
+    };
 };
 
-=======
-
-/*
-Expressions:
-    - Blocks
-    - Literals:
-        - Integer
-        | Float
-        | Char
-        | String
-        | Array
-
-*/
-
-struct Object {};
-
->>>>>>> 6a4716edc27e34ace985e59d311e32fe1db24f8c
 #endif  // ANALYZER_SYNTAX_HPP
