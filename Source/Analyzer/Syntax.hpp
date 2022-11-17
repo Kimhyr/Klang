@@ -6,14 +6,16 @@
 
 #include "Token.hpp"
 
-struct Object {};
+namespace O {
+    struct Expression {};
 
-struct Expression {};
-
-struct Statement {};
+    struct Statement {};    
+}
 
 namespace O {
     struct Identifier {
+        enum struct Flag {
+        } flags;
         const Char8 *identifier;
     };
 
@@ -22,42 +24,46 @@ namespace O {
         Statement *statements;
     };
 
-    struct Type {};
+    struct Type {
+        enum struct Kind {
+            Structure,
+            Enumerare,
+            Unistruct,
+        } kind;
+        union Value {
+            S::Structure *structure;
+        } value;
+    };
 
     struct TypePath {
         UInt8 pointerCount;
         enum struct Modifier {
             Mutable = 0x01,
         } modifiers;
-        O::Type *type;
+        O::Type type;
     };
 }
-
 
 namespace S {
-    struct Datum : public Statement {
-        O::Identifier identifier;
+    struct Structure : public O::Statement {
+    };
+
+     struct Datum : public O::Statement {
         O::TypePath type;
-        Expression value;
+        O::Expression value;
     };
 }
 
-namespace O {
-    struct DatumPath {
-        S::Datum *datum;
-    };
-};
-
 namespace E {
-    struct Binary : public Expression {
+    struct Binary : public O::Expression {
         enum struct Operation {
             Add,
         } operation;
-        Expression *first;
-        Expression second;
+        O::Expression *first;
+        O::Expression second;
     };
 
-    struct Literal : public Expression {};
+    struct Literal : public O::Expression {};
 
     struct Integer : public Literal {
         enum struct Flag : UInt8 {
@@ -101,9 +107,9 @@ namespace E {
 };
 
 namespace S {
-    struct Assign : public Statement {
-        O::DatumPath datum;
-        Expression value;
+    struct Assign : public O::Statement {
+        S::Datum *datum;
+        O::Expression value;
     };
 }
 
@@ -115,16 +121,31 @@ namespace O {
 };
 
 namespace S {
-    struct Procedure : public Statement {
-        O::Identifier identifier;
+    struct Procedure : public O::Statement {
         O::Parameter parameter;
         O::TypePath type;
         O::Body body;
     };
 
-    struct Return : public Statement {
-        Expression value;
+    struct Return : public O::Statement {
+        O::Expression value;
     };
 };
+
+namespace O {
+     struct Declaration {
+        enum struct Kind {
+            Structure,
+            Procedure,
+            Datum,
+        } kind;
+        union Value {
+            S::Structure *structure;
+            S::Procedure *procedure;
+            S::Datum *datum;
+        };
+    };
+}
+
 
 #endif  // ANALYZER_SYNTAX_HPP
