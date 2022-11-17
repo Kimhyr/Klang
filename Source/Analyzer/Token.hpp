@@ -5,12 +5,6 @@
 #include "../Core.hpp"
 #include "../Utils/Structs.hpp"
 
-/**************************************************************************************************\
-
-
-
-\**************************************************************************************************/
-
 struct LiteralT {
   enum struct Flag {
     Cooked, // Escapable string/character | Signed integer

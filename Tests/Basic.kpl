@@ -1,7 +1,7 @@
 procedure Initiate( \\ THIS IS A COOL COMMENT
-	argc::I32, argv::@@I8
-) -> I32 {
-	datum x::?I32 = 7;
+	argc :: Int32, argv :: @@Int8
+) -> Int32 {
+	datum x :: ?Int32 = 7;
 	x = 21 + 14;
 	return x;
 }

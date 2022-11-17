@@ -4,26 +4,18 @@
 
 #include "../Core.hpp"
 
-/**************************************************************************************************\
+/*
+Expressions:
+    - Blocks
+    - Literals:
+        - Integer
+        | Float
+        | Char
+        | String
+        | Array
 
-Assign:
-    * DatumPath
-    * Value
-Datum:
-    * Identifier
-    * TypePath
-    * Value
-Procedure:
-    * Identifier
-    * Parameter
-    * TypePath
-    * Body
-Return:
-    * Value
-
-\**************************************************************************************************/
+*/
 
 struct Object {};
-
 
 #endif  // ANALYZER_SYNTAX_HPP
