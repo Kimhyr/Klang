@@ -1,0 +1,61 @@
+structure Token {
+    span :: structure Span {
+        from :: structure Point {
+            row :: UInt64,
+            column :: UInt64,
+        },
+        to :: Token:Span:Point,
+    },
+    kind :: enumerare Kind :: UInt8 {
+        Identifier,
+        Keyword,
+        Literal,
+        Punctuator,
+        Operator,
+        Modifier,
+    },
+    value :: unistruct Value {
+        Identifier :: @UInt8,
+        Keyword :: UInt8,
+        Literal :: structure Literal {
+            kind :: UInt8,
+            value :: unistruct Value {
+                Integer :: UInt64,
+                Float :: Float128,
+                Character :: UInt16,
+                String :: @UInt16,
+            },
+        },
+        Punctuator :: UInt16,
+        Operator :: UInt16,
+        Modifier :: UInt16,
+    },
+}
+
+implement Token {
+    !procedure Create(
+        span :: Toen:Span, kind :: Token:Kind,
+        value :: Token:Value
+    ) -> Token {
+        return Token {
+            .span = span,
+            .kind = kind,
+            .value = value,
+        };
+    }
+
+    !procedure @?Destroy {
+        if 'kind == Token:Kind:Identifier
+            => jumpto IDENTIFIER;
+        if 'kind == Token:Kind:Literal & 'value.Literal.kind == Token:Value:Literal:Kind:String
+            => Memory:free('value.Literal.value.String);
+        jumpto END;
+    label IDENTIFIER :=
+        Memory:Free('value.Identifier);
+        jumpto END;
+    label END :=
+        return;
+    }
+}
+
+
