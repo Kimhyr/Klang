@@ -7,18 +7,16 @@
 #include "Token.hpp"
 
 struct Lexer {
-  enum struct Flag {
-    EoF = 0x01,
-    Error = 0x02,
-    Continue = 0x04,
-  };
-
   ErrorBuffer *errBuf;
   UInt64 index;
   const Char8 *source;
   Char8 peek;
   Token::Point point;
-  UInt8 flags;
+  enum struct Flag {
+    EoF = (1 << 0),
+    Error = (1 << 1),
+    Continue = (1 << 2),
+  } flags;
   String buffer;
 
   Lexer(ErrorBuffer *errBuf, const Char8 *source);

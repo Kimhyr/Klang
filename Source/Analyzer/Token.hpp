@@ -6,9 +6,9 @@
 
 struct LiteralT {
   enum struct Flag : UInt8 {
-    Signed = 0x01,
-    // 0x02
-    Cooked = 0x04,
+    Signed = (1 << 0),
+    // (1 << 1)
+    Cooked = (1 << 2),
   } flags;
   enum struct Kind : UInt8 {
     Integer,

@@ -1,6 +1,7 @@
 #include "Lexer.hpp"
 
 #include "../Utils/Char.hpp"
+#include "../Utils/Bit.hpp"
 #include <iostream>
 
 Lexer::Lexer(ErrorBuffer *errBuf, const Char8 *source)
@@ -16,7 +17,7 @@ Void Lexer::Destroy() {
 }
 
 Lexer::Flag Lexer::Lex(Token *out) {
-  this->flags = 0;
+  Bit::Clear(&this->flags);
   while (Char::IsWhitespace(this->peek)) {
     this->Advance();
   }
@@ -51,7 +52,7 @@ Lexer::Flag Lexer::Lex(Token *out) {
             Error::Severity::Critical,
             "Float literal token has too many dots."
           ));
-          this->flags |= (UInt8)Lexer::Flag::Error;
+          Bit::Set(&this->flags, Lexer::Flag::Error);
           break;
         }
       }
@@ -98,11 +99,11 @@ Lexer::Flag Lexer::Lex(Token *out) {
         do {
           this->Advance();
           if (this->peek == '\0') {
-            this->flags |= (UInt8)Lexer::Flag::EoF;
+            Bit::Set(&this->flags, Lexer::Flag::EoF);
             goto END;
           }
         } while (this->peek != '\n');
-        this->flags |= (UInt8)Lexer::Flag::Continue;
+        Bit::Set(&this->flags, Lexer::Flag::Continue);
         goto END;
       default:
         break;
@@ -114,7 +115,7 @@ Lexer::Flag Lexer::Lex(Token *out) {
       goto SINGLE;
     default:
       out->kind = Token::Kind::None;
-      this->flags |= (UInt8)Lexer::Flag::Error;
+      Bit::Set(&this->flags, Lexer::Flag::Error);
       goto SINGLE;
       break;
     }
@@ -127,9 +128,9 @@ END:
   out->end = this->point;
   --out->end.column;
   if (this->peek == '\0') {
-    this->flags |= (UInt8)Lexer::Flag::EoF;
+    Bit::Set(&this->flags, Lexer::Flag::EoF);
   }
-  return (Lexer::Flag)this->flags;
+  return this->flags;
 }
 
 Void Lexer::Advance() {

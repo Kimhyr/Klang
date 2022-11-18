@@ -6,27 +6,25 @@ Parser::Parser(ErrorBuffer *errBuf, const Char8 *source)
     , lexer(errBuf, source) {}
 
 Void Parser::Parse() {
-    Parser::Flag flags = this->Advance();
+    this->Advance();
 }
 
-Parser::Flag Parser::Advance() {
-    Lexer::Flag lexerFlags;
-    UInt8 flags;
+Void Parser::Advance() {
+    Lexer::Flag lexerFlags = (Lexer::Flag)0;
 LOOP_START:
     lexerFlags = this->lexer.Lex(&this->token);
-    if (Bit::Bit_0(lexerFlags)) {
-        flags |= (UInt8)Parser::Flag::EoF;
-        this->flags = (Parser::Flag)flags;
-        if (Bit::Bit_1(this->flags)) {
+    if (Bit::Check(lexerFlags, Lexer::Flag::EoF)) {
+        Bit::Set(&this->flags, Parser::Flag::EoF);
+        if (Bit::Check(this->flags, Lexer::Flag::Error)) {
             this->state = Parser::State::Done;
         }
         goto LOOP_END;
     }
-    if (Bit::Bit_1(lexerFlags)) {
+    if (Bit::Check(lexerFlags, Lexer::Flag::Error)) {
         this->state = Parser::State::SkipToTerminator;
         // Error
     }
-    if (Bit::Bit_2(lexerFlags)) {
+    if (Bit::Check(lexerFlags, Lexer::Flag::Continue)) {
         // Continue
     }
     switch (this->state) {

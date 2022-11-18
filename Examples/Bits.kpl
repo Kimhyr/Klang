@@ -1,0 +1,22 @@
+import Core:TypeSets.Number;
+
+namespace Bit {
+    $Inline
+    procedure Clear(bits::@TBits) {
+        #bits = 0;
+    }
+
+    $Inline
+    procedure Check<TFlags, TCheck>(
+        flags::TFlags, check::TCheck
+    ) -> Bool {
+        return bits && (1 << (check - 1));
+    } 
+
+    $Inline
+    procedure Set<TFlags::Number>(
+        flags::@TFlags, set::TFlags
+    ) {
+        #flags ||= set;
+    }
+}

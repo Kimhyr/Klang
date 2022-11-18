@@ -38,7 +38,7 @@ namespace O {
     struct TypePath {
         UInt8 pointerCount;
         enum struct Modifier {
-            Mutable = 0x01,
+            Mutable = (1 << 0),
         } modifiers;
         O::Type type;
     };
@@ -67,11 +67,11 @@ namespace E {
 
     struct Integer : public Literal {
         enum struct Flag : UInt8 {
-            Bit8 = 0x01,
-            Bit16 = 0x02,
-            Bit32 = 0x04,
-            Bit64 = 0x08,
-            Signed = 0x10,
+            Bit8 = (1 << 0),
+            Bit16 = (1 << 1),
+            Bit32 = (1 << 2),
+            Bit64 = (1 << 3),
+            Signed = (1 << 4),
         } flags;
         UInt64 value;
     };

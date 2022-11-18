@@ -11,9 +11,8 @@ struct Parser {
     Lexer lexer;
     Dynarray<O::Declaration> identifiers;
     enum struct Flag {
-        EoF = 0x01,
-
-        Done = 0x02,
+        EoF = (1 << 0),
+        Done = (1 << 1),
     } flags;
     enum struct State {
         SkipToTerminator,
@@ -23,7 +22,7 @@ struct Parser {
     
     Parser(ErrorBuffer *errBuf, const Char8 *source);
     Void Parse();
-    Parser::Flag Advance();
+    Void Advance();
 };
 
 #endif  // ANALYZER_PARSER_HPP
