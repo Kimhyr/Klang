@@ -7,7 +7,7 @@
 struct LiteralT {
   enum struct Flag : UInt8 {
     Signed = 0x01,
-    
+    // 0x02
     Cooked = 0x04,
   } flags;
   enum struct Kind : UInt8 {
@@ -51,7 +51,6 @@ enum struct ModifierT {
 };
 
 struct Token {
-  const Char8 *path;
   struct Point {
     UInt64 row;
     UInt64 column;

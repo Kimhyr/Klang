@@ -14,7 +14,6 @@ struct Lexer {
   };
 
   ErrorBuffer *errBuf;
-  const Char8 *sourcePath;
   UInt64 index;
   const Char8 *source;
   Char8 peek;
@@ -22,7 +21,7 @@ struct Lexer {
   UInt8 flags;
   String buffer;
 
-  Lexer(ErrorBuffer *errBuf, const Char8 *sourcePath, const Char8 *source);
+  Lexer(ErrorBuffer *errBuf, const Char8 *source);
   Void Destroy();
 
   Lexer::Flag Lex(Token *out);
@@ -31,10 +30,6 @@ struct Lexer {
     return this->source[this->index + offset];
   }
   Void Advance();
-
-  static constexpr Bool FlagHasEoF(Lexer::Flag flags) {
-    return ((UInt8)flags | 0xfe) ^ 0xfe;
-  }
 };
 
 #endif  // ANALYZER_LEXER_HPP

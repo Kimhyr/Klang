@@ -3,9 +3,8 @@
 #include "../Utils/Char.hpp"
 #include <iostream>
 
-Lexer::Lexer(ErrorBuffer *errBuf, const Char8 *sourcePath, const Char8 *source)
+Lexer::Lexer(ErrorBuffer *errBuf, const Char8 *source)
   : errBuf(errBuf)
-  , sourcePath(sourcePath)
   , index(-1)
   , source(source)
   , peek(source[0])
