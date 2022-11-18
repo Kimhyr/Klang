@@ -6,9 +6,9 @@
 
 ```kpl
 procedure Initiate(
-  argc :: Int32, argv :: @@UInt8
+  argc::Int32, argv::@@UInt8
 ) -> Int32 {
-  datum x :: ?Int32 = 7; \\ Question mark is the mutable operator.
+  datum x::?Int32 = 7; \\ Question mark is the mutable operator.
   x = 21 + 14;
   return x;
 }
