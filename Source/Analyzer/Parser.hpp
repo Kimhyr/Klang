@@ -10,7 +10,7 @@
 struct Parser {
   ErrorBuffer *errBuf;
   Lexer lexer;
-  Dynarray<O::Declaration> identifiers;
+  Dynarray<O::Declaration> declarations;
   enum struct Flag {
     EoF = (1 << 0),
     Done = (1 << 1),
@@ -25,7 +25,11 @@ struct Parser {
   Token token;
 
   Parser(ErrorBuffer *errBuf, const Char8 *source);
+
   Void Parse();
+
+  Void PutDeclaration(O::Declaration::Kind kind);
+
   Void Advance();
 };
 

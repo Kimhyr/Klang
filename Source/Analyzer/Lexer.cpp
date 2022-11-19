@@ -31,11 +31,11 @@ Lexer::Flag Lexer::Lex(Token *out) {
     } while (Char::IsNumeric(this->peek) || Char::IsAlphabetic(this->peek) ||
              this->peek == '_');
     if (this->buffer == "procedure") {
-      out->value.Keyword = KeywordT::Procedure;
+      out->value.Keyword = T::Keyword::Procedure;
     } else if (this->buffer == "datum") {
-      out->value.Keyword = KeywordT::Datum;
+      out->value.Keyword = T::Keyword::Datum;
     } else if (this->buffer == "return") {
-      out->value.Keyword = KeywordT::Return;
+      out->value.Keyword = T::Keyword::Return;
     } else {
       out->kind = Token::Kind::Identifier;
       out->value.Identifier = this->buffer.Flush();
@@ -50,7 +50,7 @@ Lexer::Flag Lexer::Lex(Token *out) {
       }
       this->Advance();
       if (this->peek == '.') {
-        if (out->value.Literal.kind == LiteralT::Kind::Float) {
+        if (out->value.Literal.kind == T::Literal::Kind::Float) {
           this->errBuf->Put(Error(
               Error::Severity::Critical,
               "Float literal token has too many dots."
@@ -68,7 +68,7 @@ Lexer::Flag Lexer::Lex(Token *out) {
       switch (this->Peek(2)) {
       case ':':
         out->kind = Token::Kind::Oper;
-        out->value.Oper = OperT::DColon;
+        out->value.Oper = T::Oper::DColon;
         goto DOUBLE;
       default:
         break;
@@ -80,13 +80,13 @@ Lexer::Flag Lexer::Lex(Token *out) {
     case ',':
     case ';':
       out->kind = Token::Kind::Punctuator;
-      out->value.Punctuator = (PunctuatorT)this->peek;
+      out->value.Punctuator = (T::Punctuator)this->peek;
       goto SINGLE;
     case '-':
       switch (this->Peek(2)) {
       case '>':
         out->kind = Token::Kind::Oper;
-        out->value.Oper = OperT::RArrow;
+        out->value.Oper = T::Oper::RArrow;
         goto DOUBLE;
       default:
         break;
@@ -94,7 +94,7 @@ Lexer::Flag Lexer::Lex(Token *out) {
     case '=':
     case '+':
       out->kind = Token::Kind::Oper;
-      out->value.Oper = (OperT)this->peek;
+      out->value.Oper = (T::Oper)this->peek;
       goto SINGLE;
     case '\\':
       switch (this->Peek(2)) {
@@ -115,7 +115,7 @@ Lexer::Flag Lexer::Lex(Token *out) {
     case '@':
     case '?':
       out->kind = Token::Kind::Modifier;
-      out->value.Modifier = (ModifierT)this->peek;
+      out->value.Modifier = (T::Modifier)this->peek;
       goto SINGLE;
     default:
       out->kind = Token::Kind::None;

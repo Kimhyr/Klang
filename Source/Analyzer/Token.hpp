@@ -4,51 +4,53 @@
 
 #include "../Core.hpp"
 
-struct LiteralT {
-  enum struct Flag : UInt8 {
-    Signed = (1 << 0),
-    // (1 << 1)
-    Cooked = (1 << 2),
-  } flags;
-  enum struct Kind : UInt8 {
-    Integer,
-    Float,
-    Character,
-    String,
-  } kind;
-  const Char8 *value;
+namespace T {
+  struct Literal {
+    enum struct Flag : UInt8 {
+      Signed = (1 << 0),
+      // (1 << 1)
+      Cooked = (1 << 2),
+    } flags;
+    enum struct Kind : UInt8 {
+      Integer,
+      Float,
+      Character,
+      String,
+    } kind;
+    const Char8 *value;
 
-  const Char8 *ToStr();
-};
+    const Char8 *ToStr();
+  };
 
-enum struct KeywordT {
-  Procedure,
-  Datum,
-  Return,
-};
+  enum struct Keyword {
+    Procedure,
+    Datum,
+    Return,
+  };
 
-enum struct PunctuatorT {
-  OParen = '(',
-  CParen = ')',
-  OCurl = '{',
-  CCurl = '}',
-  Comma = ',',
-  Semicolon = ';',
-};
+  enum struct Punctuator {
+    OParen = '(',
+    CParen = ')',
+    OCurl = '{',
+    CCurl = '}',
+    Comma = ',',
+    Semicolon = ';',
+  };
 
-enum struct OperT {
-  Equal = '=',
-  Plus = '+',
-  Minus = '-',
-  DColon = 256,  // ::
-  RArrow,        // ->
-};
+  enum struct Oper {
+    Equal = '=',
+    Plus = '+',
+    Minus = '-',
+    DColon = 256,  // ::
+    RArrow,        // ->
+  };
 
-enum struct ModifierT {
-  Slosh = '\\',
-  At = '@',
-  Question = '?',
-};
+  enum struct Modifier {
+    Slosh = '\\',
+    At = '@',
+    Question = '?',
+  };
+}  // namespace T
 
 struct Token {
   struct Point {
@@ -69,63 +71,63 @@ struct Token {
   } kind;
   union Value {
     const Char8 *Identifier;
-    KeywordT Keyword;
-    LiteralT Literal;
-    PunctuatorT Punctuator;
-    OperT Oper;
-    ModifierT Modifier;
+    T::Keyword Keyword;
+    T::Literal Literal;
+    T::Punctuator Punctuator;
+    T::Oper Oper;
+    T::Modifier Modifier;
   } value;
 
   constexpr const Char8 *KeywordToStr() {
     switch (this->value.Keyword) {
-    case KeywordT::Procedure:
+    case T::Keyword::Procedure:
       return "KeywordT::Procedure";
-    case KeywordT::Datum:
+    case T::Keyword::Datum:
       return "KeywordT::Datum";
-    case KeywordT::Return:
+    case T::Keyword::Return:
       return "KeywordT::Return";
     }
   }
 
   constexpr const Char8 *PunctuatorToStr() {
     switch (this->value.Punctuator) {
-    case PunctuatorT::OParen:
+    case T::Punctuator::OParen:
       return "PunctuatorT::OParen";
-    case PunctuatorT::CParen:
+    case T::Punctuator::CParen:
       return "PunctuatorT::CParen";
-    case PunctuatorT::OCurl:
+    case T::Punctuator::OCurl:
       return "PunctuatorT::OCurl";
-    case PunctuatorT::CCurl:
+    case T::Punctuator::CCurl:
       return "PunctuatorT::CCurl";
-    case PunctuatorT::Comma:
+    case T::Punctuator::Comma:
       return "PunctuatorT::Comma";
-    case PunctuatorT::Semicolon:
+    case T::Punctuator::Semicolon:
       return "PunctuatorT::Semicolon";
     }
   }
 
   constexpr const Char8 *OperToStr() {
     switch (this->value.Oper) {
-    case OperT::Equal:
+    case T::Oper::Equal:
       return "OperT::Equal";
-    case OperT::Plus:
+    case T::Oper::Plus:
       return "OperT::Plus";
-    case OperT::Minus:
+    case T::Oper::Minus:
       return "OperT::Minus";
-    case OperT::DColon:
+    case T::Oper::DColon:
       return "OperT::DColon";
-    case OperT::RArrow:
+    case T::Oper::RArrow:
       return "OperT::RArrow";
     }
   }
 
   constexpr const Char8 *ModifierToStr() {
     switch (this->value.Modifier) {
-    case ModifierT::Slosh:
+    case T::Modifier::Slosh:
       return "ModifierT::Slosh";
-    case ModifierT::At:
+    case T::Modifier::At:
       return "ModifierT::At";
-    case ModifierT::Question:
+    case T::Modifier::Question:
       return "ModifierT::Question";
     }
   }

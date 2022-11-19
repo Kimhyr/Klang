@@ -5,6 +5,10 @@
 #include "../Core.hpp"
 #include "Token.hpp"
 
+template<typename TOut>
+struct Syntax {
+  Bool Parse(TOut *out);
+};
 
 namespace O {
   struct Expression {};
@@ -20,45 +24,33 @@ namespace O {
   /*
     O:Identifier -> [_|A-Z|a-z][_|A-Z|a-z|0-9]*
   */
-  struct Identifier {
+  struct Identifier : public Syntax<O::Identifier> {
     enum struct Flag {
     } flags;
     const Char8 *identifier;
+
+    Bool Parse(Identifier *out);
   };
 
   /*
     O:Body -> '{' Statement* '}'
   */
-  struct Body {
+  struct Body : public Syntax<O::Body> {
     UInt64 size;
     Statement *statements;
-  };
 
-  struct Type {
-    enum struct Kind {
-      Structure,
-      Enumerare,
-      Unistruct,
-    } kind;
-    union Value {
-      S::Structure *structure;
-    } value;
+    Bool Parse(Body *out);
   };
 
   /*
     O:TypePath -> '::' T:Modifier {d | Declaration.kind $ O:Type}
   */
-  struct TypePath {
+  struct TypePath : public Syntax<O::TypePath>{
     UInt8 pointerCount;
     enum struct Modifier {
       Mutable = (1 << 0),
     } modifiers;
-    O::Type type;
   };
-
-  /*
-    O:Initializer -> '{' [O:Accessor+|Literal] '}'
-  */
 }  // namespace O
 
 namespace S {
@@ -131,6 +123,16 @@ namespace S {
 }  // namespace S
 
 namespace O {
+  /*
+    O:Initializer -> '{' [O:Accessor+|Literal] '}'
+  */
+  struct Initializer {
+    union Object {
+      E::Literal literal;
+      S::Assign assignment;
+    } object;
+  };
+
   struct Parameter {
     UInt8 size;
     S::Datum items;
@@ -160,10 +162,11 @@ namespace O {
       Datum,
     } kind;
     union Value {
-      S::Structure *structure;
-      S::Procedure *procedure;
-      S::Datum *datum;
-    };
+      S::Structure *Structure;
+      S::Procedure *Procedure;
+      S::Datum *Datum;
+    } value;
+    O::Identifier identifier;
   };
 }  // namespace O
 
