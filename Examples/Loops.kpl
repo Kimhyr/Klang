@@ -16,7 +16,7 @@ procedure For(n :: UInt64) {
 label WHILE_START =:
 	c = Get;
 	if == EoF => jumpto WHILE_END;
-	
+
 
 	jumpto WHILE_START;
 label WHILE_END :=

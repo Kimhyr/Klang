@@ -1,15 +1,17 @@
 #include "Lexer.hpp"
 
-#include "../Utils/Char.hpp"
-#include "../Utils/Bit.hpp"
 #include <iostream>
 
+#include "../Utils/Bit.hpp"
+#include "../Utils/Char.hpp"
+
+
 Lexer::Lexer(ErrorBuffer *errBuf, const Char8 *source)
-  : errBuf(errBuf)
-  , index(-1)
-  , source(source)
-  , peek(source[0])
-  , point({1, 1}) {
+    : errBuf(errBuf)
+    , index(-1)
+    , source(source)
+    , peek(source[0])
+    , point({1, 1}) {
 }
 
 Void Lexer::Destroy() {
@@ -26,7 +28,8 @@ Lexer::Flag Lexer::Lex(Token *out) {
     do {
       this->buffer.Put(this->peek);
       this->Advance();
-    } while (Char::IsNumeric(this->peek) || Char::IsAlphabetic(this->peek) || this->peek == '_');
+    } while (Char::IsNumeric(this->peek) || Char::IsAlphabetic(this->peek) ||
+             this->peek == '_');
     if (this->buffer == "procedure") {
       out->value.Keyword = KeywordT::Procedure;
     } else if (this->buffer == "datum") {
@@ -49,14 +52,15 @@ Lexer::Flag Lexer::Lex(Token *out) {
       if (this->peek == '.') {
         if (out->value.Literal.kind == LiteralT::Kind::Float) {
           this->errBuf->Put(Error(
-            Error::Severity::Critical,
-            "Float literal token has too many dots."
+              Error::Severity::Critical,
+              "Float literal token has too many dots."
           ));
           Bit::Set(&this->flags, Lexer::Flag::Error);
           break;
         }
       }
-    } while (Char::IsNumeric(this->peek) || this->peek == '_' || this->peek == '.');
+    } while (Char::IsNumeric(this->peek) || this->peek == '_' ||
+             this->peek == '.');
     out->value.Literal.value = this->buffer.Flush();
   } else {
     switch (this->peek) {

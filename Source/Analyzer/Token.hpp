@@ -40,8 +40,8 @@ enum struct OperT {
   Equal = '=',
   Plus = '+',
   Minus = '-',
-  DColon = 256, // ::
-  RArrow, // ->
+  DColon = 256,  // ::
+  RArrow,        // ->
 };
 
 enum struct ModifierT {
@@ -89,18 +89,18 @@ struct Token {
 
   constexpr const Char8 *PunctuatorToStr() {
     switch (this->value.Punctuator) {
-      case PunctuatorT::OParen:
-        return "PunctuatorT::OParen";
-      case PunctuatorT::CParen:
-        return "PunctuatorT::CParen";
-      case PunctuatorT::OCurl:
-        return "PunctuatorT::OCurl";
-      case PunctuatorT::CCurl:
-        return "PunctuatorT::CCurl";
-      case PunctuatorT::Comma:
-        return "PunctuatorT::Comma";
-      case PunctuatorT::Semicolon:
-        return "PunctuatorT::Semicolon";
+    case PunctuatorT::OParen:
+      return "PunctuatorT::OParen";
+    case PunctuatorT::CParen:
+      return "PunctuatorT::CParen";
+    case PunctuatorT::OCurl:
+      return "PunctuatorT::OCurl";
+    case PunctuatorT::CCurl:
+      return "PunctuatorT::CCurl";
+    case PunctuatorT::Comma:
+      return "PunctuatorT::Comma";
+    case PunctuatorT::Semicolon:
+      return "PunctuatorT::Semicolon";
     }
   }
 

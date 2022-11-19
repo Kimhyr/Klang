@@ -12,7 +12,7 @@ struct Lexer {
   const Char8 *source;
   Char8 peek;
   Token::Point point;
-  enum struct Flag {
+  enum struct Flag : UInt8 {
     EoF = (1 << 0),
     Error = (1 << 1),
     Continue = (1 << 2),
