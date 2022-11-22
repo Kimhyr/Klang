@@ -1,76 +1,81 @@
+import Core:Structures...;
+import Core:Text...;
+import Core:Collections...;
+import Core:System:Bits...;
+
 structure Token {
-  span :: Span,
-  kind :: enumerare Kind {
+  Symbol::enumerare Symbol::UInt16 {
+    OParen {"("},
+    CParen {")"},
+    OCurl {"{"},
+    CCurl {"}"},
+    Comma {","},
+    Semicolon {";"},
+    Equal {"="},
+    Plus {"+"},
+    Minus {"-"},
+    Slosh {c"\\"},
+    At {"@"},
+    Question {"?"},
+
+    Procedure {256},
+    Datum,
+    Return,
+    DColon,  \\ ::
+    RArrow, \\ ->
+  },
+  span::Span,
+  kind::enumerare Kind {
     None,
     Identifier,
     Literal,
     Symbol,
   },
-  value :: unistruct Value {
-    Identifier :: Text,
-    Literal :: structure Literal {
-      kind :: enumerare Kind {
+  value::unistruct Value {
+    Identifier::Text,
+    Literal::structure Literal {
+      kind::enumerare Kind {
         Integer,
         Float,
         Symbol,
         Text,
       },
-      value :: unistruct Value {
-        Integer :: UInt64,
-        Float :: Float128,
-        Symbol :: Symbol,
-        Text :: Text,
+      value::unistruct Value {
+        Integer::UInt64,
+        Float::Float128,
+        Symbol::Token:Symbol,
+        Text::Text,
       },
-    },
-    Symbol :: enumerare Symbol :: UInt16 {
-      OParen = "(",
-      CParen = ")",
-      OCurl = "{",
-      CCurl = "}",
-      Comma = ",",
-      Semicolon = ";",
-      Equal = "=",
-      Plus = "+",
-      Minus = "-",
-      Slosh = "\\",
-      At = "@",
-      Question = "?",
-
-      Procedure = 256,
-      Datum,
-      Return,
-      DColon,  \\ ::
-      RArrow, \\ ->
     },
   },
 }
 
 structure Lexer {
-  errBuf :: String<Error>,
-  index :: UInt64,
-  source :: Text,
-  peek :: Symbol,
-  point :: Point,
-  flags :: enumerare Flag :: Bit8 {
-    EoF = (1 << 0),
-    Error = (1 << 1),
-    Continue = (1 << 2),
+  errBuf::String<Error>,
+  index::UInt64,
+  source::Text,
+  peek::Symbol,
+  point::Point,
+  flags::enumerare Flag::Bit8 {
+    EoF {1 << 0},
+    Error {1 << 1},
+    Continue {1 << 2},
   },
-  buffer :: Text,
+  buffer::Text,
 }
 
 implement Lexer {
   procedure !Create(
-    errBuf :: String<Error>, source :: Text
+    errBuf::String<Error>, source::Text
   ) -> Lexer {
     return Lexer {
-      .errBuf = errBuf,
-      .index = -1,
+      .errBuf = errBuf;
+      .index {-1},
       .source = source,
-      .peek = source[0],
-      .point = {
-        .x = 1,
-        .y = 1,
+      .peek {source[0},
+      .point {
+        .x {1},
+        .y {1},
       },
       .buffer = Text:Create,
     };
@@ -80,7 +85,7 @@ implement Lexer {
     .buffer.Destroy;
   }
 
-  @?procedure Lex(out :: @Token) {
+  @?procedure Lex(out::@Token) {
     'flags.ClearBits;
     loop 'peek.IsWhitespace {
       'Advance;
@@ -104,7 +109,7 @@ implement Lexer {
       }
       out'kind = Token:Kind:Symbol;
     }
-    elif  'peek.IsNumeric {
+    else 'peek.IsNumeric {
       out'kind = Token:Kind:Literal;
       loop \('peek.IsNumeric | 'peek == "_" | 'peek == ".") {
         if 'peek != "_" =>

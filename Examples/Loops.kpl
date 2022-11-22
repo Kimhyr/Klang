@@ -1,23 +1,27 @@
-procedure For(n :: UInt64) {
-  datum i :: ?UInt64 = 0;
-  label Start {
-    if i > n => goto End;
-    i += 1;
-    goto Start;
-  }
-  label End;
+import Core:System.Console;
 
-  \\ =: onward
-  \\ := backward
-  \\ :=: backward and onward
-  \\ {} scoped
+procedure Loop {
+	datum i::?UInt64 {0}
+	loop {
+		Console:WriteFormatted("i = {}", \(i));
+	}
+}
 
-  datum c :: U8;
-label WHILE_START =:
-	c = Get;
-	if == EoF => jumpto WHILE_END;
+procedure While(i::UInt64) {
+	loop \(i--) > 0 {
+		Console:WriteFormatted("i = {}", i);
+	}
+}
 
+procedure Do(i::UInt64) {
+	loop \(i-- > 0) {
+		Console:WriteFormatted("i = {}", i);
+	}
+}
 
-	jumpto WHILE_START;
-label WHILE_END :=
+procedure For(n::UInt64) {
+	datum i::?UInt64 {0}
+	loop \(i++) < n {
+		Console:WriteFormatted("i = {}", i);
+	}
 }

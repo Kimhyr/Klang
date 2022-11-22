@@ -1,18 +1,18 @@
 procedure Initiate {
-    datum uint8 :: U8 = 'A';
-    datum uint16 :: U16 = 13;
-    datum uint32 :: U32 = 230498430890923;
-    datum uint64 :: U64 -13;
+    datum uint8::UInt8 {'A'}
+    datum uint16::UInt16 {13}
+    datum uint32::UInt32 {9999_99999999999999988888888888888888_889}
+    datum uint64::UInt64 {-13}
 
-    datum int8 :: I8 = 'K';
-    datum int16 :: I16 = 7;
-    datum int32 :: I32 = 'sdfdsf';
-    datum int64 :: I64 = 2009320;
+    datum int8::Int8 {'K'}
+    datum int16::Int16 {7}
+    datum int32::Int32 {'sdfdsf'}
+    datum int64::Int64 {20093_20}
 
-    datum float32 :: F32 = 34234.2345;
-    datum float64 :: F64 = 0.4324234234234234234;
-    datum float128 :: F128 = .8989;
+    datum float32::Float32 34_234.2345;
+    datum float64::Float64 0.432423_423_4234234234;
+    datum float128::Float128 0._8989; 
 
-    datum string :: @I8 = 'balls';
-    datum char :: I8 = 's';
+    datum string::@Int8 {'balls'}
+    datum char::Int8 {'s'}
 }
