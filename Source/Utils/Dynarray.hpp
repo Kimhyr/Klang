@@ -14,7 +14,7 @@ struct Dynarray {
 
   Void Destroy();
 
-  Void Put();
+  Void Put(TData value);
   Void Find();
 
   constexpr TData *Last() {

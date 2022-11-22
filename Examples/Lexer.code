@@ -1,0 +1,181 @@
+structure Token {
+  span :: Span,
+  kind :: enumerare Kind {
+    None,
+    Identifier,
+    Literal,
+    Symbol,
+  },
+  value :: unistruct Value {
+    Identifier :: Text,
+    Literal :: structure Literal {
+      kind :: enumerare Kind {
+        Integer,
+        Float,
+        Symbol,
+        Text,
+      },
+      value :: unistruct Value {
+        Integer :: UInt64,
+        Float :: Float128,
+        Symbol :: Symbol,
+        Text :: Text,
+      },
+    },
+    Symbol :: enumerare Symbol :: UInt16 {
+      OParen = "(",
+      CParen = ")",
+      OCurl = "{",
+      CCurl = "}",
+      Comma = ",",
+      Semicolon = ";",
+      Equal = "=",
+      Plus = "+",
+      Minus = "-",
+      Slosh = "\\",
+      At = "@",
+      Question = "?",
+
+      Procedure = 256,
+      Datum,
+      Return,
+      DColon,  \\ ::
+      RArrow, \\ ->
+    },
+  },
+}
+
+structure Lexer {
+  errBuf :: String<Error>,
+  index :: UInt64,
+  source :: Text,
+  peek :: Symbol,
+  point :: Point,
+  flags :: enumerare Flag :: Bit8 {
+    EoF = (1 << 0),
+    Error = (1 << 1),
+    Continue = (1 << 2),
+  },
+  buffer :: Text,
+}
+
+implement Lexer {
+  procedure !Create(
+    errBuf :: String<Error>, source :: Text
+  ) -> Lexer {
+    return Lexer {
+      .errBuf = errBuf,
+      .index = -1,
+      .source = source,
+      .peek = source[0],
+      .point = {
+        .x = 1,
+        .y = 1,
+      },
+      .buffer = Text:Create,
+    };
+  }
+
+  @?procedure !Destroy {
+    .buffer.Destroy;
+  }
+
+  @?procedure Lex(out :: @Token) {
+    'flags.ClearBits;
+    loop 'peek.IsWhitespace {
+      'Advance;
+    }
+    out'span.start = 'point;
+    if 'peek.IsAlphabetic {
+      loop \('peek.IsAlphabetic | 'peek.IsNumeric | 'peek == "_") {
+        'buffer.Put('peek);
+        'Advance;
+      }
+      if 'buffer.Compare("procedure") =>
+        out'value.Symbol = Token:Value:Symbol:Procedure;
+      else 'buffer.Compare("datum") =>
+        out'value.Symbol = Token:Value:Symbol:Datum;
+      else 'buffer.Compare("return") =>
+        out'value.Symbol = Token:Value:Symbol:Return;
+      else {
+        out'kind = Token:Kind:Identifier;
+        out'value.Identifier = 'buffer.Flush;
+        jumpto END;
+      }
+      out'kind = Token:Kind:Symbol;
+    }
+    elif  'peek.IsNumeric {
+      out'kind = Token:Kind:Literal;
+      loop \('peek.IsNumeric | 'peek == "_" | 'peek == ".") {
+        if 'peek != "_" =>
+          'buffer.Put('peek);
+        'Advance;
+        if 'peek == "." =>
+          if out'value.Literal.kind == Token:Value:Literal:Kind.Float {
+            'errBuf'Put(Error:Create(
+              Error:Severity.Critical,
+              "Float literal token has too many dots."
+            ));
+            'flags.SetBit(Lexer:Flag:Error);
+            break;
+          }
+      }
+      out'value.Literal.value = 'buffer.Flush;
+    }
+    else {
+      out'kind = Token:Kind:Symbol;
+      switch 'peek {
+        case ":" =>
+          switch 'Peek(2) {
+            case ":" {
+              out'value.Symbol = Token:Value:Symbol:DColon;
+              jumpto DOUBLE;
+            }
+            case {}
+          }
+        case "-" =>
+          switch 'Peek(2) {
+            case ">" {
+              out'value.Symbol = Token:Value:Symbol.RArrow;
+              jumpto DOUBLE;
+            }
+            case {}
+          }
+        case c"\\" =>
+          switch 'PeeK(2) {
+            case c"\\" {
+              out'kind = Token:Kind:None;
+              loop \('peek != "\n") {
+                'Advance;
+                if 'peek == "\0" =>
+                  jumpto END;
+              }
+              'flags.Set(Lexer::Flag:Continue);
+              jumpto END;
+            }
+            case {}
+          }
+        case "(" | ")" | "{" | "}" | "," | ";" | "=" | "+" | "@" | "?" {
+          out'kind = Token:Kind:Symbol;
+          out'value.Symbol = ('peek :: Token:Value:Symbol);
+          jumpto SINGLE;
+        }
+        case {
+          out'kind = TOken:Kind:None;
+          'flags.Set(Lexer:Flag:Error);
+          jumpto SINGLE;
+        }
+      }
+    label DOUBLE :=
+      'Advance;
+    label SINGLE :=
+      'Advance;
+    }
+  label END :=
+    out'span.end = 'point;
+    --out'span.end.x;
+    if 'peek == 0 =>
+      Bits::Set(@'flags, Lexer:Flag.EoF);
+    return 'flags;
+  }
+}

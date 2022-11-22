@@ -2,20 +2,20 @@
 
 #include <sstream>
 
-const Char8 *LiteralT::ToStr() {
+const Char8 *T::Literal::ToStr() {
   std::stringstream ss;
   ss << "LiteralT{flags=" << (UInt8)this->flags;
   switch (this->kind) {
-  case LiteralT::Kind::Integer:
+  case T::Literal::Kind::Integer:
     ss << ",Integer,";
     break;
-  case LiteralT::Kind::Float:
+  case T::Literal::Kind::Float:
     ss << ",Float,";
     break;
-  case LiteralT::Kind::Character:
+  case T::Literal::Kind::Character:
     ss << ",Character,";
     break;
-  case LiteralT::Kind::String:
+  case T::Literal::Kind::String:
     ss << ",String,";
     break;
   }
@@ -32,24 +32,8 @@ const Char8 *Token::Point::ToStr() {
 const Char8 *Token::ToStr() {
   std::stringstream ss;
   ss << "Token{start=" << this->start.ToStr()
-     << ", end=" << this->end.ToStr() << ",kind=" << this->KindToStr()
-     << ",value=";
-  switch (this->kind) {
-  case Token::Kind::None:
-    ss << "None";
-  case Token::Kind::Identifier:
-    ss << this->value.Identifier;
-  case Token::Kind::Keyword:
-    ss << this->KeywordToStr();
-  case Token::Kind::Literal:
-    ss << this->value.Literal.ToStr();
-  case Token::Kind::Punctuator:
-    ss << this->PunctuatorToStr();
-  case Token::Kind::Oper:
-    ss << this->OperToStr();
-  case Token::Kind::Modifier:
-    ss << this->ModifierToStr();
-  }
+     << ", end=" << this->end.ToStr();  // << ",kind=" << this->KindToStr()
+                                        // << ",value=";
   ss << "}";
   return ss.str().c_str();
 }

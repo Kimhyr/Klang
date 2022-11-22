@@ -6,7 +6,6 @@
 #include "Lexer.hpp"
 #include "Syntax.hpp"
 
-
 struct Parser {
   ErrorBuffer *errBuf;
   Lexer lexer;
@@ -21,16 +20,17 @@ struct Parser {
     Procedure,
     Datum,
   } state;
-  Dynarray<State> stateBuffer; // TODO Give this set a static cardinality.
+  Dynarray<State> stateBuffer;  // TODO Give this set a static cardinality.
   Token token;
 
   Parser(ErrorBuffer *errBuf, const Char8 *source);
 
-  Void Parse();
+  template<typename TStatement>
+  Bool Parse(TStatement *out);
 
-  Void PutDeclaration(O::Declaration::Kind kind);
+  Void Destroy();
 
-  Void Advance();
+  Bool Advance();
 };
 
 #endif  // ANALYZER_PARSER_HPP

@@ -5,7 +5,6 @@
 #include "../Utils/Bit.hpp"
 #include "../Utils/Char.hpp"
 
-
 Lexer::Lexer(ErrorBuffer *errBuf, const Char8 *source)
     : errBuf(errBuf)
     , index(-1)
@@ -31,17 +30,17 @@ Lexer::Flag Lexer::Lex(Token *out) {
     } while (Char::IsNumeric(this->peek) || Char::IsAlphabetic(this->peek) ||
              this->peek == '_');
     if (this->buffer == "procedure") {
-      out->value.Keyword = T::Keyword::Procedure;
+      out->value.Symbol = T::Symbol::Procedure;
     } else if (this->buffer == "datum") {
-      out->value.Keyword = T::Keyword::Datum;
+      out->value.Symbol = T::Symbol::Datum;
     } else if (this->buffer == "return") {
-      out->value.Keyword = T::Keyword::Return;
+      out->value.Symbol = T::Symbol::Return;
     } else {
       out->kind = Token::Kind::Identifier;
       out->value.Identifier = this->buffer.Flush();
       goto END;
     }
-    out->kind = Token::Kind::Keyword;
+    out->kind = Token::Kind::Symbol;
   } else if (Char::IsNumeric(this->peek)) {
     out->kind = Token::Kind::Literal;
     do {
@@ -63,39 +62,8 @@ Lexer::Flag Lexer::Lex(Token *out) {
              this->peek == '.');
     out->value.Literal.value = this->buffer.Flush();
   } else {
+    out->kind = Token::Kind::Symbol;
     switch (this->peek) {
-    case ':':
-      switch (this->Peek(2)) {
-      case ':':
-        out->kind = Token::Kind::Oper;
-        out->value.Oper = T::Oper::DColon;
-        goto DOUBLE;
-      default:
-        break;
-      }
-    case '(':
-    case ')':
-    case '{':
-    case '}':
-    case ',':
-    case ';':
-      out->kind = Token::Kind::Punctuator;
-      out->value.Punctuator = (T::Punctuator)this->peek;
-      goto SINGLE;
-    case '-':
-      switch (this->Peek(2)) {
-      case '>':
-        out->kind = Token::Kind::Oper;
-        out->value.Oper = T::Oper::RArrow;
-        goto DOUBLE;
-      default:
-        break;
-      }
-    case '=':
-    case '+':
-      out->kind = Token::Kind::Oper;
-      out->value.Oper = (T::Oper)this->peek;
-      goto SINGLE;
     case '\\':
       switch (this->Peek(2)) {
       case '\\':
@@ -112,16 +80,39 @@ Lexer::Flag Lexer::Lex(Token *out) {
       default:
         break;
       }
+    case ':':
+      switch (this->Peek(2)) {
+      case ':':
+        out->value.Symbol = T::Symbol::DColon;
+        goto DOUBLE;
+      default:
+        break;
+      }
+    case '-':
+      switch (this->Peek(2)) {
+      case '>':
+        out->kind = Token::Kind::Symbol;
+        out->value.Symbol = T::Symbol::RArrow;
+        goto DOUBLE;
+      default:
+        break;
+      }
+    case '(':
+    case ')':
+    case '{':
+    case '}':
+    case ',':
+    case ';':
+    case '=':
+    case '+':
     case '@':
     case '?':
-      out->kind = Token::Kind::Modifier;
-      out->value.Modifier = (T::Modifier)this->peek;
+      out->value.Symbol = (T::Symbol)this->peek;
       goto SINGLE;
     default:
       out->kind = Token::Kind::None;
       Bit::Set(&this->flags, Lexer::Flag::Error);
       goto SINGLE;
-      break;
     }
   DOUBLE:
     this->Advance();

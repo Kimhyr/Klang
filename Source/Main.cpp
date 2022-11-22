@@ -3,7 +3,6 @@
 
 // #include "Analyzer/Lexer.hpp"
 
-
 // Int32 Initiate(const Int32 argc, const Char8 **argv) {
 //   if (argc <= 1) {
 //     return 1;

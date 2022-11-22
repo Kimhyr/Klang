@@ -5,11 +5,6 @@
 #include "../Core.hpp"
 #include "Token.hpp"
 
-template<typename TOut>
-struct Syntax {
-  Bool Parse(TOut *out);
-};
-
 namespace O {
   struct Expression {};
 
@@ -24,28 +19,24 @@ namespace O {
   /*
     O:Identifier -> [_|A-Z|a-z][_|A-Z|a-z|0-9]*
   */
-  struct Identifier : public Syntax<O::Identifier> {
+  struct Identifier {
     enum struct Flag {
     } flags;
     const Char8 *identifier;
-
-    Bool Parse(Identifier *out);
   };
 
   /*
     O:Body -> '{' Statement* '}'
   */
-  struct Body : public Syntax<O::Body> {
+  struct Body {
     UInt64 size;
     Statement *statements;
-
-    Bool Parse(Body *out);
   };
 
   /*
     O:TypePath -> '::' T:Modifier {d | Declaration.kind $ O:Type}
   */
-  struct TypePath : public Syntax<O::TypePath>{
+  struct TypePath {
     UInt8 pointerCount;
     enum struct Modifier {
       Mutable = (1 << 0),
@@ -167,6 +158,8 @@ namespace O {
       S::Datum *Datum;
     } value;
     O::Identifier identifier;
+
+    Declaration(S::Procedure *value);
   };
 }  // namespace O
 

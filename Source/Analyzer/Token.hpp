@@ -22,33 +22,25 @@ namespace T {
     const Char8 *ToStr();
   };
 
-  enum struct Keyword {
-    Procedure,
-    Datum,
-    Return,
-  };
-
-  enum struct Punctuator {
+  enum struct Symbol {
     OParen = '(',
     CParen = ')',
     OCurl = '{',
     CCurl = '}',
     Comma = ',',
     Semicolon = ';',
-  };
-
-  enum struct Oper {
+    Colon = ':',
     Equal = '=',
     Plus = '+',
     Minus = '-',
-    DColon = 256,  // ::
-    RArrow,        // ->
-  };
-
-  enum struct Modifier {
     Slosh = '\\',
     At = '@',
     Question = '?',
+    Procedure = 256,
+    Datum,
+    Return,
+    DColon,  // ::
+    RArrow,  // ->
   };
 }  // namespace T
 
@@ -63,93 +55,19 @@ struct Token {
   enum struct Kind {
     None,
     Identifier,
-    Keyword,
     Literal,
-    Punctuator,
-    Oper,
-    Modifier,
+    Symbol
   } kind;
   union Value {
     const Char8 *Identifier;
-    T::Keyword Keyword;
     T::Literal Literal;
-    T::Punctuator Punctuator;
-    T::Oper Oper;
-    T::Modifier Modifier;
+    T::Symbol Symbol;
   } value;
 
-  constexpr const Char8 *KeywordToStr() {
-    switch (this->value.Keyword) {
-    case T::Keyword::Procedure:
-      return "KeywordT::Procedure";
-    case T::Keyword::Datum:
-      return "KeywordT::Datum";
-    case T::Keyword::Return:
-      return "KeywordT::Return";
-    }
+  constexpr const Char8 *SymbolToStr() {
+    return nil;
   }
 
-  constexpr const Char8 *PunctuatorToStr() {
-    switch (this->value.Punctuator) {
-    case T::Punctuator::OParen:
-      return "PunctuatorT::OParen";
-    case T::Punctuator::CParen:
-      return "PunctuatorT::CParen";
-    case T::Punctuator::OCurl:
-      return "PunctuatorT::OCurl";
-    case T::Punctuator::CCurl:
-      return "PunctuatorT::CCurl";
-    case T::Punctuator::Comma:
-      return "PunctuatorT::Comma";
-    case T::Punctuator::Semicolon:
-      return "PunctuatorT::Semicolon";
-    }
-  }
-
-  constexpr const Char8 *OperToStr() {
-    switch (this->value.Oper) {
-    case T::Oper::Equal:
-      return "OperT::Equal";
-    case T::Oper::Plus:
-      return "OperT::Plus";
-    case T::Oper::Minus:
-      return "OperT::Minus";
-    case T::Oper::DColon:
-      return "OperT::DColon";
-    case T::Oper::RArrow:
-      return "OperT::RArrow";
-    }
-  }
-
-  constexpr const Char8 *ModifierToStr() {
-    switch (this->value.Modifier) {
-    case T::Modifier::Slosh:
-      return "ModifierT::Slosh";
-    case T::Modifier::At:
-      return "ModifierT::At";
-    case T::Modifier::Question:
-      return "ModifierT::Question";
-    }
-  }
-
-  constexpr const Char8 *KindToStr() {
-    switch (this->kind) {
-    case Kind::None:
-      return "Token::Kind::None";
-    case Kind::Identifier:
-      return "Token::Kind::Identifier";
-    case Kind::Keyword:
-      return "Token::Kind::Keyword";
-    case Kind::Literal:
-      return "Token::Kind::Literal";
-    case Kind::Punctuator:
-      return "Token::Kind::Punctuator";
-    case Kind::Oper:
-      return "Token::Kind::Oper";
-    case Kind::Modifier:
-      return "Token::Kind::Modifier";
-    }
-  }
   const Char8 *PointToStr();
   const Char8 *ToStr();
 };

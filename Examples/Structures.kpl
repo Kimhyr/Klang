@@ -16,9 +16,25 @@ structure Token {
     },
     value :: unistruct Value {
         Identifier :: @UInt8,
-        Keyword :: UInt8,
+        Keyword :: enumerare Keyword {
+            Structure,
+            Enumerare,
+            Unistruct,
+            Procedure,
+            Datum,
+            Label,
+            Return,
+            Switch,
+            Jumpto,
+            If,
+        },
         Literal :: structure Literal {
-            kind :: UInt8,
+            kind :: enumerare Kind {
+                Integer,
+                Float,
+                Character,
+                String,
+            },
             value :: unistruct Value {
                 Integer :: UInt64,
                 Float :: Float128,
@@ -32,8 +48,42 @@ structure Token {
     },
 }
 
+implement Token:Value:Literal {
+    procedure !Create(
+        kind :: Token:Value:Literal:Kind,
+        value :: Token:Value:Literal:Value
+    ) -> Token:Value:Literal {
+        return Token:Value:Literal {
+            .kind = kind,
+            .value = value,
+        };
+    }
+}
+
+implement Token:Span:Point {
+    procedure !Create(
+        row :: UInt64, column :: UInt64
+    ) -> Token:Span:Point {
+        return Token:Span:Point {
+            .row = row,
+            .column = column,
+        };
+    }
+}
+
+implement Token:Span {
+    procedure !Create(
+        from :: Token:Point, to :: Token:Point
+    ) -> Token:Span {
+        return Token:Span {
+            .from = from,
+            .to = to,
+        };
+    }
+}
+
 implement Token {
-    !procedure Create(
+    @?procedure !Create(
         span :: Toen:Span, kind :: Token:Kind,
         value :: Token:Value
     ) -> Token {
@@ -44,7 +94,7 @@ implement Token {
         };
     }
 
-    !procedure @?Destroy {
+    @?procedure !Destroy {
         if 'kind == Token:Kind:Identifier
             => jumpto IDENTIFIER;
         if 'kind == Token:Kind:Literal & 'value.Literal.kind == Token:Value:Literal:Kind:String
