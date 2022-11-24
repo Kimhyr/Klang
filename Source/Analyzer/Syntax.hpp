@@ -39,7 +39,7 @@ namespace O {
   struct TypePath {
     UInt8 pointerCount;
     enum struct Modifier {
-      Mutable = (1 << 0),
+      Mutable = 1 << 0,
     } modifiers;
   };
 }  // namespace O

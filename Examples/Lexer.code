@@ -1,49 +1,48 @@
 import Core:Structures...;
 import Core:Text...;
 import Core:Collections...;
-import Core:System:Bits...;
+import Core:Bits...;
 
-structure Token {
-  Symbol::enumerare Symbol::UInt16 {
-    OParen {"("},
-    CParen {")"},
-    OCurl {"{"},
-    CCurl {"}"},
-    Comma {","},
-    Semicolon {";"},
-    Equal {"="},
-    Plus {"+"},
-    Minus {"-"},
-    Slosh {c"\\"},
-    At {"@"},
-    Question {"?"},
-
-    Procedure {256},
-    Datum,
-    Return,
-    DColon,  \\ ::
-    RArrow, \\ ->
-  },
-  span::Span,
-  kind::enumerare Kind {
+structure !Token {
+  span::!Span,
+  kind::enumerare !Kind {
     None,
     Identifier,
     Literal,
     Symbol,
   },
-  value::unistruct Value {
+  value::unistruct !Value {
     Identifier::Text,
-    Literal::structure Literal {
-      kind::enumerare Kind {
+    Literal::structure !Literal {
+      kind::enumerare !Kind {
         Integer,
         Float,
         Symbol,
         Text,
       },
-      value::unistruct Value {
+      value::unistruct !Value {
         Integer::UInt64,
         Float::Float128,
-        Symbol::Token:Symbol,
+        Symbol::enumerare !Symbol::UInt16 {
+          OParen = "(",
+          CParen = ")",
+          OCurl = "{",
+          CCurl = "}",
+          Comma = ",",
+          Semicolon ";",
+          Equal = "=",
+          Plus = "+",
+          Minus = "-",
+          Slosh = c"\\",
+          At = "@",
+          Question = "?",
+
+          Procedure = 256,
+          Datum,
+          Return,
+          DColon,  \\ ::
+          RArrow, \\ ->
+        },
         Text::Text,
       },
     },
@@ -56,10 +55,10 @@ structure Lexer {
   source::Text,
   peek::Symbol,
   point::Point,
-  flags::enumerare Flag::Bit8 {
-    EoF {1 << 0},
-    Error {1 << 1},
-    Continue {1 << 2},
+  flags::enumerare !Flag::Bit8 {
+    EoF = 1 << 0,
+    Error = 1 << 1,
+    Continue = 1 << 2,
   },
   buffer::Text,
 }
@@ -69,10 +68,10 @@ implement Lexer {
     errBuf::String<Error>, source::Text
   ) -> Lexer {
     return Lexer {
-      .errBuf = errBuf;
+      .errBuf = errBuf,
       .index {-1},
       .source = source,
-      .peek {source[0},
+      .peek {source[0]},
       .point {
         .x {1},
         .y {1},
@@ -81,12 +80,12 @@ implement Lexer {
     };
   }
 
-  @?procedure !Destroy {
+  procedure !Destroy @?{
     .buffer.Destroy;
   }
 
-  @?procedure Lex(out::@Token) {
-    'flags.ClearBits;
+  procedure Lex(out::@Token) @?{
+    'flags.Clear;
     loop 'peek.IsWhitespace {
       'Advance;
     }
@@ -121,7 +120,7 @@ implement Lexer {
               Error:Severity.Critical,
               "Float literal token has too many dots."
             ));
-            'flags.SetBit(Lexer:Flag:Error);
+            'flags.OR(Lexer:Flag:Error);
             break;
           }
       }
@@ -166,7 +165,7 @@ implement Lexer {
           jumpto SINGLE;
         }
         case {
-          out'kind = TOken:Kind:None;
+          out'kind = Token:Kind:None;
           'flags.Set(Lexer:Flag:Error);
           jumpto SINGLE;
         }
@@ -180,7 +179,7 @@ implement Lexer {
     out'span.end = 'point;
     --out'span.end.x;
     if 'peek == 0 =>
-      Bits::Set(@'flags, Lexer:Flag.EoF);
+      'flags.OR(Lexer:Flag.EoF);
     return 'flags;
   }
 }

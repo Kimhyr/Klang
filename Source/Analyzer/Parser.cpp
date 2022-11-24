@@ -34,11 +34,10 @@ Bool Parser::Parse(S::Procedure *out) {
     // Error
   }
 
-  if (!this->Advance()) {
-    // Error
-  }
-
   for (UInt8 i = 0; i < 3; ++i) {
+    if (!this->Advance()) {
+      // Error
+    }
     switch (this->token.kind) {
     case Token::Kind::Symbol:
       switch (this->token.value.Symbol) {
