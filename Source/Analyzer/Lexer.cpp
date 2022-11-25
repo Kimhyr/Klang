@@ -31,8 +31,8 @@ Lexer::Flag Lexer::Lex(Token *out) {
              this->peek == '_');
     if (this->buffer == "procedure") {
       out->value.Symbol = T::Symbol::Procedure;
-    } else if (this->buffer == "datum") {
-      out->value.Symbol = T::Symbol::Datum;
+    } else if (this->buffer == "let") {
+      out->value.Symbol = T::Symbol::Let;
     } else if (this->buffer == "return") {
       out->value.Symbol = T::Symbol::Return;
     } else {

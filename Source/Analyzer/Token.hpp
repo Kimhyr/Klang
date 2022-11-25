@@ -37,7 +37,7 @@ namespace T {
     At = '@',
     Question = '?',
     Procedure = 256,
-    Datum,
+    Let,
     Return,
     DColon,  // ::
     RArrow,  // ->
