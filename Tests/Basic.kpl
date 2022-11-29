@@ -1,8 +1,5 @@
-procedure Initiate( \\ THIS IS A COOL COMMENT
-	argc::Int32, argv::@@Int8
-) -> Int32 {
-	let ?x::Int32 = 7;
+procedure Initiate(argc::Int32, argv::@@UInt8) -> Int32 {
+	let x?::Int32 = 7;
 	x = 21 + 14;
 	return x;
 }
-\\ THIS IS A COOL COMMENT

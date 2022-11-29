@@ -1,8 +1,0 @@
-{
-  "files.associations": {
-    "system_error": "cpp",
-    "type_traits": "cpp",
-    "xtr1common": "cpp",
-    "xiosbase": "cpp"
-  }
-}

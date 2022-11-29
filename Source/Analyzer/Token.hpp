@@ -1,75 +1,116 @@
-#pragma once
-#ifndef ANALYER_TOKEN_HPP
-#define ANALYER_TOKEN_HPP
+#ifndef COMPILER_ANALYZER_TOKEN_HPP
+#define COMPILER_ANALYZER_TOKEN_HPP
 
-#include "../Core.hpp"
+#include "../Definitions.hpp
 
-namespace T {
-  struct Literal {
-    enum struct Flag : UInt8 {
-      Signed = (1 << 0),
-      // (1 << 1)
-      Cooked = (1 << 2),
-    } flags;
-    enum struct Kind : UInt8 {
-      Integer,
-      Float,
-      Character,
-      String,
-    } kind;
-    const Char8 *value;
+namespace Analyzer {
+    class Token {
+    public: // Types
+        struct Point {
+            UInt64 Line;
+            UInt64 Column;
+        };
 
-    const Char8 *ToStr();
-  };
+        enum class Symbol {
+            None = 0,
 
-  enum struct Symbol {
-    OParen = '(',
-    CParen = ')',
-    OCurl = '{',
-    CCurl = '}',
-    Comma = ',',
-    Semicolon = ';',
-    Colon = ':',
-    Equal = '=',
-    Plus = '+',
-    Minus = '-',
-    Slosh = '\\',
-    At = '@',
-    Question = '?',
-    Procedure = 256,
-    Let,
-    Return,
-    DColon,  // ::
-    RArrow,  // ->
-  };
-}  // namespace T
+            // Punctuates
+            OParen = '(',
+            CParen = ')',
+            OBrace = '{',
+            CBrace = '}',
+            Comma = ',',
+            Semicolon = ';',
 
-struct Token {
-  struct Point {
-    UInt64 row;
-    UInt64 column;
+            // Operators
+            Equal = '=',
+            Plus = '+',
 
-    const Char8 *ToStr();
-  } start;
-  Token::Point end;
-  enum struct Kind {
-    None,
-    Identifier,
-    Literal,
-    Symbol
-  } kind;
-  union Value {
-    const Char8 *Identifier;
-    T::Literal Literal;
-    T::Symbol Symbol;
-  } value;
+            // Modifiers
+            Question = '?',
+            At = '@',
 
-  constexpr const Char8 *SymbolToStr() {
-    return nil;
-  }
+            // Words
+            Identity = 256,
+            Procedure,
+            Let,
+            Return,
 
-  const Char8 *PointToStr();
-  const Char8 *ToStr();
-};
+            // Literals
+            Integer,
+            Real,
+            Symbol,
+            Text,
 
-#endif  // ANALYER_TOKEN_HPP
+            // Punctuates
+
+            // Operators
+            Cast, // ::
+
+            // Modifiers
+
+        };
+
+        // I know I can make the type into "Char8 *".
+        union Value {
+            Char8 None;
+            Char8 *Identity;
+            Char8 *Integer;
+            Char8 *Real;
+            Char8 Symbol;
+            Char8 *Text;
+        };
+
+    public: // Constructors and destructors
+        constexpr
+        Token() = default;
+
+        explicit constexpr
+        Token(Token::Point start)
+                : start(start) {}
+
+        inline
+        Void Destroy();
+
+    public: // Properties
+        inline constexpr
+        const Token::Point *GetStart()
+        const noexcept { return &this->start; }
+
+        inline constexpr
+        Void SetStart(Token::Point start)
+        const noexcept { this->start = start; }
+
+        inline constexpr
+        const Token::Point *GetEnd()
+        const noexcept { return &this->end; }
+
+        inline constexpr
+        Void SetEnd(Token::Point end)
+        const noexcept { this->end = end; }
+
+        inline constexpr
+        Token::Symbol GetSymbol()
+        const noexcept { return &this->symbol; }
+
+        inline constexpr
+        Void SetSymbol(Token::Symbol symbol)
+        const noexcept { this->symbol = symbol; }
+
+        inline constexpr
+        const Token::Value *GetValue()
+        const noexcept { return &this->value; }
+
+        inline constexpr
+        Void SetValue(Token::Value value)
+        const noexcept { this->value = value; }
+
+    private: // Members
+        Token::Point start;
+        Token::Point end;
+        Token::Symbol symbol;
+        Token::Value value;
+    };
+} // Analyzer
+
+#endif // COMPILER_ANALYZER_TOKEN_HPP

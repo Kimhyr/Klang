@@ -1,139 +1,93 @@
 #include "Lexer.hpp"
 
-#include <iostream>
+#include "../Utility/Char.hpp"
+#include "../Utility/Dynar.hpp"
+#include "../Utility/Text.hpp"
 
-#include "../Utils/Bit.hpp"
-#include "../Utils/Char.hpp"
+namespace Analyzer {
+    using namespace Utility;
 
-Lexer::Lexer(ErrorBuffer *errBuf, const Char8 *source)
-    : errBuf(errBuf)
-    , index(-1)
-    , source(source)
-    , peek(source[0])
-    , point({1, 1}) {
-}
-
-Void Lexer::Destroy() {
-  this->buffer.Destroy();
-}
-
-Lexer::Flag Lexer::Lex(Token *out) {
-  Bit::Clear(&this->flags);
-  while (Char::IsWhitespace(this->peek)) {
-    this->Advance();
-  }
-  out->start = this->point;
-  if (Char::IsAlphabetic(this->peek)) {
-    do {
-      this->buffer.Put(this->peek);
-      this->Advance();
-    } while (Char::IsNumeric(this->peek) || Char::IsAlphabetic(this->peek) ||
-             this->peek == '_');
-    if (this->buffer == "procedure") {
-      out->value.Symbol = T::Symbol::Procedure;
-    } else if (this->buffer == "let") {
-      out->value.Symbol = T::Symbol::Let;
-    } else if (this->buffer == "return") {
-      out->value.Symbol = T::Symbol::Return;
-    } else {
-      out->kind = Token::Kind::Identifier;
-      out->value.Identifier = this->buffer.Flush();
-      goto END;
+    Void Lexer::Destroy() {
+        delete[] this->source;
     }
-    out->kind = Token::Kind::Symbol;
-  } else if (Char::IsNumeric(this->peek)) {
-    out->kind = Token::Kind::Literal;
-    do {
-      if (this->peek != '_') {
-        this->buffer.Put(this->peek);
-      }
-      this->Advance();
-      if (this->peek == '.') {
-        if (out->value.Literal.kind == T::Literal::Kind::Float) {
-          this->errBuf->Put(Error(
-              Error::Severity::Critical,
-              "Float literal token has too many dots."
-          ));
-          Bit::Set(&this->flags, Lexer::Flag::Error);
-          break;
+
+    Lexer::Flag Lexer::Lex(Token *out) {
+        while (Char::IsWhitespace(this->peek)) {
+            this->Advance();
         }
-      }
-    } while (Char::IsNumeric(this->peek) || this->peek == '_' ||
-             this->peek == '.');
-    out->value.Literal.value = this->buffer.Flush();
-  } else {
-    out->kind = Token::Kind::Symbol;
-    switch (this->peek) {
-    case '\\':
-      switch (this->Peek(2)) {
-      case '\\':
-        out->kind = Token::Kind::None;
-        do {
-          this->Advance();
-          if (this->peek == '\0') {
-            Bit::Set(&this->flags, Lexer::Flag::EoF);
-            goto END;
-          }
-        } while (this->peek != '\n');
-        Bit::Set(&this->flags, Lexer::Flag::Continue);
-        goto END;
-      default:
-        break;
-      }
-    case ':':
-      switch (this->Peek(2)) {
-      case ':':
-        out->value.Symbol = T::Symbol::DColon;
-        goto DOUBLE;
-      default:
-        break;
-      }
-    case '-':
-      switch (this->Peek(2)) {
-      case '>':
-        out->kind = Token::Kind::Symbol;
-        out->value.Symbol = T::Symbol::RArrow;
-        goto DOUBLE;
-      default:
-        break;
-      }
-    case '(':
-    case ')':
-    case '{':
-    case '}':
-    case ',':
-    case ';':
-    case '=':
-    case '+':
-    case '@':
-    case '?':
-      out->value.Symbol = (T::Symbol)this->peek;
-      goto SINGLE;
-    default:
-      out->kind = Token::Kind::None;
-      Bit::Set(&this->flags, Lexer::Flag::Error);
-      goto SINGLE;
-    }
-  DOUBLE:
-    this->Advance();
-  SINGLE:
-    this->Advance();
-  }
-END:
-  out->end = this->point;
-  --out->end.column;
-  if (this->peek == '\0') {
-    Bit::Set(&this->flags, Lexer::Flag::EoF);
-  }
-  return this->flags;
-}
 
-Void Lexer::Advance() {
-  ++this->index;
-  if (this->peek == '\n') {
-    ++this->point.row;
-    this->point.column = 0;
-  }
-  ++this->point.column;
-  this->peek = this->Peek();
-}
+        out->SetStart(this->point);
+        if (Char::IsAlphabetic(this->peek) || this->peek == '_') {
+            Dynar<Char8> buf;
+            do {
+                buf.Put(this->peek);
+                this->Advance();
+            } while (Char::IsNumeric(this->peek) || Char::IsAlphabetic(this->peek) || this->peek == '_');
+            buf.Put('\0');
+            Char8 *flush = buf.Flush();
+            if (Text::Compare(flush, "procedure") == 0) {
+                out->SetSymbol(Token::Symbol::Procedure);
+            }
+            else if (Text::Compare(flush, "let") == 0) {
+                out->SetSymbol(Token::Symbol::Let);
+            }
+            else if (Text::Compare(flush, "return") == 0) {
+                out->SetSymbol(Token::Symbol::Return);
+            }
+            else {
+                out->SetSymbol(Token::Symbol::Identity);
+                out->SetValue({.Identity = flush});
+            }
+        }
+        else if (Char::IsNumeric(this->peek)) {
+//            Dynar<Char8> buf;
+//            switch (this->Peek(2)) {
+//            case 'x': case 'X': case 'h': case 'H':
+//                // Lex hexidecimal
+//            default:
+//                out->SetSymbol(Token::Symbol::Integer);
+//
+//            }
+//            do {
+//                if (this->peek != '_') {
+//                    buf.Put(this->peek);
+//                }
+//                this->Advance();
+//                if (this->peek == '.') {
+//                    if (out->GetSymbol() == Token::Symbol::Real) {
+//                        throw Error(
+//                                this, Error::Severity::Error,
+//                                0, "Real literal token has too many dots."
+//                        );
+//                    }
+//                    out->SetSymbol(Token::Symbol::Real);
+//                }
+//            } while (this->peek == '_' || Char::IsNumeric(this->peek));
+//            Char8 *flush = buf.Flush();
+//            if (out->GetSymbol() == Token::Symbol::Integer) {
+//                out->SetValue({.Integer = flush});
+//            } else {
+//                out->SetValue({.Real = flush});
+//            }
+        }
+        else {
+            switch (this->peek) {
+            case '-':
+            default:
+                out->SetSymbol(this->peek);
+                break;
+            }
+            this->Advance();
+        SINGLE:
+            this->Advance();
+        }
+
+    END:
+        out->SetEnd(this->point);
+        out->GetEnd()->Column--;
+        if (this->peek == '\0') {
+            this->flags |= Lexer::Flag::End;
+        }
+        return this->flags;
+    }
+} // Analyzer
