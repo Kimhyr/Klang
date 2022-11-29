@@ -1,7 +1,7 @@
 #ifndef KPLC_ANALYZER_TOKEN_HPP
 #define KPLC_ANALYZER_TOKEN_HPP
 
-#include "../Definitions.hpp
+#include "../Definitions.hpp"
 
 namespace Analyzer {
     class Token {
@@ -9,6 +9,10 @@ namespace Analyzer {
         struct Point {
             UInt64 Line;
             UInt64 Column;
+
+            constexpr
+            Void Set(Token::Point point)
+            noexcept {  *this = point; }
         };
 
         enum class Symbol {
@@ -40,7 +44,7 @@ namespace Analyzer {
             Integer,
             Real,
             Symbol,
-            Text,
+            String,
 
             // Punctuates
 
@@ -58,14 +62,13 @@ namespace Analyzer {
             Char8 *Integer;
             Char8 *Real;
             Char8 Symbol;
-            Char8 *Text;
+            Char8 *String;
         };
 
     public: // Constructors and destructors
-        constexpr
         Token() = default;
 
-        explicit constexpr
+        explicit
         Token(Token::Point start)
                 : start(start) {}
 
@@ -78,7 +81,7 @@ namespace Analyzer {
 
         constexpr
         Void SetStart(Token::Point start)
-        const noexcept { this->start = start; }
+        noexcept { this->start= start; }
 
         constexpr
         const Token::Point *GetEnd()
@@ -86,15 +89,15 @@ namespace Analyzer {
 
         constexpr
         Void SetEnd(Token::Point end)
-        const noexcept { this->end = end; }
+        noexcept { this->end = end; }
 
         constexpr
         Token::Symbol GetSymbolCopy()
-        const noexcept { return &this->symbol; }
+        const noexcept { return this->symbol; }
 
         constexpr
         Void SetSymbol(Token::Symbol symbol)
-        const noexcept { this->symbol = symbol; }
+        noexcept { this->symbol = symbol; }
 
         constexpr
         const Token::Value *GetValue()
@@ -102,7 +105,7 @@ namespace Analyzer {
 
         constexpr
         Void SetValue(Token::Value value)
-        const noexcept { this->value = value; }
+        noexcept { this->value = value; }
 
     private: // Members
         Token::Point start;

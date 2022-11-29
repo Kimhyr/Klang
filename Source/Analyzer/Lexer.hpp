@@ -1,44 +1,54 @@
 #ifndef KPLC_ANALYZER_LEXER_HPP
 #define KPLC_ANALYZER_LEXER_HPP
 
+#include "../Utility/Char.hpp"
+#include "../Utility/Dynar.hpp"
 #include "../Definitions.hpp"
 #include "../Module.hpp"
 #include "Token.hpp"
 
 namespace Analyzer {
-    class Lexer : Compiler::Module {
-    public:
+    using namespace Utility;
+
+    class Lexer : public Compiler::Module {
+    public: // Types
         enum Flag : Bit8 {
+            None = 0,
             End = 1 << 0,
             Continue = 1 << 1,
+        };
+
+        enum class ErrorCode {
+            BinaryNumber,
         };
 
     public: // Constructors and destructors
         constexpr
         Lexer(const Char8 *source)
-                : flags(0),
-                  point(1, 1),
+                : flags(Lexer::Flag::None),
+                  point({1, 1}),
                   index(-1),
                   source(source),
-                  peek(source[0]) {}
+                  peek(source[0]),
+                  token() {}
         inline
         Void Destroy();
 
     public: // Properties
         inline constexpr
-        Lexer::Flag GetFlagsCopy()
+        Bit8 GetFlagsCopy()
         const noexcept { return this->flags; }
 
     public: // Procedures
         Token Lex();
 
     public: // Procedures from Compiler::Module
-        inline constexpr
+        inline
         Module::Identity GetModuleIdentity()
         const noexcept override { return Module::Identity::Lexer; }
 
     private: // Properties
-        Lexer::Flag flags;
+        Bit8 flags;
         Token::Point point;
         Int64 index;
         const Char8 *source;
@@ -46,11 +56,24 @@ namespace Analyzer {
         Token token;
 
     private: // Procedures
+        static constexpr
+        Bool CharIsHexNumber(Char8 in)
+        noexcept { return Char::IsNumeric(in) || (in >='a' && in <= 'z') || (in >= 'A' && in <= 'Z'); }
+
+        static constexpr
+        Bool CharIsBinaryNumber(Char8 in)
+        noexcept { return in == '0' || in == '1'; }
+
+        static constexpr
+        Bool CharIsNaturalNumber(Char8 in)
+        noexcept { return Char::IsNumeric(in) || in == '_'; }
+
+        Void LexNaturalNumber(Dynar<Char8> *buf);
         inline constexpr
         Char8 Peek(UInt64 offset = 1)
         const noexcept { return this->source[this->index + offset]; }
 
-        inline constexpr
+        constexpr
         Void Advance()
         noexcept {
             this->peek = this->Peek();

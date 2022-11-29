@@ -1,8 +1,8 @@
 #include "Lexer.hpp"
 
-#include "../Utility/Char.hpp"
 #include "../Utility/Dynar.hpp"
 #include "../Utility/Text.hpp"
+#include "../Utility/Error.hpp"
 
 namespace Analyzer {
     using namespace Utility;
@@ -39,34 +39,38 @@ namespace Analyzer {
                 this->token.SetValue({.Identity = flush});
             }
         }
-
-        /*
-        Number := Integer       := <INTEGER>+ [<INTEGER>|'_']*
-                | Binary        := '0' ['b'|'B'] ['0'|'1'|'_']+
-                | Hexadecimal   := '0' ['x'|'X'|'h'|'H'] [<INTEGER>|<ALPHABET:('a'..'f'&'A'..'F')>|'_']+
-                | Real          := <INTEGER>+ [<INTEGER>|'_']* ('.' [<INTEGER>|'_']*)?
-                | Scientific    := <INTEGER>+ ['E'|'e'] ['+'|'-'] <INTEGER>+k
-         */
         else if (Char::IsNumeric(this->peek)) {
             Dynar<Char8> buf;
             if (this->peek == '0') {
                 this->Advance();
-                switch (this->Peek(2)) {
-                case 'b': case 'B':
-                    this->Advance();
-                    // TODO Refactor this.
-                    while (this->peek == '0' || this->peek == '1' || this->peek == '_') {
-                        if (this->peek != '_') {
-                            buf.Put(this->peek);
-                        }
+                switch (this->peek) {
+                case '0':
+                    do {
                         this->Advance();
+                    } while (this->peek == '0');
+                    break;
+                case 'b':
+                    this->peek = 'B';
+                case 'B':
+                    // Lex binary.
+                    buf.Put(this->peek);
+                    this->Advance();
+                    if (Lexer::CharIsBinaryNumber(this->peek)) {
+                        do {
+                            if (this->peek != '_') {
+                                buf.Put(this->peek);
+                            }
+                            this->Advance();
+                        } while (this->peek == '_' || Lexer::CharIsBinaryNumber(this->peek));
+                    } else {
+                        if (Char::IsNumeric(this->peek)) {}
+                        // Binary is incomlete
                     }
                     break;
-                case 'x': case 'X': case 'h': case 'H':
-                    this->Advance();
-                    // Lex hexadecimal
-                    break;
-                default:
+                case 'x':
+                    this->peek = 'X';
+                case 'X':
+                    // Lex Hexadecimal.
                     break;
                 }
             }
@@ -75,7 +79,7 @@ namespace Analyzer {
             switch (this->peek) {
             case '-':
             default:
-                this->token.SetSymbol(this->peek);
+                this->token.SetSymbol((Token::Symbol)this->peek);
                 break;
             }
             this->Advance();
@@ -95,5 +99,14 @@ namespace Analyzer {
             this->flags |= Lexer::Flag::End;
         }
         return this->token;
+    }
+
+    Void Lexer::LexNaturalNumber(Dynar<Char8> *buf) {
+        do {
+            if (this->peek != '_') {
+                buf->Put(this->peek);
+            }
+            this->Advance();
+        } while (Lexer::CharIsNaturalNumber(this->peek));
     }
 } // Analyzer

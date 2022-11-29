@@ -1,0 +1,20 @@
+procedure Types {
+label Integers =:
+    datum _::Int8;
+    datum _::Int16;
+    datum _::Int32;
+    datum _::Int64;
+
+    datum _::UInt64;
+    datum _::UInt16;
+    datum _::UInt32;
+    datum _::UInt64;
+
+label Floats =:
+    datum _::Float32;
+    datum _::Float64;
+
+label Abstracts =:
+    datum _::Ptr<TYPE>;
+    datum _::Array<SIZE, TYPE>;
+}

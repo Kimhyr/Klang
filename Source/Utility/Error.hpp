@@ -32,7 +32,7 @@ namespace Utility {
     public: // Properties
         inline constexpr
         const Compiler::Module *GetModule()
-        const noexcept { return &this->module; }
+        const noexcept { return this->module; }
 
         inline constexpr
         Error::Severity GetSeverityCopy()

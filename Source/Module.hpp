@@ -15,7 +15,7 @@ namespace Compiler {
         };
 
     public:
-        virtual inline constexpr
+        virtual inline
         Module::Identity GetModuleIdentity()
         const noexcept { return Module::Identity::None; };
     };

@@ -1,0 +1,51 @@
+namespace Compiler:Analyzer {
+    import Core:Memory;
+    import Compiler:Analyzer:Token;
+
+    structure Lexer! {
+        flags::enumerare Flag!::Ptr<UInt8> {
+            None = 0,
+            End = 1 << ,
+            Continue = 1 << 1,
+        },
+        point::Token:Point,
+        index::Int64,
+        source::Ptr<UInt8>,
+        peek::UInt8,
+        token::Token,
+    }
+
+    implement Lexer {
+        alias This = Lexer
+
+    label Structors =:
+        $[Constant]
+        procedure Create!(source::Ptr<UInt8>) -> :This;
+
+        procedure? Destroy!;
+
+    label Procedures =:
+        procedure? Lex! -> Token;
+
+    label Helpers =:
+        $[Constant]
+        procedure' Peek(offset::Int64) -> UInt8;
+
+        $[Constant]
+        procedure? Advance!;
+    }
+
+    implement Lexer::Compiler:Module {
+        alias Trait = Compiler:Module;
+
+        $[Constant]
+        procedure? GetIdentity! -> Trait:Identity;
+    }
+}
+
+procedure Initiate {
+    datum source::Ptr<UInt8> = "porcedure";
+    datum lexer::Lexer = Lexer:Create(source);
+    datum token::Token = lexer.Lex();
+    lexer.GetIdentity;
+}
