@@ -39,7 +39,9 @@ namespace Utility {
     template<typename DataT>
     Void Dynar<DataT>::Realloc() {
         auto mlock = new DataT[this->space];
-        for (UInt64 i = 0; i < this->size; ++i) {
+        for (
+                UInt64 i = 0; i < this->size; ++i
+                ) {
             mlock[i] = this->data[i];
         }
         delete[] this->data;

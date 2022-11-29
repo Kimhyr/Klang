@@ -1,5 +1,5 @@
-#ifndef COMPILER_UTILITY_TEXT_HPP
-#define COMPILER_UTILITY_TEXT_HPP
+#ifndef KPLC_UTILITY_TEXT_HPP
+#define KPLC_UTILITY_TEXT_HPP
 
 namespace Utility {
     class Text {
@@ -9,4 +9,4 @@ namespace Utility {
     };
 } // Utility
 
-#endif // COMPILER_UTILITY_TEXT_HPP
+#endif // KPLC_UTILITY_TEXT_HPP

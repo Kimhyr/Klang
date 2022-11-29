@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "E:/Projects/Compiler/cmake-build-debug",
-		"source" : "E:/Projects/Compiler"
+		"build" : "E:/Projects/KPLC/Source/cmake-build-debug",
+		"source" : "E:/Projects/KPLC/Source"
 	},
 	"version" : 
 	{

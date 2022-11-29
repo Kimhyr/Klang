@@ -1,5 +1,5 @@
-#ifndef COMPILER_ANALYZER_LEXER_HPP
-#define COMPILER_ANALYZER_LEXER_HPP
+#ifndef KPLC_ANALYZER_LEXER_HPP
+#define KPLC_ANALYZER_LEXER_HPP
 
 #include "../Definitions.hpp"
 #include "../Module.hpp"
@@ -60,4 +60,4 @@ namespace Analyzer {
     };
 } // Analyzer
 
-#endif // COMPILER_ANALYZER_LEXER_HPP
+#endif // KPLC_ANALYZER_LEXER_HPP

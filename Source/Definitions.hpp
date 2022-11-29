@@ -1,5 +1,5 @@
-#ifndef COMPILER__DEFINITIONS_HPP
-#define COMPILER__DEFINITIONS_HPP
+#ifndef KPLC__DEFINITIONS_HPP
+#define KPLC__DEFINITIONS_HPP
 
 #define null = NULL
 #define nil = nullptr
@@ -26,4 +26,4 @@ using UInt16 = unsigned short int;
 using UInt32 = unsigned int;
 using UInt64 = unsigned long long int;
 
-#endif //COMPILER__DEFINITIONS_HPP
+#endif // KPLC__DEFINITIONS_HPP

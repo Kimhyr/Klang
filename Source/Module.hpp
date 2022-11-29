@@ -1,5 +1,5 @@
-#ifndef COMPILER__MODULE_HPP
-#define COMPILER__MODULE_HPP
+#ifndef KPLC__MODULE_HPP
+#define KPLC__MODULE_HPP
 
 #include "Definitions.hpp"
 
@@ -11,4 +11,4 @@ namespace Compiler {
     };
 };
 
-#endif //COMPILER__MODULE_HPP
+#endif //KPLC__MODULE_HPP

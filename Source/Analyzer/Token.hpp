@@ -1,5 +1,5 @@
-#ifndef COMPILER_ANALYZER_TOKEN_HPP
-#define COMPILER_ANALYZER_TOKEN_HPP
+#ifndef KPLC_ANALYZER_TOKEN_HPP
+#define KPLC_ANALYZER_TOKEN_HPP
 
 #include "../Definitions.hpp
 
@@ -113,4 +113,4 @@ namespace Analyzer {
     };
 } // Analyzer
 
-#endif // COMPILER_ANALYZER_TOKEN_HPP
+#endif // KPLC_ANALYZER_TOKEN_HPP

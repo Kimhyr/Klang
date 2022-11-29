@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "e:/Projects/Compiler/cmake-build-debug"
+			"value" : "e:/Projects/KPLC/Source/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -623,7 +623,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "E:/Projects/Compiler"
+			"value" : "E:/Projects/KPLC/Source"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1239,7 +1239,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "E:/Projects/Compiler/cmake-build-debug"
+			"value" : "E:/Projects/KPLC/Source/cmake-build-debug"
 		},
 		{
 			"name" : "Compiler_IS_TOP_LEVEL",
@@ -1263,7 +1263,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "E:/Projects/Compiler"
+			"value" : "E:/Projects/KPLC/Source"
 		}
 	],
 	"kind" : "cache",

@@ -1,5 +1,5 @@
-#ifndef COMPILER_UTILITY_DYNAR_HPP
-#define COMPILER_UTILITY_DYNAR_HPP
+#ifndef KPLC_UTILITY_DYNAR_HPP
+#define KPLC_UTILITY_DYNAR_HPP
 
 #include "../Definitions.hpp"
 
@@ -35,4 +35,4 @@ namespace Utility {
     };
 } // Utility
 
-#endif // COMPILER_UTILITY_DYNAR_HPP
+#endif // KPLC_UTILITY_DYNAR_HPP

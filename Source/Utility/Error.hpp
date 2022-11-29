@@ -1,5 +1,5 @@
-#ifndef COMPILER_UTILITY_ERROR_HPP
-#define COMPILER_UTILITY_ERROR_HPP
+#ifndef KPLC_UTILITY_ERROR_HPP
+#define KPLC_UTILITY_ERROR_HPP
 
 #include "../Definitions.hpp"
 #include "../Module.hpp"
@@ -54,4 +54,4 @@ namespace Utility {
     };
 } // Utility
 
-#endif // COMPILER_UTILITY_ERROR_HPP
+#endif // KPLC_UTILITY_ERROR_HPP
