@@ -35,11 +35,11 @@ namespace Utility {
         const noexcept { return &this->module; }
 
         inline constexpr
-        Error::Severity GetSeverity()
+        Error::Severity GetSeverityCopy()
         const noexcept { return this->severity; }
 
         inline constexpr
-        UInt64 GetCode()
+        UInt64 GetCodeCopy()
         const noexcept { return this->code; }
 
         inline constexpr

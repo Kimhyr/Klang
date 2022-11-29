@@ -69,39 +69,38 @@ namespace Analyzer {
         Token(Token::Point start)
                 : start(start) {}
 
-        inline
         Void Destroy();
 
     public: // Properties
-        inline constexpr
+        constexpr
         const Token::Point *GetStart()
         const noexcept { return &this->start; }
 
-        inline constexpr
+        constexpr
         Void SetStart(Token::Point start)
         const noexcept { this->start = start; }
 
-        inline constexpr
+        constexpr
         const Token::Point *GetEnd()
         const noexcept { return &this->end; }
 
-        inline constexpr
+        constexpr
         Void SetEnd(Token::Point end)
         const noexcept { this->end = end; }
 
-        inline constexpr
-        Token::Symbol GetSymbol()
+        constexpr
+        Token::Symbol GetSymbolCopy()
         const noexcept { return &this->symbol; }
 
-        inline constexpr
+        constexpr
         Void SetSymbol(Token::Symbol symbol)
         const noexcept { this->symbol = symbol; }
 
-        inline constexpr
+        constexpr
         const Token::Value *GetValue()
         const noexcept { return &this->value; }
 
-        inline constexpr
+        constexpr
         Void SetValue(Token::Value value)
         const noexcept { this->value = value; }
 

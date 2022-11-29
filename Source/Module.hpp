@@ -6,8 +6,18 @@
 namespace Compiler {
     class Module {
     public:
-        virtual
-        const Char8 *GetModuleName() = 0;
+        enum class Identity {
+            None,
+            Lexer,
+            Parser,
+            Processor,
+            Generator,
+        };
+
+    public:
+        virtual inline constexpr
+        Module::Identity GetModuleIdentity()
+        const noexcept { return Module::Identity::None; };
     };
 };
 

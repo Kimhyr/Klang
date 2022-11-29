@@ -24,13 +24,18 @@ namespace Analyzer {
         inline
         Void Destroy();
 
+    public: // Properties
+        inline constexpr
+        Lexer::Flag GetFlagsCopy()
+        const noexcept { return this->flags; }
+
     public: // Procedures
-        Lexer::Flag Lex(Token *out);
+        Token Lex();
 
     public: // Procedures from Compiler::Module
         inline constexpr
-        const Char8 *GetModuleName()
-        const noexcept { return "Lexer"; }
+        Module::Identity GetModuleIdentity()
+        const noexcept override { return Module::Identity::Lexer; }
 
     private: // Properties
         Lexer::Flag flags;
@@ -38,13 +43,12 @@ namespace Analyzer {
         Int64 index;
         const Char8 *source;
         Char8 peek;
+        Token token;
 
     private: // Procedures
         inline constexpr
         Char8 Peek(UInt64 offset = 1)
-        const noexcept {
-            return this->source[this->index + offset];
-        }
+        const noexcept { return this->source[this->index + offset]; }
 
         inline constexpr
         Void Advance()

@@ -13,16 +13,13 @@ namespace Utility {
         explicit
         Dynar(UInt64 space = Dynar::InitialSpace);
 
-        inline
         Void Destroy();
 
-        inline
         DataT *Flush();
 
     public: // Procedures
         Void Put(DataT value);
 
-        inline
         Void Expand();
 
     private: // Properties
