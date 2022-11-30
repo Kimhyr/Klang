@@ -21,14 +21,16 @@ namespace Compiler::Analyzer {
         };
 
         enum class ErrorCode : Error::Code {
-            WrongFormat,
+            WrongFormat = 1,
             Valueless,
             Incomplete,
             Conversion,
+            OutOfRange,
         };
 
     public:
-        constexpr
+        [[nodiscard]]
+        explicit constexpr
         Lexer(const Char8 *source)
                 : flags(Lexer::Flag::None),
                   point({1, 1}),
@@ -40,12 +42,22 @@ namespace Compiler::Analyzer {
         Void Destroy();
 
     public:
+        [[nodiscard]]
         constexpr
         Bit8 GetFlags()
         const noexcept { return this->flags; }
 
     public:
         Token Lex();
+
+    private:
+        enum class LexingWay : UInt8 {
+            NumericLiteral = 1,
+            UnsignedLiteral,
+            BinaryLiteral,
+            HexadecimalLiteral,
+            RealLiteral,
+        };
 
     private:
         Bit8 flags;
@@ -67,16 +79,28 @@ namespace Compiler::Analyzer {
         inline
         Void LexNumeric();
 
-        inline
-        Void LexBinary(Dynar<Char8> *buf);
+        Void LexUnsignedLiteral(Dynar<Char8> *buf);
 
+        inline
+        Void PutNumericBuf(Dynar<Char8> *buf);
+
+        [[nodiscard]]
+        constexpr
+        Bool PeekIsValidUnsigned()
+        const noexcept { return Char::IsNumeric(this->peek) || this->peek == '_'; }
+
+        inline
+        Void LexBinaryLiteral(Dynar<Char8> *buf);
+
+        [[nodiscard]]
         constexpr
         Bool PeekIsValidBinary()
         const noexcept { return this->peek == '0' || this->peek == '1' || this->peek == '_'; }
 
         inline
-        Void LexHexadecimal(Dynar<Char8> *buf);
+        Void LexHexadecimalLiteral(Dynar<Char8> *buf);
 
+        [[nodiscard]]
         constexpr
         Bool PeekIsValidHexadecimal()
         const noexcept {
@@ -86,13 +110,6 @@ namespace Compiler::Analyzer {
 
         inline
         Void LexReal(Dynar<Char8> *buf);
-
-        inline
-        Void LexUnsigned(Dynar<Char8> *buf);
-
-        constexpr
-        Bool PeekIsValidUnsigned()
-        const noexcept { return Char::IsNumeric(this->peek) || this->peek == '_'; }
 
         inline
         Void SkipZeros()
@@ -108,7 +125,10 @@ namespace Compiler::Analyzer {
         Void ResolveToken()
         noexcept;
 
-        constexpr
+        static
+        Void ThrowError(Lexer::LexingWay way, Lexer::ErrorCode error);
+
+        [[nodiscard]] constexpr
         Char8 Peek(UInt64 offset = 1)
         const noexcept { return this->source[this->index + offset]; }
 

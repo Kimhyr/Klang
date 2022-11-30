@@ -8,6 +8,10 @@ namespace Compiler {
     public:
         using Code = UInt64;
 
+        enum class From {
+            Lexer = 256,
+        };
+
         enum class Severity {
             Verbose,
             Info,
@@ -18,10 +22,10 @@ namespace Compiler {
     public:
         constexpr
         Error(
-                Error::Severity severity, Error::Code code,
-                const Char8 *description
+                Error::From from, Error::Severity severity,
+                Error::Code code, const Char8 *description
         )
-                : module(module),
+                : from(from),
                   severity(severity),
                   code(code),
                   description(description) {}
@@ -31,6 +35,10 @@ namespace Compiler {
         Void Send();
 
     public:
+        inline constexpr
+        Error::From GetFrom()
+        const noexcept { return this->from; }
+
         inline constexpr
         Error::Severity GetSeverity()
         const noexcept { return this->severity; }
@@ -44,6 +52,7 @@ namespace Compiler {
         const noexcept { return this->description; }
 
     private:
+        Error::From from;
         Error::Severity severity;
         UInt64 code;
         const Char8 *description;

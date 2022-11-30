@@ -67,6 +67,7 @@
       <option name="CATCH_ON_NEW_LINE" value="true" />
       <option name="INDENT_CASE_FROM_SWITCH" value="false" />
       <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
+      <option name="SPACE_AFTER_TYPE_CAST" value="false" />
       <option name="PARENTHESES_EXPRESSION_LPAREN_WRAP" value="true" />
       <option name="PARENTHESES_EXPRESSION_RPAREN_WRAP" value="true" />
       <option name="FOR_STATEMENT_LPAREN_ON_NEXT_LINE" value="true" />

@@ -43,7 +43,8 @@ namespace Compiler::Analyzer {
             ReturnKeyword,
 
             // Literals
-            IntegerLiteral,
+            UnsignedLiteral,
+            SignedLiteral,
             FloatLiteral,
             MachineLiteral,
             TextLiteral,
@@ -55,11 +56,11 @@ namespace Compiler::Analyzer {
         // I know I can make the type into "Char8 *".
         union Value {
             Char8 None;
-            Char8 *Identity;
+            const Char8 *Identity;
             UInt64 Integer;
             Float64 Float;
             Bit64 Machine;
-            Char8 *Text;
+            const Char8 *Text;
         };
 
     public:

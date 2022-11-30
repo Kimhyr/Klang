@@ -19,11 +19,11 @@ namespace Collections {
 
     public:
         constexpr
-        UInt64 GetSpace
+        UInt64 GetSpace()
         const noexcept { return this->space; }
 
         constexpr
-        UInt64 GetSize
+        UInt64 GetSize()
         const noexcept { return this->size; }
 
         constexpr
@@ -39,7 +39,7 @@ namespace Collections {
         DataT *data;
 
     private:
-        Void Reallocate(UInt64 newSpace):
+        Void Reallocate(UInt64 newSpace);
     };
 } // Debugger
 

@@ -1,6 +1,6 @@
 #include "Lexer.hpp"
 
-#include <string>
+#include <stdexcept>
 
 #include "../../Text/String.hpp"
 
@@ -11,7 +11,6 @@ namespace Compiler::Analyzer {
 
     Token Lexer::Lex() {
         this->SkipWhitespace();
-
         this->token.SetStart(this->point);
         if (Char::IsAlphabetic(this->peek) || this->peek == '_') {
             this->LexAlphabetic();
@@ -22,12 +21,12 @@ namespace Compiler::Analyzer {
         else {
             this->LexSymbolic();
         }
-
         this->ResolveToken();
         return this->token;
     }
 
-    Void Lexer::LexAlphabetic() {
+    Void Lexer::LexAlphabetic()
+    noexcept {
         Dynar<Char8> buf;
         do {
             buf.Put(this->peek);
@@ -38,14 +37,15 @@ namespace Compiler::Analyzer {
         this->MatchAlphabetic(flush);
     }
 
-    Void Lexer::MatchAlphabetic(const Char8 *flush) {
-        if (Text::Compare(flush, "procedure") == 0) {
+    Void Lexer::MatchAlphabetic(const Char8 *flush)
+    noexcept {
+        if (String::Compare(flush, "procedure") == 0) {
             this->token.SetSymbol(Token::Symbol::ProcedureKeyword);
         }
-        else if (Text::Compare(flush, "let") == 0) {
+        else if (String::Compare(flush, "let") == 0) {
             this->token.SetSymbol(Token::Symbol::LetKeyword);
         }
-        else if (Text::Compare(flush, "return") == 0) {
+        else if (String::Compare(flush, "return") == 0) {
             this->token.SetSymbol(Token::Symbol::ReturnKeyword);
         }
         else {
@@ -61,118 +61,107 @@ namespace Compiler::Analyzer {
             switch (this->peek) {
             case '0':
                 this->SkipZeros();
-                break;
+                if (this->PeekIsValidUnsigned()) {
+                    return this->LexUnsignedLiteral(&buf);
+                } else {
+                    this->token.SetSymbol(Token::Symbol::UnsignedLiteral);
+                    return this->token.SetValue({.Integer = 0});
+                }
             case 'b':
-                this->peek = 'B';
             case 'B':
                 this->Advance();
-                this->LexBinary(&buf);
+                this->LexBinaryLiteral(&buf);
                 break;
             case 'x':
-                this->peek = 'X';
             case 'X':
                 this->Advance();
-                this->LexHexadecimal(&buf);
+                return this->LexHexadecimalLiteral(&buf);
+            default:
                 break;
             }
         }
+        this->LexUnsignedLiteral(&buf);
     }
 
-    Void Lexer::LexBinary(Dynar<Char8> *buf) {
+    Void Lexer::LexUnsignedLiteral(Dynar<Char8> *buf) {
+        do {
+            this->PutNumericBuf(buf);
+        } while (this->PeekIsValidUnsigned());
+        if (buf->GetSize() == 0) {
+            Lexer::ThrowError(Lexer::LexingWay::UnsignedLiteral, Lexer::ErrorCode::Valueless);
+        }
+    }
+
+    Void Lexer::PutNumericBuf(Dynar<Char8> *buf) {
+        if (this->peek != '_') {
+            buf->Put(this->peek);
+        }
+        this->Advance();
+    }
+
+    Void Lexer::LexBinaryLiteral(Dynar<Char8> *buf) {
         this->token.SetSymbol(Token::Symbol::MachineLiteral);
         if (this->PeekIsValidBinary()) {
             do {
-                if (this->peek != '_') {
-                    buf->Put(this->peek);
-                }
-                this->Advance();
+                this->PutNumericBuf(buf);
             } while (this->PeekIsValidBinary());
-        } else {
+        }
+        else {
             if (Char::IsWhitespace(this->peek)) {
-                throw Error(
-                        // TODO Refactor error messages to follow D.R.Y..
-                        Error::Severity::Error, Lexer::ErrorCode::Incomplete,
-                        "Hexadecimal literal token is incomplete.\n"
-                        "\tThe header follows with whitespace."
-                );
+                Lexer::ThrowError(Lexer::LexingWay::BinaryLiteral, Lexer::ErrorCode::Incomplete);
             }
-            if (Char::IsAlphabetic(this->peek)) {
-                throw Error(
-                        Error::Severity::Error, Lexer::ErrorCode::WrongFormat,
-                        "Binary literal token has the wrong format.\n"
-                        "\tExpected a valid binary character, "
-                        "but received an alphabetic character."
-                );
-            }
-            if (Char::IsNumeric(this->peek)) {
-                throw Error(
-                        Error::Severity::Error, Lexer::ErrorCode::WrongFormat,
-                        "Binary literal token has the wrong format.\n"
-                        "\tExpected a valid binary character, "
-                        "but received a numeric character that is not '1' or '0'."
-                );
+            else if (Char::IsAlphabetic(this->peek) || Char::IsNumeric(this->peek)) {
+                Lexer::ThrowError(Lexer::LexingWay::BinaryLiteral, Lexer::ErrorCode::WrongFormat);
             }
         }
         if (buf->GetSize() == 0) {
-            throw Error(
-                    Error::Severity::Error, Lexer::ErrorCode::Valueless,
-                    "Binary literal token has no value.\n"
-                    "\tIt only contains '_'."
+            Lexer::ThrowError(Lexer::LexingWay::BinaryLiteral, Lexer::ErrorCode::Valueless);
+        }
+        try {
+            this->token.SetValue(
+                    {
+                            .Machine = String::ConvertToInteger<UInt64>(buf->Flush(), 2)
+                    }
             );
         }
-
-        try {
-            this->token.SetValue({.Machine = std::stoull(buf->Flush(), 0, 2)});
-        } catch (const auto &) {
-            throw Error(
-                    Error::Severity::Error, Lexer::ErrorCode::Conversion,
-                    "Binary literal token could not be converted into a literal value."
-            );
+        catch (const std::invalid_argument &) {
+            Lexer::ThrowError(Lexer::LexingWay::BinaryLiteral, Lexer::ErrorCode::Conversion);
+        }
+        catch (const std::out_of_range &) {
+            Lexer::ThrowError(Lexer::LexingWay::BinaryLiteral, Lexer::ErrorCode::OutOfRange);
         }
     }
 
-    Void Lexer::LexHexadecimal(Dynar<Char8> *buf) {
+    Void Lexer::LexHexadecimalLiteral(Dynar<Char8> *buf) {
         this->token.SetSymbol(Token::Symbol::MachineLiteral);
         if (this->PeekIsValidHexadecimal()) {
             do {
-                if (this->peek != '_') {
-                    buf->Put(this->peek);
-                }
-                this->Advance();
+                this->PutNumericBuf(buf);
             } while (this->PeekIsValidHexadecimal());
-        } else {
+        }
+        else {
             if (Char::IsWhitespace(this->peek)) {
-                throw Error(
-                        Error::Severity::Error, Lexer::ErrorCode::Incomplete,
-                        "Hexadecimal literal token is incomplete.\n"
-                        "\tThe header follows with whitespace."
-                );
+                Lexer::ThrowError(Lexer::LexingWay::HexadecimalLiteral, Lexer::ErrorCode::Incomplete);
             }
             if (Char::IsAlphabetic(this->peek)) {
-                throw Error(
-                        Error::Severity::Error, Lexer::ErrorCode::WrongFormat,
-                        "Hexadecimal literal token has the wrong format.\n"
-                        "\tExpected an alphabetic character greater than 'a' and less than 'f', "
-                        "or greater than 'A' and less than 'F', "
-                        "but received a different alphabetic character."
-                );
+                Lexer::ThrowError(Lexer::LexingWay::HexadecimalLiteral, Lexer::ErrorCode::WrongFormat);
             }
         }
         if (buf->GetSize() == 0) {
-            throw Error(
-                    Error::Severity::Error, Lexer::ErrorCode::Valueless,
-                    "Hexadecimal literal token has no value.\n"
-                    "\tIt only contains '_'."
+            Lexer::ThrowError(Lexer::LexingWay::HexadecimalLiteral, Lexer::ErrorCode::Valueless);
+        }
+        try {
+            this->token.SetValue(
+                    {
+                            .Machine = String::ConvertToInteger<UInt64>(buf->Flush(), 16)
+                    }
             );
         }
-
-        try {
-           this->token.Setvalue({.Machine = std::stoull(buf->flush(), 0, 12)});
-        } catch (const auto &) {
-            throw Error(
-                    Error::Severity::Error, Lexer::ErrorCode::Conversion,
-                    "Hexadecimal literal token could not be converted into a literal value."
-            );
+        catch (const std::invalid_argument &) {
+            Lexer::ThrowError(Lexer::LexingWay::HexadecimalLiteral, Lexer::ErrorCode::Conversion);
+        }
+        catch (const std::out_of_range &) {
+            Lexer::ThrowError(Lexer::LexingWay::HexadecimalLiteral, Lexer::ErrorCode::OutOfRange);
         }
     }
 
@@ -182,12 +171,17 @@ namespace Compiler::Analyzer {
         // TODO ...
 
         try {
-            this->token.SetValue({.Float = std::stod(buf->Flush())});
-        } catch (const auto &) {
-            throw Error(
-                    Error::Code::Error, Lexer::ErrorCode::Conversion,
-                    "Real literal token could not be converted into a literal value."
+            this->token.SetValue(
+                    {
+                            .Float = String::ConvertToFloat<Float64>(buf->Flush())
+                    }
             );
+        }
+        catch (const std::invalid_argument &) {
+            Lexer::ThrowError(Lexer::LexingWay::RealLiteral, Lexer::ErrorCode::Conversion);
+        }
+        catch (const std::out_of_range &) {
+            Lexer::ThrowError(Lexer::LexingWay::RealLiteral, Lexer::ErrorCode::OutOfRange);
         }
     }
 
@@ -208,7 +202,8 @@ namespace Compiler::Analyzer {
         }
     }
 
-    Void Lexer::ResolveToken() {
+    Void Lexer::ResolveToken()
+    noexcept {
         this->token.SetEnd(
                 {
                         .Line = this->point.Line,
@@ -218,5 +213,13 @@ namespace Compiler::Analyzer {
         if (this->peek == '\0') {
             this->flags |= Lexer::Flag::End;
         }
+    }
+
+    Void Lexer::ThrowError(Lexer::LexingWay way, Lexer::ErrorCode error) {
+        const Char8 *description = "";
+        throw Error(
+                Error::From::Lexer, Error::Severity::Error,
+                (Error::Code)error * (UInt64)way, description
+        );
     }
 } // Analyzer

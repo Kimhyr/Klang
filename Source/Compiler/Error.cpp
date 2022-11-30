@@ -18,7 +18,13 @@ namespace Compiler {
         case Error::Severity::Error:
             std::cerr << "[Error] ";
         }
-        std::cerr << "Error code " << this->code << ": " << this->description << '\n';
+        std::cerr << "From ";
+        switch (this->from) {
+        case Error::From::Lexer:
+            std::cerr << "lexer ";
+        }
+        std::cerr << "(" << this->code << "): ";
+        std::cerr << this->description << '\n';
         this->Destroy();
     }
 } // Debugger
