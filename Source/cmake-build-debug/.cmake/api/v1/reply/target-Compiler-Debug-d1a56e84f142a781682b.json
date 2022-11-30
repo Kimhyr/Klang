@@ -13,8 +13,8 @@
 	{
 		"commands" : 
 		[
-			"add_executable",
-			"add_compile_options"
+			"ADD_EXECUTABLE",
+			"ADD_COMPILE_OPTIONS"
 		],
 		"files" : 
 		[
@@ -78,8 +78,10 @@
 				1,
 				4,
 				6,
-				9,
-				12
+				8,
+				11,
+				13,
+				15
 			]
 		}
 	],
@@ -120,8 +122,10 @@
 				1,
 				4,
 				6,
-				9,
-				12
+				8,
+				11,
+				13,
+				15
 			]
 		},
 		{
@@ -132,10 +136,11 @@
 				3,
 				5,
 				7,
-				8,
+				9,
 				10,
-				11,
-				13
+				12,
+				14,
+				16
 			]
 		}
 	],
@@ -150,12 +155,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Analyzer/Token.cpp",
+			"path" : "Compiler/Analyzer/Token.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Analyzer/Token.hpp",
+			"path" : "Compiler/Analyzer/Token.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -166,55 +171,72 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Utility/Dynar.cpp",
+			"path" : "Collections/Dynar.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Utility/Dynar.hpp",
+			"path" : "Collections/Dynar.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Utility/Error.cpp",
+			"path" : "Compiler/Error.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Utility/Error.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Module.hpp",
+			"path" : "Compiler/Error.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Analyzer/Lexer.cpp",
+			"path" : "Compiler/Analyzer/Lexer.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Analyzer/Lexer.hpp",
+			"path" : "Compiler/Analyzer/Lexer.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Utility/Char.hpp",
+			"path" : "Text/Char.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Utility/Text.cpp",
+			"path" : "Text/Text.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Utility/Text.hpp",
+			"path" : "Text/Text.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "System/Memory.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "System/Memory.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Number/Integer.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Number/Integer.hpp",
 			"sourceGroupIndex" : 1
 		}
 	],

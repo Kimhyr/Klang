@@ -1,12 +1,13 @@
-#ifndef KPLC_UTILITY_ERROR_HPP
-#define KPLC_UTILITY_ERROR_HPP
+#ifndef KPLC_COMPILER_ERROR_HPP
+#define KPLC_COMPILER_ERROR_HPP
 
 #include "../Definitions.hpp"
-#include "../Module.hpp"
 
-namespace Utility {
+namespace Compiler {
     class Error {
-    public: // Types
+    public:
+        using Code = UInt64;
+
         enum class Severity {
             Verbose,
             Info,
@@ -14,11 +15,11 @@ namespace Utility {
             Error,
         };
 
-    public: // Constructors and destructors
+    public:
         constexpr
         Error(
-                const Compiler::Module *module, Error::Severity severity,
-                UInt64 code, const Char8 *description
+                Error::Severity severity, Error::Code code,
+                const Char8 *description
         )
                 : module(module),
                   severity(severity),
@@ -29,29 +30,24 @@ namespace Utility {
 
         Void Send();
 
-    public: // Properties
+    public:
         inline constexpr
-        const Compiler::Module *GetModule()
-        const noexcept { return this->module; }
-
-        inline constexpr
-        Error::Severity GetSeverityCopy()
+        Error::Severity GetSeverity()
         const noexcept { return this->severity; }
 
         inline constexpr
-        UInt64 GetCodeCopy()
+        UInt64 GetCode()
         const noexcept { return this->code; }
 
         inline constexpr
         const Char8 *GetDescription()
         const noexcept { return this->description; }
 
-    private: // Properties
-        const Compiler::Module *module;
+    private:
         Error::Severity severity;
         UInt64 code;
         const Char8 *description;
     };
-} // Utility
+} // Debugger
 
-#endif // KPLC_UTILITY_ERROR_HPP
+#endif // KPLC_COMPILER_ERROR_HPP

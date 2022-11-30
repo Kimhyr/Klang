@@ -1,10 +1,19 @@
-Integer := ['+'|'-']? <'0'..'9'> [<'0'..'9'>|'_']*
+Unsigned := <'0'..'9'> [<'0'..'9'>|'_']*
+Signed := ['+'|'-']? Unsigned
 
-Real := ['+'|'-']? <'0'..'9'> [<'0'..'9'>|'_']* '.' [<'0'..'9'>|'_']*
-Scientific := ['+'|'-']? <'0'..'9'> [<'0'..'9'>|'_']* ['e'|'E'] ['+'|'-']? <'0'..'9'>+
+Integer := [Signed|Unsigned]
+
+Real := Signed '.' [<'0'..'9'>|'_']*
+~ Scientific := Signed ['e'|'E'] ['+'|'-']? <'0'..'9'>+
+
+Float := [Real|Scientific]
 
 Binary := '0' ['b'|'B'] ['0'|'1'|'_']+
 Hexadecimal := '0' ['x'|'X'] [<'0'..'9'>|<'a'..'f'>|<'A'..'F'>|'_']+
 
+Machine := [Binary|Hexadecimal]
+
 Symbol := '$'? '"' <$^> '"'
 String := '$'? '"' <$^>+ '"'
+
+Text := [Symbol|String]

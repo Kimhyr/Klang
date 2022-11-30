@@ -1,6 +1,6 @@
 #include "Token.hpp"
 
-namespace Analyzer {
+namespace Compiler::Analyzer {
     Void Token::Destroy() {
         switch (this->symbol) {
         case Token::Symbol::Identity:

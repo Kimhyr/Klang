@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace Utility {
+namespace Compiler {
     Void Error::Destroy() {
         delete[] this->description;
     }
@@ -18,9 +18,7 @@ namespace Utility {
         case Error::Severity::Error:
             std::cerr << "[Error] ";
         }
-        std::cerr << this->module->GetModuleName()
-                  << " (" << this->code << "): "
-                  << this->description << '\n';
+        std::cerr << "Error code " << this->code << ": " << this->description << '\n';
         this->Destroy();
     }
-} // Utility
+} // Debugger

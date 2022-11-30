@@ -5,4 +5,4 @@ SET(CMAKE_CXX_STANDARD 20)
 
 PROJECT(Compiler)
 
-ADD_EXECUTABLE(Compiler Main.cpp Analyzer/Token.cpp Analyzer/Token.hpp Definitions.hpp Utility/Dynar.cpp Utility/Dynar.hpp Utility/Error.cpp Utility/Error.hpp Module.hpp Analyzer/Lexer.cpp Analyzer/Lexer.hpp Utility/Char.hpp Utility/Text.cpp Utility/Text.hpp)
+ADD_EXECUTABLE(Compiler Main.cpp Compiler/Analyzer/Token.cpp Compiler/Analyzer/Token.hpp Definitions.hpp Collections/Dynar.cpp Collections/Dynar.hpp Compiler/Error.cpp Compiler/Error.hpp Compiler/Analyzer/Lexer.cpp Compiler/Analyzer/Lexer.hpp Text/Char.hpp Text/String.cpp Text/String.hpp System/Memory.cpp System/Memory.hpp Number/Integer.cpp Number/Integer.hpp)

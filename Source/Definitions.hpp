@@ -26,4 +26,8 @@ using UInt16 = unsigned short int;
 using UInt32 = unsigned int;
 using UInt64 = unsigned long long int;
 
+using Float32 = float;
+using Float64 = double;
+using Float128 = long double;
+
 #endif // KPLC__DEFINITIONS_HPP

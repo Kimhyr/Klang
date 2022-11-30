@@ -1,8 +1,7 @@
-#include "Text.hpp"
+#include "String.hpp"
 
-namespace Utility {
-
-    Bool Text::Compare(const Char8 *first, const Char8 *second) {
+namespace Text {
+    Bool String::Compare(const Char8 *first, const Char8 *second) {
         Char8 *c_first = first;
         Char8 *c_second = second;
         while (*c_first && (*c_first == *c_second)) {
@@ -11,4 +10,4 @@ namespace Utility {
         }
         return *c_first - *c_second;
     }
-} // Utility
+} // Debugger

@@ -1,11 +1,11 @@
-#ifndef KPLC_ANALYZER_TOKEN_HPP
-#define KPLC_ANALYZER_TOKEN_HPP
+#ifndef KPLC_COMPILER_ANALYZER_TOKEN_HPP
+#define KPLC_COMPILER_ANALYZER_TOKEN_HPP
 
-#include "../Definitions.hpp"
+#include "../../Definitions.hpp"
 
-namespace Analyzer {
+namespace Compiler::Analyzer {
     class Token {
-    public: // Types
+    public:
         struct Point {
             UInt64 Line;
             UInt64 Column;
@@ -18,54 +18,51 @@ namespace Analyzer {
         enum class Symbol {
             None = 0,
 
+            // Delimiters
+            OParenDelimiter  = '(',
+            CParenDelimiter  = ')',
+            OBraceDelimiter  = '{',
+            CBraceDelimiter  = '}',
+
             // Punctuates
-            OParen = '(',
-            CParen = ')',
-            OBrace = '{',
-            CBrace = '}',
-            Comma = ',',
-            Semicolon = ';',
+            CommaPunctuator = ',',
+            SemicolonPunctuator = ';',
 
             // Operators
-            Equal = '=',
-            Plus = '+',
+            EqualOperator = '=',
+            PlusOperator = '+',
 
             // Modifiers
-            Question = '?',
-            At = '@',
+            QuestionModifier = '?',
+            AtModifier = '@',
 
             // Words
             Identity = 256,
-            Procedure,
-            Let,
-            Return,
+            ProcedureKeyword,
+            LetKeyword,
+            ReturnKeyword,
 
             // Literals
-            Integer,
-            Real,
-            Symbol,
-            String,
-
-            // Punctuates
+            IntegerLiteral,
+            FloatLiteral,
+            MachineLiteral,
+            TextLiteral,
 
             // Operators
-            Cast, // ::
-
-            // Modifiers
-
+            CastOperator, // ::
         };
 
         // I know I can make the type into "Char8 *".
         union Value {
             Char8 None;
             Char8 *Identity;
-            Char8 *Integer;
-            Char8 *Real;
-            Char8 Symbol;
-            Char8 *String;
+            UInt64 Integer;
+            Float64 Float;
+            Bit64 Machine;
+            Char8 *Text;
         };
 
-    public: // Constructors and destructors
+    public:
         Token() = default;
 
         explicit
@@ -74,7 +71,7 @@ namespace Analyzer {
 
         Void Destroy();
 
-    public: // Properties
+    public:
         constexpr
         const Token::Point *GetStart()
         const noexcept { return &this->start; }
@@ -92,7 +89,7 @@ namespace Analyzer {
         noexcept { this->end = end; }
 
         constexpr
-        Token::Symbol GetSymbolCopy()
+        Token::Symbol GetSymbol()
         const noexcept { return this->symbol; }
 
         constexpr
@@ -107,12 +104,13 @@ namespace Analyzer {
         Void SetValue(Token::Value value)
         noexcept { this->value = value; }
 
-    private: // Members
+    private:
         Token::Point start;
+
         Token::Point end;
         Token::Symbol symbol;
         Token::Value value;
     };
 } // Analyzer
 
-#endif // KPLC_ANALYZER_TOKEN_HPP
+#endif // KPLC_COMPILER_ANALYZER_TOKEN_HPP

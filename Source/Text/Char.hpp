@@ -1,19 +1,19 @@
-#ifndef KPLC_UTILITY_CHAR_HPP
-#define KPLC_UTILITY_CHAR_HPP
+#ifndef KPLC_TEXT_CHAR_HPP
+#define KPLC_TEXT_CHAR_HPP
 
 #include "../Definitions.hpp"
 
-namespace Utility {
+namespace Text {
     struct Char {
-        static inline constexpr
+        static constexpr
         Bool IsWhitespace(Char8 in) { return (in == ' ') || (in >= '\t' && in <= '\r'); }
 
-        static inline constexpr
+        static constexpr
         Bool IsAlphabetic(Char8 in) { return (in >= 'A' && in <= 'Z') || (in >= 'a' && in <= 'z'); }
 
-        static inline constexpr
+        static constexpr
         Bool IsNumeric(Char8 in) { return in >= '0' && in <= '9'; };
     };
-} // Utility
+} // Debugger
 
-#endif //KPLC_UTILITY_CHAR_HPP
+#endif // KPLC_TEXT_CHAR_HPP
