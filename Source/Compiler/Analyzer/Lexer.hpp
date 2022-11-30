@@ -51,7 +51,7 @@ namespace Compiler::Analyzer {
         Token Lex();
 
     private:
-        enum class LexingWay : UInt8 {
+        enum class Way : UInt8 {
             NumericLiteral = 1,
             UnsignedLiteral,
             BinaryLiteral,
@@ -121,12 +121,8 @@ namespace Compiler::Analyzer {
         inline
         Void SkipWhitespace();
 
-        inline
-        Void ResolveToken()
-        noexcept;
-
         static
-        Void ThrowError(Lexer::LexingWay way, Lexer::ErrorCode error);
+        Void ThrowError(Lexer::Way way, Lexer::ErrorCode error);
 
         [[nodiscard]] constexpr
         Char8 Peek(UInt64 offset = 1)

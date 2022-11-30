@@ -18,17 +18,20 @@ namespace Collections {
         DataT *Flush();
 
     public:
+        [[nodiscard]]
         constexpr
         UInt64 GetSpace()
         const noexcept { return this->space; }
 
+        [[nodiscard]]
         constexpr
         UInt64 GetSize()
         const noexcept { return this->size; }
 
+        [[nodiscard]]
         constexpr
         const DataT *GetData()
-        const noexcept { return this->space; }
+        const noexcept { return this->data; }
 
     public:
         Void Put(DataT value);

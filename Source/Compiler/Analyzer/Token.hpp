@@ -12,17 +12,17 @@ namespace Compiler::Analyzer {
 
             constexpr
             Void Set(Token::Point point)
-            noexcept {  *this = point; }
+            noexcept { *this = point; }
         };
 
         enum class Symbol {
             None = 0,
 
             // Delimiters
-            OParenDelimiter  = '(',
-            CParenDelimiter  = ')',
-            OBraceDelimiter  = '{',
-            CBraceDelimiter  = '}',
+            OParenDelimiter = '(',
+            CParenDelimiter = ')',
+            OBraceDelimiter = '{',
+            CBraceDelimiter = '}',
 
             // Punctuates
             CommaPunctuator = ',',
@@ -68,46 +68,52 @@ namespace Compiler::Analyzer {
 
         explicit
         Token(Token::Point start)
-                : start(start) {}
+                : start(start),
+                  end({}),
+                  symbol(Token::Symbol::None),
+                  value({}) {}
 
         Void Destroy();
 
     public:
+        [[nodiscard]]
         constexpr
         const Token::Point *GetStart()
         const noexcept { return &this->start; }
 
         constexpr
-        Void SetStart(Token::Point start)
-        noexcept { this->start= start; }
+        Void SetStart(Token::Point point)
+        noexcept { this->start = point; }
 
+        [[nodiscard]]
         constexpr
         const Token::Point *GetEnd()
         const noexcept { return &this->end; }
 
         constexpr
-        Void SetEnd(Token::Point end)
-        noexcept { this->end = end; }
+        Void SetEnd(Token::Point point)
+        noexcept { this->end = point; }
 
+        [[nodiscard]]
         constexpr
         Token::Symbol GetSymbol()
         const noexcept { return this->symbol; }
 
         constexpr
-        Void SetSymbol(Token::Symbol symbol)
-        noexcept { this->symbol = symbol; }
+        Void SetSymbol(Token::Symbol tokenSymbol)
+        noexcept { this->symbol = tokenSymbol; }
 
+        [[nodiscard]]
         constexpr
         const Token::Value *GetValue()
         const noexcept { return &this->value; }
 
         constexpr
-        Void SetValue(Token::Value value)
-        noexcept { this->value = value; }
+        Void SetValue(Token::Value tokenValue)
+        noexcept { this->value = tokenValue; }
 
     private:
         Token::Point start;
-
         Token::Point end;
         Token::Symbol symbol;
         Token::Value value;
