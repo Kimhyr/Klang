@@ -3,6 +3,25 @@
 
 #include "../../Definitions.hpp"
 
+
+/*
+Primitives:
+    Integers:
+        Signed:
+            - Nat8
+            - Nat16
+            - Nat32
+            - Nat64
+        Unsigned:
+            - Int8
+            - Int16
+            - Int32
+            - Int64
+    Floats:
+        - Float32
+        - Float64
+*/
+
 namespace Compiler::Analyzer {
     class Token {
     public:
@@ -19,45 +38,80 @@ namespace Compiler::Analyzer {
             None = 0,
 
             // Delimiters
-            OParenDelimiter = '(',
-            CParenDelimiter = ')',
-            OBraceDelimiter = '{',
-            CBraceDelimiter = '}',
+            OpenBraceDelimiter = '{',
+            CloseBraceDelimiter = '}',
+            OpenParenDelimiter = '(',
+            CloseParenDelimiter = ')',
+            OpenBracketDelimiter = '[',
+            CloseBracketDelimiter = ']',
+            OpenAngleDelimiter = '<',
+            CloseAngleDelimiter = '>',
+            Quote = '\"',
 
             // Punctuates
             CommaPunctuator = ',',
             SemicolonPunctuator = ';',
 
             // Operators
-            EqualOperator = '=',
-            PlusOperator = '+',
+            AssignOperator = '=',
+            AddOperator = '+',
+            MinusOperator = '-',
 
             // Modifiers
+            ExclaimModifier = '!',
             QuestionModifier = '?',
             AtModifier = '@',
 
             // Words
             Identity = 256,
+            NamespaceKeyword,
+            EnumerareKeyword,
+            StructureKeyword,
+            UnistructKeyword,
+            ImplementKeyword,
             ProcedureKeyword,
-            LetKeyword,
-            ReturnKeyword,
+            MacroKeyword,
+            DatumKeyword,
+            LabelKeyword,
+            AliasKeyword,
+            MatchKeyword,
+            CaseKeyword,
+            LoopKeyword,
+            IfKeyword,
+            ElifKeyword,
+            ElseKeyword,
+            GiveKeyword, // Return
+            StopKeyword, // Break
+            DropKeyword, // Next case
+            RollKeyword, // Continue
+            YeetKeyword, // Throw
 
             // Literals
-            UnsignedLiteral,
-            SignedLiteral,
-            FloatLiteral,
+            NaturalLiteral,
+            IntegerLiteral,
+            RealLiteral,
             MachineLiteral,
             TextLiteral,
 
             // Operators
             CastOperator, // ::
+            ReturnOperator, // ->
+            IncrementOperator, // ++
+            DecrementOperator, // --
+            EQOperator, // ==
+            LEQOperator, // <=
+            GEQOperator, // >=
+            ANDOperator, // &&
+            OROperator, // ||
+            Space
         };
 
         // I know I can make the type into "Char8 *".
         union Value {
             Char8 None;
             const Char8 *Identity;
-            UInt64 Integer;
+            UInt64 Natural;
+            Int64 Integer;
             Float64 Float;
             Bit64 Machine;
             const Char8 *Text;

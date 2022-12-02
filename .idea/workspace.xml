@@ -3,15 +3,15 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader">{
-  &quot;useNewFormat&quot;: true
-}</component>
+  <component name="CMakePresetLoader"><![CDATA[{
+  "useNewFormat": true
+}]]></component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
     <generated>
-      <config projectName="Compiler" targetName="Compiler" />
+      <config projectName="KPLC" targetName="KPLC" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -20,21 +20,67 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d39b407-9cf1-426d-a2f7-6645ed55c21c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/KPLC.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Collections/Dynar.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Collections/Dynar.hpp" afterDir="false" />
+    <list default="true" id="ec0a8a61-6cf6-4da2-b7de-dd66701ca07f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/KPLC.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Documents/Literals" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Documents/Pattern_matching" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Documents/Primitives" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Documents/Syntax/Primitives" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Utility/Exceptions/Exception.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Utility/Exceptions/Exception.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Utility/Exceptions/InvalidArgument.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Collections/Dynar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utility/Collections/Dynar.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Collections/Dynar.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utility/Collections/Dynar.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Compiler/Analyzer/Lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Compiler/Analyzer/Lexer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Compiler/Analyzer/Lexer.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Compiler/Analyzer/Lexer.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Compiler/Analyzer/Token.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Compiler/Analyzer/Token.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Compiler/Analyzer/Token.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Compiler/Analyzer/Token.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Compiler/Error.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Compiler/Error.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/System/Memory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utility/System/Memory.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/System/Memory.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utility/System/Memory.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Text/Char.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utility/Text/Char.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Text/String.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utility/Text/String.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Text/String.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utility/Text/String.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/query/cache-v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/query/codemodel-v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/query/toolchains-v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/reply/cache-v2-dc35e9bcbc5349f3f627.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-75ac2b023400d7959bd7.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-2671ddd1aaf8495146fa.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/reply/index-2022-11-30T00-08-51-0088.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/reply/target-Compiler-Debug-d1a56e84f142a781682b.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-43ffccab9629596128ee.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/3.23.2/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/3.23.2/CMakeCXXCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/3.23.2/CMakeRCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/3.23.2/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/3.23.2/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/3.23.2/CompilerIdC/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/3.23.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/3.23.2/CompilerIdCXX/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/build.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,18 +91,6 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectApplicationVersion">
-    <option name="ide" value="CLion" />
-    <option name="majorVersion" value="2022" />
-    <option name="minorVersion" value="2.4" />
-  </component>
-  <component name="ProjectId" id="2ICVoNSPJ1BWq0KlAQLbMUd4Tb7" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -64,31 +98,33 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "E:/Projects/KPLC",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C/C++"
+    "nodejs_package_manager_path": "npm"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\Projects\KPLC\Source\Compiler" />
-      <recent name="E:\Projects\KPLC\Source\Collections" />
-      <recent name="E:\Projects\KPLC\Source\Text" />
+      <recent name="E:\Projects\KPLC\Source\Utility\Exception" />
+      <recent name="E:\Projects\KPLC\Source\Utility" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Compiler" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Compiler" TARGET_NAME="Compiler" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Compiler" RUN_TARGET_NAME="Compiler">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KPLC" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="KPLC" TARGET_NAME="KPLC" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="KPLC" RUN_TARGET_NAME="KPLC">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -97,18 +133,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9d39b407-9cf1-426d-a2f7-6645ed55c21c" name="Changes" comment="" />
-      <created>1669685726186</created>
+      <changelist id="ec0a8a61-6cf6-4da2-b7de-dd66701ca07f" name="Changes" comment="" />
+      <created>1669946481617</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1669685726186</updated>
-      <workItem from="1669685730894" duration="398000" />
-      <workItem from="1669720424280" duration="2753000" />
-      <workItem from="1669762192883" duration="10291000" />
-      <workItem from="1669824890508" duration="1202000" />
-      <workItem from="1669832237476" duration="481000" />
-      <workItem from="1669832734489" duration="2591000" />
-      <workItem from="1669835373671" duration="4568000" />
+      <updated>1669946481617</updated>
+      <workItem from="1669946484935" duration="5742000" />
     </task>
     <servers />
   </component>
@@ -125,9 +155,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>

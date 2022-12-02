@@ -1,16 +1,16 @@
 #ifndef KPLC_COMPILER_ANALYZER_LEXER_HPP
 #define KPLC_COMPILER_ANALYZER_LEXER_HPP
 
-#include "../../Text/Char.hpp"
-#include "../../Collections/Dynar.hpp"
+#include "../../Utility/Text/Char.hpp"
+#include "../../Utility/Collections/Dynar.hpp"
 #include "../../Definitions.hpp"
-#include "../Error.hpp"
 #include "Token.hpp"
 
 namespace Compiler::Analyzer {
     using namespace Compiler;
-    using namespace Text;
-    using namespace Collections;
+    using namespace Utility;
+    using namespace Utility::Text;
+    using namespace Utility::Collections;
 
     class Lexer {
     public:
@@ -20,7 +20,7 @@ namespace Compiler::Analyzer {
             Continue = 1 << 1,
         };
 
-        enum class ErrorCode : Error::Code {
+        enum class ErrorCode : UInt8 {
             WrongFormat = 1,
             Valueless,
             Incomplete,
@@ -53,7 +53,7 @@ namespace Compiler::Analyzer {
     private:
         enum class Way : UInt8 {
             NumericLiteral = 1,
-            UnsignedLiteral,
+            NaturalLiteral,
             BinaryLiteral,
             HexadecimalLiteral,
             RealLiteral,
@@ -79,7 +79,7 @@ namespace Compiler::Analyzer {
         inline
         Void LexNumeric();
 
-        Void LexUnsignedLiteral(Dynar<Char8> *buf);
+        Void LexNaturalLiteral(Dynar<Char8> *buf);
 
         inline
         Void PutNumericBuf(Dynar<Char8> *buf);
@@ -122,22 +122,23 @@ namespace Compiler::Analyzer {
         Void SkipWhitespace();
 
         static
-        Void ThrowError(Lexer::Way way, Lexer::ErrorCode error);
+        Void ThrowException(Lexer::Way way, Lexer::ErrorCode error);
 
-        [[nodiscard]] constexpr
+        [[nodiscard]]
+        constexpr
         Char8 Peek(UInt64 offset = 1)
         const noexcept { return this->source[this->index + offset]; }
 
         constexpr
         Void Advance()
         noexcept {
+            this->index++;
             this->peek = this->Peek();
             if (this->peek == '\n') {
                 this->point.Line++;
                 this->point.Column = 0;
             }
             this->point.Column++;
-            this->index++;
         }
     };
 } // Analyzer

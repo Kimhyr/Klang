@@ -1,22 +1,36 @@
 #include "Lexer.hpp"
 
-#include <stdexcept>
-
-#include "../../Text/String.hpp"
+#include "../../Utility/Exceptions/Exception.hpp"
+#include "../../Utility/Exceptions/InvalidArgument.hpp"
+#include "../../Utility/Exceptions/OutOfRange.hpp"
+#include "../../Utility/Text/String.hpp"
 
 namespace Compiler::Analyzer {
+    using namespace Utility::Exceptions;
+
     Void Lexer::Destroy() {
         delete[] this->source;
     }
+
+    /*
+        procedure Initiate(argc::Int32, argv::@@Nat8) -> Int32 {
+            datum ?value::Int32 {21 + 14}
+            value = 7;
+            return value;
+        }
+        sdf
+    */
 
     Token Lexer::Lex() {
         this->SkipWhitespace();
         this->token.SetStart(this->point);
         if (Char::IsAlphabetic(this->peek) || this->peek == '_') {
             this->LexAlphabetic();
-        } else if (Char::IsNumeric(this->peek)) {
+        }
+        else if (Char::IsNumeric(this->peek)) {
             this->LexNumeric();
-        } else {
+        }
+        else {
             this->LexSymbolic();
         }
         this->token.SetEnd(
@@ -47,11 +61,14 @@ namespace Compiler::Analyzer {
     noexcept {
         if (String::Compare(flush, "procedure") == 0) {
             this->token.SetSymbol(Token::Symbol::ProcedureKeyword);
-        } else if (String::Compare(flush, "let") == 0) {
+        }
+        else if (String::Compare(flush, "let") == 0) {
             this->token.SetSymbol(Token::Symbol::LetKeyword);
-        } else if (String::Compare(flush, "return") == 0) {
+        }
+        else if (String::Compare(flush, "return") == 0) {
             this->token.SetSymbol(Token::Symbol::ReturnKeyword);
-        } else {
+        }
+        else {
             this->token.SetSymbol(Token::Symbol::Identity);
             this->token.SetValue({.Identity = flush});
         }
@@ -79,25 +96,27 @@ namespace Compiler::Analyzer {
             }
         }
         if (this->PeekIsValidUnsigned()) {
-            this->LexUnsignedLiteral(&buf);
-        } else if (this->peek == '.') {
+            this->LexNaturalLiteral(&buf);
+        }
+        else if (this->peek == '.') {
             this->LexReal(&buf);
-        } else {
-            this->token.SetSymbol(Token::Symbol::UnsignedLiteral);
+        }
+        else {
+            this->token.SetSymbol(Token::Symbol::NaturalLiteral);
             this->token.SetValue({.Integer = 0});
         }
     }
 
-    Void Lexer::LexUnsignedLiteral(Dynar<Char8> *buf) {
+    Void Lexer::LexNaturalLiteral(Dynar<Char8> *buf) {
         do {
             this->PutNumericBuf(buf);
             if (this->peek == '.') {
                 return this->LexReal(buf);
             }
         } while (this->PeekIsValidUnsigned());
-        this->token.SetSymbol(Token::Symbol::UnsignedLiteral);
+        this->token.SetSymbol(Token::Symbol::NaturalLiteral);
         if (buf->GetSize() == 0) {
-            Lexer::ThrowError(Lexer::Way::UnsignedLiteral, Lexer::ErrorCode::Valueless);
+            Lexer::ThrowException(Lexer::Way::NaturalLiteral, Lexer::ErrorCode::Valueless);
         }
         try {
             this->token.SetValue(
@@ -105,10 +124,12 @@ namespace Compiler::Analyzer {
                             .Integer = String::ConvertToInteger<UInt64>(buf->Flush())
                     }
             );
-        } catch (const std::invalid_argument &) {
-            Lexer::ThrowError(Lexer::Way::UnsignedLiteral, Lexer::ErrorCode::Conversion);
-        } catch (const std::out_of_range &) {
-            Lexer::ThrowError(Lexer::Way::UnsignedLiteral, Lexer::ErrorCode::OutOfRange);
+        }
+        catch (const Exceptions::InvalidArgument &) {
+            Lexer::ThrowException(Lexer::Way::NaturalLiteral, Lexer::ErrorCode::Conversion);
+        }
+        catch (const Exceptions::OutOfrange &) {
+            Lexer::ThrowException(Lexer::Way::NaturalLiteral, Lexer::ErrorCode::OutOfRange);
         }
     }
 
@@ -125,15 +146,17 @@ namespace Compiler::Analyzer {
             do {
                 this->PutNumericBuf(buf);
             } while (this->PeekIsValidBinary());
-        } else {
+        }
+        else {
             if (Char::IsWhitespace(this->peek)) {
-                Lexer::ThrowError(Lexer::Way::BinaryLiteral, Lexer::ErrorCode::Incomplete);
-            } else if (Char::IsAlphabetic(this->peek) || Char::IsNumeric(this->peek)) {
-                Lexer::ThrowError(Lexer::Way::BinaryLiteral, Lexer::ErrorCode::WrongFormat);
+                Lexer::ThrowException(Lexer::Way::BinaryLiteral, Lexer::ErrorCode::Incomplete);
+            }
+            else if (Char::IsAlphabetic(this->peek) || Char::IsNumeric(this->peek)) {
+                Lexer::ThrowException(Lexer::Way::BinaryLiteral, Lexer::ErrorCode::WrongFormat);
             }
         }
         if (buf->GetSize() == 0) {
-            Lexer::ThrowError(Lexer::Way::BinaryLiteral, Lexer::ErrorCode::Valueless);
+            Lexer::ThrowException(Lexer::Way::BinaryLiteral, Lexer::ErrorCode::Valueless);
         }
         try {
             this->token.SetValue(
@@ -141,10 +164,12 @@ namespace Compiler::Analyzer {
                             .Machine = String::ConvertToInteger<UInt64>(buf->Flush(), 2)
                     }
             );
-        } catch (const std::invalid_argument &) {
-            Lexer::ThrowError(Lexer::Way::BinaryLiteral, Lexer::ErrorCode::Conversion);
-        } catch (const std::out_of_range &) {
-            Lexer::ThrowError(Lexer::Way::BinaryLiteral, Lexer::ErrorCode::OutOfRange);
+        }
+        catch (const Exceptions::InvalidArgument &) {
+            Lexer::ThrowException(Lexer::Way::BinaryLiteral, Lexer::ErrorCode::Conversion);
+        }
+        catch (const Exceptions::OutOfrange &) {
+            Lexer::ThrowException(Lexer::Way::BinaryLiteral, Lexer::ErrorCode::OutOfRange);
         }
     }
 
@@ -154,15 +179,17 @@ namespace Compiler::Analyzer {
             do {
                 this->PutNumericBuf(buf);
             } while (this->PeekIsValidHexadecimal());
-        } else {
+        }
+        else {
             if (Char::IsWhitespace(this->peek)) {
-                Lexer::ThrowError(Lexer::Way::HexadecimalLiteral, Lexer::ErrorCode::Incomplete);
-            } else if (Char::IsAlphabetic(this->peek)) {
-                Lexer::ThrowError(Lexer::Way::HexadecimalLiteral, Lexer::ErrorCode::WrongFormat);
+                Lexer::ThrowException(Lexer::Way::HexadecimalLiteral, Lexer::ErrorCode::Incomplete);
+            }
+            else if (Char::IsAlphabetic(this->peek)) {
+                Lexer::ThrowException(Lexer::Way::HexadecimalLiteral, Lexer::ErrorCode::WrongFormat);
             }
         }
         if (buf->GetSize() == 0) {
-            Lexer::ThrowError(Lexer::Way::HexadecimalLiteral, Lexer::ErrorCode::Valueless);
+            Lexer::ThrowException(Lexer::Way::HexadecimalLiteral, Lexer::ErrorCode::Valueless);
         }
         try {
             this->token.SetValue(
@@ -170,20 +197,22 @@ namespace Compiler::Analyzer {
                             .Machine = String::ConvertToInteger<UInt64>(buf->Flush(), 16)
                     }
             );
-        } catch (const std::invalid_argument &) {
-            Lexer::ThrowError(Lexer::Way::HexadecimalLiteral, Lexer::ErrorCode::Conversion);
-        } catch (const std::out_of_range &) {
-            Lexer::ThrowError(Lexer::Way::HexadecimalLiteral, Lexer::ErrorCode::OutOfRange);
+        }
+        catch (const Exceptions::InvalidArgument &) {
+            Lexer::ThrowException(Lexer::Way::HexadecimalLiteral, Lexer::ErrorCode::Conversion);
+        }
+        catch (const Exceptions::OutOfrange &) {
+            Lexer::ThrowException(Lexer::Way::HexadecimalLiteral, Lexer::ErrorCode::OutOfRange);
         }
     }
 
     Void Lexer::LexReal(Dynar<Char8> *buf) {
         // TODO This shit
-        this->token.SetSymbol(Token::Symbol::FloatLiteral);
+        this->token.SetSymbol(Token::Symbol::RealLiteral);
         do {
             this->PutNumericBuf(buf);
             if (this->peek == '.') {
-                Lexer::ThrowError(Lexer::Way::RealLiteral, Lexer::ErrorCode::WrongFormat);
+                Lexer::ThrowException(Lexer::Way::RealLiteral, Lexer::ErrorCode::WrongFormat);
             }
         } while (this->PeekIsValidUnsigned());
         try {
@@ -192,10 +221,12 @@ namespace Compiler::Analyzer {
                             .Float = String::ConvertToFloat<Float64>(buf->Flush())
                     }
             );
-        } catch (const std::invalid_argument &) {
-            Lexer::ThrowError(Lexer::Way::RealLiteral, Lexer::ErrorCode::Conversion);
-        } catch (const std::out_of_range &) {
-            Lexer::ThrowError(Lexer::Way::RealLiteral, Lexer::ErrorCode::OutOfRange);
+        }
+        catch (const Exceptions::InvalidArgument &) {
+            Lexer::ThrowException(Lexer::Way::RealLiteral, Lexer::ErrorCode::Conversion);
+        }
+        catch (const Exceptions::OutOfrange &) {
+            Lexer::ThrowException(Lexer::Way::RealLiteral, Lexer::ErrorCode::OutOfRange);
         }
     }
 
@@ -216,11 +247,12 @@ namespace Compiler::Analyzer {
         }
     }
 
-    Void Lexer::ThrowError(Lexer::Way way, Lexer::ErrorCode error) {
+    Void Lexer::ThrowException(Lexer::Way way, Lexer::ErrorCode error) {
         const Char8 *description = "";
-        throw Error(
-                Error::From::Lexer, Error::Severity::Error,
-                (Error::Code)error * (UInt64)way, description
+        throw Exception(
+                Exception::From::Lexer, Exception::Severity::Error,
+                // Adding so I don't get an error due to `-Werror`
+                (UInt64) error + (UInt64) way, description
         );
     }
 } // Analyzer

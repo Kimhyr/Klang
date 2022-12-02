@@ -1,0 +1,13 @@
+Numeric:
+    - Integer:
+        - Natural: <'0'..'9'> ['_'|'0'..'9']*
+        - Integer: ['+'|'-']? <Natural>
+    - Floating:
+        - Real: <Integer> '.'? <Natural>
+        - Scientific: <Integer> ['E'|'e'] <Integer>
+    - Machine:
+        - Binary: '0' ['B'|'b'] ['1'|'0']+
+        - Hexadecimal: '0' ['X'|'x'] ['A'..'F'|'a'..'f'|'0'..'9']+
+Textual:
+    - Text: '"' <$^>+ '"'
+    - Cooked: '$' <Text>
