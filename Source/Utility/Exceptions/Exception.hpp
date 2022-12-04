@@ -6,7 +6,7 @@
 namespace Utility::Exceptions {
     class Exception {
     public:
-        enum class From : UInt8 {
+        enum class From : Nat8 {
             Lexer,
         };
 
@@ -20,13 +20,13 @@ namespace Utility::Exceptions {
     public:
         constexpr
         Exception(
-                Exception::From from, Exception::Severity severity,
-                UInt64 code, const Char8 *description
+            Exception::From from, Exception::Severity severity,
+            Nat64 code, const Text8 *description
         )
-                : from(from),
-                  severity(severity),
-                  code(code),
-                  description(description) {}
+            : from(from),
+              severity(severity),
+              code(code),
+              description(description) {}
 
         Void Destroy();
 
@@ -40,18 +40,18 @@ namespace Utility::Exceptions {
         const noexcept { return this->severity; }
 
         virtual inline constexpr
-        UInt64 GetCode()
+        Nat64 GetCode()
         const noexcept { return this->code; }
 
         virtual inline constexpr
-        const Char8 *GetDescription()
+        const Text8 *GetDescription()
         const noexcept { return this->description; }
 
     private:
         Exception::From from;
         Exception::Severity severity;
-        UInt64 code;
-        const Char8 *description;
+        Nat64 code;
+        const Text8 *description;
     };
 } // Compiler::Exceptions
 

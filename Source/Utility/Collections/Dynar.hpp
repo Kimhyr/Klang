@@ -1,50 +1,51 @@
-#ifndef KPLC_COLLECTIONS_DYNAR_HPP
-#define KPLC_COLLECTIONS_DYNAR_HPP
+#ifndef KPLC_UTILITY_COLLECTIONS_DYNAR_HPP
+#define KPLC_UTILITY_COLLECTIONS_DYNAR_HPP
 
 #include "../../Definitions.hpp"
 
 namespace Utility::Collections {
-    template<typename DataT>
+    template<typename Data_T>
     class Dynar {
     public:
-        static constexpr const UInt64 InitialSpace = 8;
+        static constexpr
+        const Nat64 INITIAL_SPACE = 8;
 
     public:
         explicit
-        Dynar(UInt64 space = Dynar::InitialSpace);
+        Dynar(Nat64 space = Dynar::INITIAL_SPACE);
 
         Void Destroy();
 
-        DataT *Flush();
+        Data_T *Flush();
 
     public:
         [[nodiscard]]
         constexpr
-        UInt64 GetSpace()
+        Nat64 GetSpace()
         const noexcept { return this->space; }
 
         [[nodiscard]]
         constexpr
-        UInt64 GetSize()
+        Nat64 GetSize()
         const noexcept { return this->size; }
 
         [[nodiscard]]
         constexpr
-        const DataT *GetData()
+        const Data_T *GetData()
         const noexcept { return this->data; }
 
     public:
-        Void Put(DataT value);
+        Void Put(Data_T value);
 
     private:
-        UInt64 space;
-        UInt64 size;
-        DataT *data;
+        Nat64 space;
+        Nat64 size;
+        Data_T *data;
 
     private:
         inline
-        Void Reallocate(UInt64 newSpace);
+        Void Reallocate(Nat64 newSpace);
     };
 } // Utility::Collection
 
-#endif // KPLC_COLLECTIONS_DYNAR_HPP
+#endif // KPLC_UTILITY_COLLECTIONS_DYNAR_HPP

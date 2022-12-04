@@ -5,8 +5,7 @@
 #include "Definitions.hpp"
 
 Int32 main() {
-    using namespace Utility::Collections;
-    Dynar<Char8> string;
+    Utility::Collections::Dynar<Text8> string;
     string.Put('H');
     string.Put('i');
     string.Put('!');

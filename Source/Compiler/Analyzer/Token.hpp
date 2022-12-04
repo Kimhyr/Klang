@@ -26,95 +26,97 @@ namespace Compiler::Analyzer {
     class Token {
     public:
         struct Point {
-            UInt64 Line;
-            UInt64 Column;
+            Nat64 Line;
+            Nat64 Column;
 
             constexpr
             Void Set(Token::Point point)
             noexcept { *this = point; }
         };
 
-        enum class Symbol {
+        enum class Symbol : Nat16 {
             None = 0,
 
-            // Delimiters
-            OpenBraceDelimiter = '{',
-            CloseBraceDelimiter = '}',
-            OpenParenDelimiter = '(',
-            CloseParenDelimiter = ')',
-            OpenBracketDelimiter = '[',
-            CloseBracketDelimiter = ']',
-            OpenAngleDelimiter = '<',
-            CloseAngleDelimiter = '>',
+            OpenBrace = '{',
+            CloseBrace = '}',
+            OpenParen = '(',
+            CloseParen = ')',
+            OpenBracket = '[',
+            CloseBracket = ']',
+            Lesser = '<',
+            Greater = '>',
             Quote = '\"',
+            Comma = ',',
+            Colon = ':',
+            Semicolon = ';',
+            Equal = '=',
+            Add = '+',
+            Minus = '-',
+            Exclaim = '!',
+            Question = '?',
+            At = '@',
+            And = '&',
+            Or = '|',
+            Not = '!',
 
-            // Punctuates
-            CommaPunctuator = ',',
-            SemicolonPunctuator = ';',
-
-            // Operators
-            AssignOperator = '=',
-            AddOperator = '+',
-            MinusOperator = '-',
-
-            // Modifiers
-            ExclaimModifier = '!',
-            QuestionModifier = '?',
-            AtModifier = '@',
-
-            // Words
             Identity = 256,
-            NamespaceKeyword,
-            EnumerareKeyword,
-            StructureKeyword,
-            UnistructKeyword,
-            ImplementKeyword,
-            ProcedureKeyword,
-            MacroKeyword,
-            DatumKeyword,
-            LabelKeyword,
-            AliasKeyword,
-            MatchKeyword,
-            CaseKeyword,
-            LoopKeyword,
-            IfKeyword,
-            ElifKeyword,
-            ElseKeyword,
-            GiveKeyword, // Return
-            StopKeyword, // Break
-            DropKeyword, // Next case
-            RollKeyword, // Continue
-            YeetKeyword, // Throw
+            Namespace,
+            Enumerare,
+            Structure,
+            Unistruct,
+            Implement,
+            Procedure,
+            Macro,
+            Datum,
+            Label,
+            Alias,
+            Match,
+            Case,
+            Loop,
+            If,
+            Elif,
+            Else,
+            Give,
+            Stop,
+            Drop,
+            Roll,
+            Yeet,
 
-            // Literals
-            NaturalLiteral,
-            IntegerLiteral,
-            RealLiteral,
-            MachineLiteral,
-            TextLiteral,
+            Nat8,
+            Nat16,
+            Nat32,
+            Nat64,
+            Int8,
+            Int16,
+            Int32,
+            Int64,
 
-            // Operators
-            CastOperator, // ::
-            ReturnOperator, // ->
-            IncrementOperator, // ++
-            DecrementOperator, // --
-            EQOperator, // ==
-            LEQOperator, // <=
-            GEQOperator, // >=
-            ANDOperator, // &&
-            OROperator, // ||
-            Space
+            Natural,
+            Integer,
+            Real,
+            Machine,
+            Text,
+
+            DoubleColon, // ::
+            RightArrow, // ->
+            Increment, // ++
+            Decrement, // --
+            Equivalent, // ==
+            LesserEquivalent, // <=
+            GreaterEquivalent, // >=
+            AND, // &&
+            OR, // ||
         };
 
-        // I know I can make the type into "Char8 *".
+        // I know I can make the type into "Text8 *".
         union Value {
-            Char8 None;
-            const Char8 *Identity;
-            UInt64 Natural;
+            Text8 None;
+            const Text8 *Identity;
+            Nat64 Natural;
             Int64 Integer;
             Float64 Float;
             Bit64 Machine;
-            const Char8 *Text;
+            const Text8 *Text;
         };
 
     public:
@@ -122,10 +124,10 @@ namespace Compiler::Analyzer {
 
         explicit
         Token(Token::Point start)
-                : start(start),
-                  end({}),
-                  symbol(Token::Symbol::None),
-                  value({}) {}
+            : start(start),
+              end({}),
+              symbol(Token::Symbol::None),
+              value({}) {}
 
         Void Destroy();
 

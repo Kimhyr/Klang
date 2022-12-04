@@ -3,15 +3,15 @@ namespace Compiler:Analyzer {
     import Compiler:Analyzer:Token;
 
     structure Lexer! {
-        flags::enumerare Flag!::Ptr<UInt8> {
+        flags::enumerare Flag!::Ptr<Nat8> {
             None = 0,
             End = 1 << ,
             Continue = 1 << 1,
         },
         point::Token:Point,
         index::Int64,
-        source::Ptr<UInt8>,
-        peek::UInt8,
+        source::Ptr<Nat8>,
+        peek::Nat8,
         token::Token,
     }
 
@@ -20,7 +20,7 @@ namespace Compiler:Analyzer {
 
     label Structors =:
         $[Constant]
-        procedure Create!(source::Ptr<UInt8>) -> :This;
+        procedure Create!(source::Ptr<Nat8>) -> :This;
 
         procedure? Destroy!;
 
@@ -29,7 +29,7 @@ namespace Compiler:Analyzer {
 
     label Helpers =:
         $[Constant]
-        procedure' Peek(offset::Int64) -> UInt8;
+        procedure' Peek(offset::Int64) -> Nat8;
 
         $[Constant]
         procedure? Advance!;
@@ -44,7 +44,7 @@ namespace Compiler:Analyzer {
 }
 
 procedure Initiate {
-    datum source::Ptr<UInt8> = "porcedure";
+    datum source::Ptr<Nat8> = "porcedure";
     datum lexer::Lexer = Lexer:Create(source);
     datum token::Token = lexer.Lex();
     lexer.GetIdentity;

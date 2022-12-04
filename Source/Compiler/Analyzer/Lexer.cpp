@@ -12,15 +12,6 @@ namespace Compiler::Analyzer {
         delete[] this->source;
     }
 
-    /*
-        procedure Initiate(argc::Int32, argv::@@Nat8) -> Int32 {
-            datum ?value::Int32 {21 + 14}
-            value = 7;
-            return value;
-        }
-        sdf
-    */
-
     Token Lexer::Lex() {
         this->SkipWhitespace();
         this->token.SetStart(this->point);
@@ -34,10 +25,10 @@ namespace Compiler::Analyzer {
             this->LexSymbolic();
         }
         this->token.SetEnd(
-                {
-                        .Line = this->point.Line,
-                        .Column = this->point.Column - 1
-                }
+            {
+                .Line = this->point.Line,
+                .Column = this->point.Column - 1
+            }
         );
         if (this->peek == '\0') {
             this->flags |= Lexer::Flag::End;
@@ -47,26 +38,26 @@ namespace Compiler::Analyzer {
 
     Void Lexer::LexAlphabetic()
     noexcept {
-        Dynar<Char8> buf;
+        Dynar<Text8> buf;
         do {
             buf.Put(this->peek);
             this->Advance();
         } while (Char::IsNumeric(this->peek) || Char::IsAlphabetic(this->peek) || this->peek == '_');
         buf.Put('\0');
-        Char8 *flush = buf.Flush();
+        Text8 *flush = buf.Flush();
         this->MatchAlphabetic(flush);
     }
 
-    Void Lexer::MatchAlphabetic(const Char8 *flush)
+    Void Lexer::MatchAlphabetic(const Text8 *flush)
     noexcept {
         if (String::Compare(flush, "procedure") == 0) {
-            this->token.SetSymbol(Token::Symbol::ProcedureKeyword);
+            this->token.SetSymbol(Token::Symbol::Procedure);
         }
         else if (String::Compare(flush, "let") == 0) {
-            this->token.SetSymbol(Token::Symbol::LetKeyword);
+            this->token.SetSymbol(Token::Symbol::Datum);
         }
         else if (String::Compare(flush, "return") == 0) {
-            this->token.SetSymbol(Token::Symbol::ReturnKeyword);
+            this->token.SetSymbol(Token::Symbol::Give);
         }
         else {
             this->token.SetSymbol(Token::Symbol::Identity);
@@ -75,7 +66,7 @@ namespace Compiler::Analyzer {
     }
 
     Void Lexer::LexNumeric() {
-        Dynar<Char8> buf;
+        Dynar<Text8> buf;
         if (this->peek == '0') {
             this->Advance();
             switch (this->peek) {
@@ -102,27 +93,27 @@ namespace Compiler::Analyzer {
             this->LexReal(&buf);
         }
         else {
-            this->token.SetSymbol(Token::Symbol::NaturalLiteral);
+            this->token.SetSymbol(Token::Symbol::Natural);
             this->token.SetValue({.Integer = 0});
         }
     }
 
-    Void Lexer::LexNaturalLiteral(Dynar<Char8> *buf) {
+    Void Lexer::LexNaturalLiteral(Dynar<Text8> *buf) {
         do {
             this->PutNumericBuf(buf);
             if (this->peek == '.') {
                 return this->LexReal(buf);
             }
         } while (this->PeekIsValidUnsigned());
-        this->token.SetSymbol(Token::Symbol::NaturalLiteral);
+        this->token.SetSymbol(Token::Symbol::Natural);
         if (buf->GetSize() == 0) {
             Lexer::ThrowException(Lexer::Way::NaturalLiteral, Lexer::ErrorCode::Valueless);
         }
         try {
             this->token.SetValue(
-                    {
-                            .Integer = String::ConvertToInteger<UInt64>(buf->Flush())
-                    }
+                {
+                    .Integer = String::ConvertToInteger<Int64>(buf->Flush())
+                }
             );
         }
         catch (const Exceptions::InvalidArgument &) {
@@ -133,15 +124,15 @@ namespace Compiler::Analyzer {
         }
     }
 
-    Void Lexer::PutNumericBuf(Dynar<Char8> *buf) {
+    Void Lexer::PutNumericBuf(Dynar<Text8> *buf) {
         if (this->peek != '_') {
             buf->Put(this->peek);
         }
         this->Advance();
     }
 
-    Void Lexer::LexBinaryLiteral(Dynar<Char8> *buf) {
-        this->token.SetSymbol(Token::Symbol::MachineLiteral);
+    Void Lexer::LexBinaryLiteral(Dynar<Text8> *buf) {
+        this->token.SetSymbol(Token::Symbol::Machine);
         if (this->PeekIsValidBinary()) {
             do {
                 this->PutNumericBuf(buf);
@@ -160,9 +151,9 @@ namespace Compiler::Analyzer {
         }
         try {
             this->token.SetValue(
-                    {
-                            .Machine = String::ConvertToInteger<UInt64>(buf->Flush(), 2)
-                    }
+                {
+                    .Machine = String::ConvertToInteger<Nat64>(buf->Flush(), 2)
+                }
             );
         }
         catch (const Exceptions::InvalidArgument &) {
@@ -173,8 +164,8 @@ namespace Compiler::Analyzer {
         }
     }
 
-    Void Lexer::LexHexadecimalLiteral(Dynar<Char8> *buf) {
-        this->token.SetSymbol(Token::Symbol::MachineLiteral);
+    Void Lexer::LexHexadecimalLiteral(Dynar<Text8> *buf) {
+        this->token.SetSymbol(Token::Symbol::Machine);
         if (this->PeekIsValidHexadecimal()) {
             do {
                 this->PutNumericBuf(buf);
@@ -193,9 +184,9 @@ namespace Compiler::Analyzer {
         }
         try {
             this->token.SetValue(
-                    {
-                            .Machine = String::ConvertToInteger<UInt64>(buf->Flush(), 16)
-                    }
+                {
+                    .Machine = String::ConvertToInteger<Nat64>(buf->Flush(), 16)
+                }
             );
         }
         catch (const Exceptions::InvalidArgument &) {
@@ -206,9 +197,9 @@ namespace Compiler::Analyzer {
         }
     }
 
-    Void Lexer::LexReal(Dynar<Char8> *buf) {
+    Void Lexer::LexReal(Dynar<Text8> *buf) {
         // TODO This shit
-        this->token.SetSymbol(Token::Symbol::RealLiteral);
+        this->token.SetSymbol(Token::Symbol::Real);
         do {
             this->PutNumericBuf(buf);
             if (this->peek == '.') {
@@ -217,9 +208,9 @@ namespace Compiler::Analyzer {
         } while (this->PeekIsValidUnsigned());
         try {
             this->token.SetValue(
-                    {
-                            .Float = String::ConvertToFloat<Float64>(buf->Flush())
-                    }
+                {
+                    .Float = String::ConvertToFloat<Float64>(buf->Flush())
+                }
             );
         }
         catch (const Exceptions::InvalidArgument &) {
@@ -248,11 +239,11 @@ namespace Compiler::Analyzer {
     }
 
     Void Lexer::ThrowException(Lexer::Way way, Lexer::ErrorCode error) {
-        const Char8 *description = "";
+        const Text8 *description = "";
         throw Exception(
-                Exception::From::Lexer, Exception::Severity::Error,
-                // Adding so I don't get an error due to `-Werror`
-                (UInt64) error + (UInt64) way, description
+            Exception::From::Lexer, Exception::Severity::Error,
+            // Adding so I don't get an error due to `-Werror`
+            (Nat64) error + (Nat64) way, description
         );
     }
 } // Analyzer

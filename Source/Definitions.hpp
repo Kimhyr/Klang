@@ -1,13 +1,13 @@
-#ifndef KPLC__DEFINITIONS_HPP
-#define KPLC__DEFINITIONS_HPP
+#ifndef KPLC_DEFINITIONS_HPP
+#define KPLC_DEFINITIONS_HPP
 
 #define null = NULL
 #define nil = nullptr
 
 using Void = void;
 
-using Char8 = char;
-using Char16 = wchar_t;
+using Text8 = char;
+using Text16 = wchar_t;
 
 using Bool = bool;
 
@@ -21,13 +21,13 @@ using Int16 = signed short int;
 using Int32 = signed int;
 using Int64 = signed long long int;
 
-using UInt8 = unsigned char;
-using UInt16 = unsigned short int;
-using UInt32 = unsigned int;
-using UInt64 = unsigned long long int;
+using Nat8 = unsigned char;
+using Nat16 = unsigned short int;
+using Nat32 = unsigned int;
+using Nat64 = unsigned long long int;
 
 using Float32 = float;
 using Float64 = double;
 using Float128 = long double;
 
-#endif // KPLC__DEFINITIONS_HPP
+#endif // KPLC_DEFINITIONS_HPP

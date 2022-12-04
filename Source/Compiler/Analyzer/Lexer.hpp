@@ -20,7 +20,7 @@ namespace Compiler::Analyzer {
             Continue = 1 << 1,
         };
 
-        enum class ErrorCode : UInt8 {
+        enum class ErrorCode : Nat8 {
             WrongFormat = 1,
             Valueless,
             Incomplete,
@@ -31,13 +31,13 @@ namespace Compiler::Analyzer {
     public:
         [[nodiscard]]
         explicit constexpr
-        Lexer(const Char8 *source)
-                : flags(Lexer::Flag::None),
-                  point({1, 1}),
-                  index(-1),
-                  source(source),
-                  peek(source[0]),
-                  token() {}
+        Lexer(const Text8 *source)
+            : flags(Lexer::Flag::None),
+              point({1, 1}),
+              index(-1),
+              source(source),
+              peek(source[0]),
+              token() {}
 
         Void Destroy();
 
@@ -51,7 +51,7 @@ namespace Compiler::Analyzer {
         Token Lex();
 
     private:
-        enum class Way : UInt8 {
+        enum class Way : Nat8 {
             NumericLiteral = 1,
             NaturalLiteral,
             BinaryLiteral,
@@ -63,8 +63,8 @@ namespace Compiler::Analyzer {
         Bit8 flags;
         Token::Point point;
         Int64 index;
-        const Char8 *source;
-        Char8 peek;
+        const Text8 *source;
+        Text8 peek;
         Token token;
 
     private:
@@ -73,16 +73,16 @@ namespace Compiler::Analyzer {
         noexcept;
 
         inline
-        Void MatchAlphabetic(const Char8 *flush)
+        Void MatchAlphabetic(const Text8 *flush)
         noexcept;
 
         inline
         Void LexNumeric();
 
-        Void LexNaturalLiteral(Dynar<Char8> *buf);
+        Void LexNaturalLiteral(Dynar<Text8> *buf);
 
         inline
-        Void PutNumericBuf(Dynar<Char8> *buf);
+        Void PutNumericBuf(Dynar<Text8> *buf);
 
         [[nodiscard]]
         constexpr
@@ -90,7 +90,7 @@ namespace Compiler::Analyzer {
         const noexcept { return Char::IsNumeric(this->peek) || this->peek == '_'; }
 
         inline
-        Void LexBinaryLiteral(Dynar<Char8> *buf);
+        Void LexBinaryLiteral(Dynar<Text8> *buf);
 
         [[nodiscard]]
         constexpr
@@ -98,7 +98,7 @@ namespace Compiler::Analyzer {
         const noexcept { return this->peek == '0' || this->peek == '1' || this->peek == '_'; }
 
         inline
-        Void LexHexadecimalLiteral(Dynar<Char8> *buf);
+        Void LexHexadecimalLiteral(Dynar<Text8> *buf);
 
         [[nodiscard]]
         constexpr
@@ -109,7 +109,7 @@ namespace Compiler::Analyzer {
         }
 
         inline
-        Void LexReal(Dynar<Char8> *buf);
+        Void LexReal(Dynar<Text8> *buf);
 
         inline
         Void SkipZeros()
@@ -126,7 +126,7 @@ namespace Compiler::Analyzer {
 
         [[nodiscard]]
         constexpr
-        Char8 Peek(UInt64 offset = 1)
+        Text8 Peek(Nat64 offset = 1)
         const noexcept { return this->source[this->index + offset]; }
 
         constexpr

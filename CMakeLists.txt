@@ -11,10 +11,10 @@ FILE(GLOB SOURCES
         ./Source/*.cpp
         ./Source/Compiler/*.hpp
         ./Source/Compiler/*.cpp
-        ./Source/Utility/*.hpp
-        ./Source/Utility/*.cpp
         ./Source/Compiler/Analyzer/*.hpp
         ./Source/Compiler/Analyzer/*.cpp
+        ./Source/Utility/*.hpp
+        ./Source/Utility/*.cpp
         ./Source/Utility/Collections/*.hpp
         ./Source/Utility/Collections/*.cpp
         ./Source/Utility/Exceptions/*.hpp

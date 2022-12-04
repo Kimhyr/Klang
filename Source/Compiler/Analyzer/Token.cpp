@@ -6,7 +6,7 @@ namespace Compiler::Analyzer {
         case Token::Symbol::Identity:
             delete[] this->value.Identity;
             return;
-        case Token::Symbol::TextLiteral:
+        case Token::Symbol::Text:
             delete[] this->value.Text;
             return;
         default:

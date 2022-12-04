@@ -1,10 +1,10 @@
-enumerare Token::UInt8 {
-    Identifier::@UInt8,
-    Literal::enumerare Literal::UInt8 {
-        None::UInt8,
-        String::@UInt8,
-        Symbol::UInt8,
-        Natural::UInt64,
+enumerare Token::Nat8 {
+    Identifier::@Nat8,
+    Literal::enumerare Literal::Nat8 {
+        None::Nat8,
+        String::@Nat8,
+        Symbol::Nat8,
+        Natural::Nat64,
         Integer::Int64,
         Real::Float64,
     };
@@ -13,8 +13,8 @@ enumerare Token::UInt8 {
 label Token =: {
     structure Identifier {
         \\ "''" : Constant
-        ''TOKEN_ENUMERATOR::UInt8 = 1,
-        value::@UInt8,
+        ''TOKEN_ENUMERATOR::Nat8 = 1,
+        value::@Nat8,
     }
 }
 

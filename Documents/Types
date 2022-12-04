@@ -5,10 +5,10 @@ label Integers =:
     datum _::Int32;
     datum _::Int64;
 
-    datum _::UInt64;
-    datum _::UInt16;
+    datum _::Nat64;
+    datum _::Nat16;
     datum _::UInt32;
-    datum _::UInt64;
+    datum _::Nat64;
 
 label Floats =:
     datum _::Float32;
