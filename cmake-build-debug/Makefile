@@ -128,173 +128,149 @@ KPLC/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/build
 .PHONY : KPLC/fast
 
-Source/Compiler/Analyzer/Lexer.obj: Source/Compiler/Analyzer/Lexer.cpp.obj
-.PHONY : Source/Compiler/Analyzer/Lexer.obj
+Source/Analyzer/Lexer.obj: Source/Analyzer/Lexer.cpp.obj
+.PHONY : Source/Analyzer/Lexer.obj
 
 # target to build an object file
-Source/Compiler/Analyzer/Lexer.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Compiler/Analyzer/Lexer.cpp.obj
-.PHONY : Source/Compiler/Analyzer/Lexer.cpp.obj
+Source/Analyzer/Lexer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.obj
+.PHONY : Source/Analyzer/Lexer.cpp.obj
 
-Source/Compiler/Analyzer/Lexer.i: Source/Compiler/Analyzer/Lexer.cpp.i
-.PHONY : Source/Compiler/Analyzer/Lexer.i
+Source/Analyzer/Lexer.i: Source/Analyzer/Lexer.cpp.i
+.PHONY : Source/Analyzer/Lexer.i
 
 # target to preprocess a source file
-Source/Compiler/Analyzer/Lexer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Compiler/Analyzer/Lexer.cpp.i
-.PHONY : Source/Compiler/Analyzer/Lexer.cpp.i
+Source/Analyzer/Lexer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.i
+.PHONY : Source/Analyzer/Lexer.cpp.i
 
-Source/Compiler/Analyzer/Lexer.s: Source/Compiler/Analyzer/Lexer.cpp.s
-.PHONY : Source/Compiler/Analyzer/Lexer.s
+Source/Analyzer/Lexer.s: Source/Analyzer/Lexer.cpp.s
+.PHONY : Source/Analyzer/Lexer.s
 
 # target to generate assembly for a file
-Source/Compiler/Analyzer/Lexer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Compiler/Analyzer/Lexer.cpp.s
-.PHONY : Source/Compiler/Analyzer/Lexer.cpp.s
+Source/Analyzer/Lexer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.s
+.PHONY : Source/Analyzer/Lexer.cpp.s
 
-Source/Compiler/Analyzer/Token.obj: Source/Compiler/Analyzer/Token.cpp.obj
-.PHONY : Source/Compiler/Analyzer/Token.obj
+Source/Analyzer/Token.obj: Source/Analyzer/Token.cpp.obj
+.PHONY : Source/Analyzer/Token.obj
 
 # target to build an object file
-Source/Compiler/Analyzer/Token.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Compiler/Analyzer/Token.cpp.obj
-.PHONY : Source/Compiler/Analyzer/Token.cpp.obj
+Source/Analyzer/Token.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.obj
+.PHONY : Source/Analyzer/Token.cpp.obj
 
-Source/Compiler/Analyzer/Token.i: Source/Compiler/Analyzer/Token.cpp.i
-.PHONY : Source/Compiler/Analyzer/Token.i
+Source/Analyzer/Token.i: Source/Analyzer/Token.cpp.i
+.PHONY : Source/Analyzer/Token.i
 
 # target to preprocess a source file
-Source/Compiler/Analyzer/Token.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Compiler/Analyzer/Token.cpp.i
-.PHONY : Source/Compiler/Analyzer/Token.cpp.i
+Source/Analyzer/Token.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.i
+.PHONY : Source/Analyzer/Token.cpp.i
 
-Source/Compiler/Analyzer/Token.s: Source/Compiler/Analyzer/Token.cpp.s
-.PHONY : Source/Compiler/Analyzer/Token.s
+Source/Analyzer/Token.s: Source/Analyzer/Token.cpp.s
+.PHONY : Source/Analyzer/Token.s
 
 # target to generate assembly for a file
-Source/Compiler/Analyzer/Token.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Compiler/Analyzer/Token.cpp.s
-.PHONY : Source/Compiler/Analyzer/Token.cpp.s
+Source/Analyzer/Token.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.s
+.PHONY : Source/Analyzer/Token.cpp.s
 
-Source/Main.obj: Source/Main.cpp.obj
-.PHONY : Source/Main.obj
+Source/Compiler.obj: Source/Compiler.cpp.obj
+.PHONY : Source/Compiler.obj
 
 # target to build an object file
-Source/Main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Main.cpp.obj
-.PHONY : Source/Main.cpp.obj
+Source/Compiler.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Compiler.cpp.obj
+.PHONY : Source/Compiler.cpp.obj
 
-Source/Main.i: Source/Main.cpp.i
-.PHONY : Source/Main.i
+Source/Compiler.i: Source/Compiler.cpp.i
+.PHONY : Source/Compiler.i
 
 # target to preprocess a source file
-Source/Main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Main.cpp.i
-.PHONY : Source/Main.cpp.i
+Source/Compiler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Compiler.cpp.i
+.PHONY : Source/Compiler.cpp.i
 
-Source/Main.s: Source/Main.cpp.s
-.PHONY : Source/Main.s
+Source/Compiler.s: Source/Compiler.cpp.s
+.PHONY : Source/Compiler.s
 
 # target to generate assembly for a file
-Source/Main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Main.cpp.s
-.PHONY : Source/Main.cpp.s
+Source/Compiler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Compiler.cpp.s
+.PHONY : Source/Compiler.cpp.s
 
-Source/Utility/Collections/Dynar.obj: Source/Utility/Collections/Dynar.cpp.obj
-.PHONY : Source/Utility/Collections/Dynar.obj
+Source/Definitions.obj: Source/Definitions.cpp.obj
+.PHONY : Source/Definitions.obj
 
 # target to build an object file
-Source/Utility/Collections/Dynar.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/Collections/Dynar.cpp.obj
-.PHONY : Source/Utility/Collections/Dynar.cpp.obj
+Source/Definitions.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Definitions.cpp.obj
+.PHONY : Source/Definitions.cpp.obj
 
-Source/Utility/Collections/Dynar.i: Source/Utility/Collections/Dynar.cpp.i
-.PHONY : Source/Utility/Collections/Dynar.i
+Source/Definitions.i: Source/Definitions.cpp.i
+.PHONY : Source/Definitions.i
 
 # target to preprocess a source file
-Source/Utility/Collections/Dynar.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/Collections/Dynar.cpp.i
-.PHONY : Source/Utility/Collections/Dynar.cpp.i
+Source/Definitions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Definitions.cpp.i
+.PHONY : Source/Definitions.cpp.i
 
-Source/Utility/Collections/Dynar.s: Source/Utility/Collections/Dynar.cpp.s
-.PHONY : Source/Utility/Collections/Dynar.s
+Source/Definitions.s: Source/Definitions.cpp.s
+.PHONY : Source/Definitions.s
 
 # target to generate assembly for a file
-Source/Utility/Collections/Dynar.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/Collections/Dynar.cpp.s
-.PHONY : Source/Utility/Collections/Dynar.cpp.s
+Source/Definitions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Definitions.cpp.s
+.PHONY : Source/Definitions.cpp.s
 
-Source/Utility/Exceptions/Exception.obj: Source/Utility/Exceptions/Exception.cpp.obj
-.PHONY : Source/Utility/Exceptions/Exception.obj
+Source/Entry.obj: Source/Entry.cpp.obj
+.PHONY : Source/Entry.obj
 
 # target to build an object file
-Source/Utility/Exceptions/Exception.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/Exceptions/Exception.cpp.obj
-.PHONY : Source/Utility/Exceptions/Exception.cpp.obj
+Source/Entry.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Entry.cpp.obj
+.PHONY : Source/Entry.cpp.obj
 
-Source/Utility/Exceptions/Exception.i: Source/Utility/Exceptions/Exception.cpp.i
-.PHONY : Source/Utility/Exceptions/Exception.i
+Source/Entry.i: Source/Entry.cpp.i
+.PHONY : Source/Entry.i
 
 # target to preprocess a source file
-Source/Utility/Exceptions/Exception.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/Exceptions/Exception.cpp.i
-.PHONY : Source/Utility/Exceptions/Exception.cpp.i
+Source/Entry.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Entry.cpp.i
+.PHONY : Source/Entry.cpp.i
 
-Source/Utility/Exceptions/Exception.s: Source/Utility/Exceptions/Exception.cpp.s
-.PHONY : Source/Utility/Exceptions/Exception.s
+Source/Entry.s: Source/Entry.cpp.s
+.PHONY : Source/Entry.s
 
 # target to generate assembly for a file
-Source/Utility/Exceptions/Exception.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/Exceptions/Exception.cpp.s
-.PHONY : Source/Utility/Exceptions/Exception.cpp.s
+Source/Entry.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Entry.cpp.s
+.PHONY : Source/Entry.cpp.s
 
-Source/Utility/System/Memory.obj: Source/Utility/System/Memory.cpp.obj
-.PHONY : Source/Utility/System/Memory.obj
+Source/Exception.obj: Source/Exception.cpp.obj
+.PHONY : Source/Exception.obj
 
 # target to build an object file
-Source/Utility/System/Memory.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/System/Memory.cpp.obj
-.PHONY : Source/Utility/System/Memory.cpp.obj
+Source/Exception.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Exception.cpp.obj
+.PHONY : Source/Exception.cpp.obj
 
-Source/Utility/System/Memory.i: Source/Utility/System/Memory.cpp.i
-.PHONY : Source/Utility/System/Memory.i
-
-# target to preprocess a source file
-Source/Utility/System/Memory.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/System/Memory.cpp.i
-.PHONY : Source/Utility/System/Memory.cpp.i
-
-Source/Utility/System/Memory.s: Source/Utility/System/Memory.cpp.s
-.PHONY : Source/Utility/System/Memory.s
-
-# target to generate assembly for a file
-Source/Utility/System/Memory.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/System/Memory.cpp.s
-.PHONY : Source/Utility/System/Memory.cpp.s
-
-Source/Utility/Text/String.obj: Source/Utility/Text/String.cpp.obj
-.PHONY : Source/Utility/Text/String.obj
-
-# target to build an object file
-Source/Utility/Text/String.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/Text/String.cpp.obj
-.PHONY : Source/Utility/Text/String.cpp.obj
-
-Source/Utility/Text/String.i: Source/Utility/Text/String.cpp.i
-.PHONY : Source/Utility/Text/String.i
+Source/Exception.i: Source/Exception.cpp.i
+.PHONY : Source/Exception.i
 
 # target to preprocess a source file
-Source/Utility/Text/String.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/Text/String.cpp.i
-.PHONY : Source/Utility/Text/String.cpp.i
+Source/Exception.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Exception.cpp.i
+.PHONY : Source/Exception.cpp.i
 
-Source/Utility/Text/String.s: Source/Utility/Text/String.cpp.s
-.PHONY : Source/Utility/Text/String.s
+Source/Exception.s: Source/Exception.cpp.s
+.PHONY : Source/Exception.s
 
 # target to generate assembly for a file
-Source/Utility/Text/String.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Utility/Text/String.cpp.s
-.PHONY : Source/Utility/Text/String.cpp.s
+Source/Exception.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KPLC.dir\build.make CMakeFiles/KPLC.dir/Source/Exception.cpp.s
+.PHONY : Source/Exception.cpp.s
 
 # Help Target
 help:
@@ -305,27 +281,24 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... KPLC
-	@echo ... Source/Compiler/Analyzer/Lexer.obj
-	@echo ... Source/Compiler/Analyzer/Lexer.i
-	@echo ... Source/Compiler/Analyzer/Lexer.s
-	@echo ... Source/Compiler/Analyzer/Token.obj
-	@echo ... Source/Compiler/Analyzer/Token.i
-	@echo ... Source/Compiler/Analyzer/Token.s
-	@echo ... Source/Main.obj
-	@echo ... Source/Main.i
-	@echo ... Source/Main.s
-	@echo ... Source/Utility/Collections/Dynar.obj
-	@echo ... Source/Utility/Collections/Dynar.i
-	@echo ... Source/Utility/Collections/Dynar.s
-	@echo ... Source/Utility/Exceptions/Exception.obj
-	@echo ... Source/Utility/Exceptions/Exception.i
-	@echo ... Source/Utility/Exceptions/Exception.s
-	@echo ... Source/Utility/System/Memory.obj
-	@echo ... Source/Utility/System/Memory.i
-	@echo ... Source/Utility/System/Memory.s
-	@echo ... Source/Utility/Text/String.obj
-	@echo ... Source/Utility/Text/String.i
-	@echo ... Source/Utility/Text/String.s
+	@echo ... Source/Analyzer/Lexer.obj
+	@echo ... Source/Analyzer/Lexer.i
+	@echo ... Source/Analyzer/Lexer.s
+	@echo ... Source/Analyzer/Token.obj
+	@echo ... Source/Analyzer/Token.i
+	@echo ... Source/Analyzer/Token.s
+	@echo ... Source/Compiler.obj
+	@echo ... Source/Compiler.i
+	@echo ... Source/Compiler.s
+	@echo ... Source/Definitions.obj
+	@echo ... Source/Definitions.i
+	@echo ... Source/Definitions.s
+	@echo ... Source/Entry.obj
+	@echo ... Source/Entry.i
+	@echo ... Source/Entry.s
+	@echo ... Source/Exception.obj
+	@echo ... Source/Exception.i
+	@echo ... Source/Exception.s
 .PHONY : help
 
 

@@ -4,7 +4,7 @@ NAME=kplc
 SRCD=./Source
 OUTD=./Output
 OBJD=$(OUTD)/Objects
-DIRS=. Compiler/Analyzer Utility/Collections Utility/Eceptions Utility/System Utility/Text
+DIRS=. Analyzer Utilities
 
 # Files
 SRCS=$(foreach D,$(DIRS),$(wildcard $(SRCD)/$(D)/*.cpp))
@@ -20,6 +20,9 @@ IFLGS=$(foreach D,$(DIRS),-I$(D))
 FLGS=$(CFLGS) $(WFLGS) $(IFLGS)
 
 all:$(BIN)
+
+entry:$(SRCD)/Entry.cpp
+	$(CC) $(SRCD)/Entry.cpp -o ./Entry.exe $(FLGS)
 
 run:$(BIN)
 	$(BIN)

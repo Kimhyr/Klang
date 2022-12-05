@@ -6,7 +6,7 @@ enumerare Token::Nat8 {
         Symbol::Nat8,
         Natural::Nat64,
         Integer::Int64,
-        Real::Float64,
+        Real::Real64,
     };
 }
 

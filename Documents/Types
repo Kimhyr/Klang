@@ -12,7 +12,7 @@ label Integers =:
 
 label Floats =:
     datum _::Float32;
-    datum _::Float64;
+    datum _::Real64;
 
 label Abstracts =:
     datum _::Ptr<TYPE>;

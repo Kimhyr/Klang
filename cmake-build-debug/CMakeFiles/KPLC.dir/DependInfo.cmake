@@ -8,13 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "E:/Projects/KPLC/Source/Compiler/Analyzer/Lexer.cpp" "CMakeFiles/KPLC.dir/Source/Compiler/Analyzer/Lexer.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Compiler/Analyzer/Lexer.cpp.obj.d"
-  "E:/Projects/KPLC/Source/Compiler/Analyzer/Token.cpp" "CMakeFiles/KPLC.dir/Source/Compiler/Analyzer/Token.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Compiler/Analyzer/Token.cpp.obj.d"
-  "E:/Projects/KPLC/Source/Main.cpp" "CMakeFiles/KPLC.dir/Source/Main.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Main.cpp.obj.d"
-  "E:/Projects/KPLC/Source/Utility/Collections/Dynar.cpp" "CMakeFiles/KPLC.dir/Source/Utility/Collections/Dynar.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Utility/Collections/Dynar.cpp.obj.d"
-  "E:/Projects/KPLC/Source/Utility/Exceptions/Exception.cpp" "CMakeFiles/KPLC.dir/Source/Utility/Exceptions/Exception.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Utility/Exceptions/Exception.cpp.obj.d"
-  "E:/Projects/KPLC/Source/Utility/System/Memory.cpp" "CMakeFiles/KPLC.dir/Source/Utility/System/Memory.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Utility/System/Memory.cpp.obj.d"
-  "E:/Projects/KPLC/Source/Utility/Text/String.cpp" "CMakeFiles/KPLC.dir/Source/Utility/Text/String.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Utility/Text/String.cpp.obj.d"
+  "E:/Projects/KPLC/Source/Analyzer/Lexer.cpp" "CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.obj.d"
+  "E:/Projects/KPLC/Source/Analyzer/Token.cpp" "CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.obj.d"
+  "E:/Projects/KPLC/Source/Compiler.cpp" "CMakeFiles/KPLC.dir/Source/Compiler.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Compiler.cpp.obj.d"
+  "E:/Projects/KPLC/Source/Definitions.cpp" "CMakeFiles/KPLC.dir/Source/Definitions.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Definitions.cpp.obj.d"
+  "E:/Projects/KPLC/Source/Entry.cpp" "CMakeFiles/KPLC.dir/Source/Entry.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Entry.cpp.obj.d"
+  "E:/Projects/KPLC/Source/Exception.cpp" "CMakeFiles/KPLC.dir/Source/Exception.cpp.obj" "gcc" "CMakeFiles/KPLC.dir/Source/Exception.cpp.obj.d"
   )
 
 # Targets to which this target links.

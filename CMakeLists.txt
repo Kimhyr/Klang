@@ -11,18 +11,18 @@ FILE(GLOB SOURCES
         ./Source/*.cpp
         ./Source/Compiler/*.hpp
         ./Source/Compiler/*.cpp
-        ./Source/Compiler/Analyzer/*.hpp
-        ./Source/Compiler/Analyzer/*.cpp
-        ./Source/Utility/*.hpp
-        ./Source/Utility/*.cpp
-        ./Source/Utility/Collections/*.hpp
-        ./Source/Utility/Collections/*.cpp
-        ./Source/Utility/Exceptions/*.hpp
-        ./Source/Utility/Exceptions/*.cpp
-        ./Source/Utility/System/*.hpp
-        ./Source/Utility/System/*.cpp
-        ./Source/Utility/Text/*.hpp
-        ./Source/Utility/Text/*.cpp
+        Source/Analyzer/*.hpp
+        Source/Analyzer/*.cpp
+        Source/_/*.hpp
+        Source/_/*.cpp
+        Source/_/Collections/*.hpp
+        Source/_/Collections/*.cpp
+        Source/_/Exceptions/*.hpp
+        Source/_/Exceptions/*.cpp
+        Source/_/System/*.hpp
+        Source/_/System/*.cpp
+        Source/_/Text/*.hpp
+        Source/_/Text/*.cpp
 )
 
 ADD_EXECUTABLE(KPLC ${SOURCES})

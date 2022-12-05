@@ -11,4 +11,4 @@ Integer:
         - Int64
 Floating:
     - Float32
-    - Float64
+    - Real64
