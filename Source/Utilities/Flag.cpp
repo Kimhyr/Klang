@@ -21,5 +21,4 @@ using Flag16 = Flag<Bit16>;
 using Flag32 = Flag<Bit32>;
 using Flag64 = Flag<Bit64>;
 
-
 #endif // KPLC_UTILITIES_FLAG_CPP

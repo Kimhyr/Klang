@@ -61,7 +61,10 @@ namespace U {
         inline
         Void Reallocate(Nat64 newSpace) {
             $ space = newSpace;
-            $ data = U::Memory::Reallocate($ size, $ data, $ space);
+            $ data = U::Memory::Reallocate(
+                $ size, $ data,
+                $ space
+            );
         }
     };
 } // U

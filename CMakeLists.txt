@@ -10,6 +10,6 @@ FILE(GLOB SOURCES
         ./Source/*.cpp
         ./Source/Compiler/*.cpp
         ./Source/Utilities/*.cpp
-)
+        )
 
 ADD_EXECUTABLE(KPLC ${SOURCES})

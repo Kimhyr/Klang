@@ -1,5 +1,5 @@
 procedure Initiate(argc: Int32, argv: @@Nat8) -> Int32 {
-	datum x?: Int32 = 7;
-	x = 21 + 14;
-	give x;
+	datum value?: Int32 {7}
+	value = 21 + 14;
+	give value;
 }

@@ -12,12 +12,14 @@ public:
 };
 
 Int32 main() {
-    Lexer lexer("procedure 234234 sdaf  asdf124312a 0x23__4 0b010101___0 0.23______432 234234.");
+    Lexer lexer(
+        "procedure 234234 sdaf  asdf124312a 0x23_z_4 0b010101___0 0.23______432 234234.");
     Token token {};
     do {
         try {
             token = lexer.Lex();
-        } catch (const Exception &e) {
+        }
+        catch (const Exception &e) {
             std::cout << "Exception Code: " << e.Code << '\n';
             continue;
         }

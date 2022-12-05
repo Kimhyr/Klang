@@ -58,8 +58,7 @@ public:
             $ LexAlphabetic();
         else if (U::Text::IsNumeric($ peek))
             $ LexNumeric();
-        else
-            $ LexSymbolic();
+        else $ LexSymbolic();
 
     EPILOGUE:
         $ token.End = {
@@ -101,6 +100,24 @@ private:
             $ token.Symbol = Token::Symbol::Datum;
         else if (U::Text::Compare("give", buf) == 0)
             $ token.Symbol = Token::Symbol::Give;
+        
+        // TODO This shit could be more efficient.
+        else if (U::Text::Compare("Nat8", buf) == 0)
+            $ token.Symbol = Token::Symbol::Nat8;
+        else if (U::Text::Compare("Nat16", buf) == 0)
+            $ token.Symbol = Token::Symbol::Nat16;
+        else if (U::Text::Compare("Nat32", buf) == 0)
+            $ token.Symbol = Token::Symbol::Nat32;
+        else if (U::Text::Compare("Nat64", buf) == 0)
+            $ token.Symbol = Token::Symbol::64;
+        else if (U::Text::Compare("Int8", buf) == 0)
+            $ token.Symbol = Token::Symbol::Nat8;
+        else if (U::Text::Compare("Int16", buf) == 0)
+            $ token.Symbol = Token::Symbol::Nat16;
+        else if (U::Text::Compare("Int32", buf) == 0)
+            $ token.Symbol = Token::Symbol::Nat32;
+        else if (U::Text::Compare("Int64", buf) == 0)
+            $ token.Symbol = Token::Symbol::64;
         else {
             $ token.Symbol = Token::Symbol::Identity;
             $ token.Value.Identity = buf;
@@ -132,13 +149,11 @@ private:
         }
 
         if ($ PeekIsValidNatural())
-            $ LexNatural(&buf);
-        else if ($ peek == '.') {
-            $ LexReal(&buf);
-        } else {
-            $ token.Symbol = Token::Symbol::Natural;
-            $ token.Value.Integer = 0;
-        }
+            return $ LexNatural(&buf);
+        else if ($ peek == '.')
+            return $ LexReal(&buf);
+        $ token.Symbol = Token::Symbol::Natural;
+        $ token.Value.Integer = 0;
     }
 
     inline
@@ -163,12 +178,7 @@ private:
         if ($ PeekIsValidBinary()) {
             do $ PutNumericBuf(buf);
             while ($ PeekIsValidBinary());
-        } else {
-            if (U::Text::IsWhitespace($ peek))
-                $ BinaryYeet(Lexer::ErrorCode::Incomplete);
-            else if (U::Text::IsAlphabetic($ peek) || U::Text::IsNumeric($ peek))
-                $ BinaryYeet(Lexer::ErrorCode::WrongFormat);
-        }
+        } else $ BinaryYeet(Lexer::ErrorCode::WrongFormat);
 
         if (buf->Size() == 0)
             $ BinaryYeet(Lexer::ErrorCode::Valueless);
@@ -200,22 +210,18 @@ private:
         if ($ PeekIsValidHexadecimal()) {
             do $ PutNumericBuf(buf);
             while ($ PeekIsValidHexadecimal());
-        } else {
-            if (U::Text::IsAlphabetic($ peek))
-                HexadecimalYeet(Lexer::ErrorCode::WrongFormat);
-            else
-                HexadecimalYeet(Lexer::ErrorCode::Incomplete);
-        }
-
+        } else $ HexadecimalYeet(Lexer::ErrorCode::WrongFormat);
 
         if (buf->Size() == 0)
             HexadecimalYeet(Lexer::ErrorCode::Valueless);
         buf->Put(0);
         try {
             $ token.Value.Machine = U::Text::ConvertToNatural(buf->Flush(), 16);
-        } catch (const Exception::InvalidArgument &) {
+        }
+        catch (const Exception::InvalidArgument &) {
             $ HexadecimalYeet(Lexer::ErrorCode::Inconvertible);
-        } catch (const Exception::OutOfRange &) {
+        }
+        catch (const Exception::OutOfRange &) {
             $ HexadecimalYeet(Lexer::ErrorCode::OutOfRange);
         }
     }
@@ -273,7 +279,9 @@ private:
 
 private:
     Void LexSymbolic() {
-        $ Yeet(Lexer::Module::Symbolic, Lexer::ErrorCode::Incomplete);
+        switch () {
+    
+  }    
     }
 
 private:
