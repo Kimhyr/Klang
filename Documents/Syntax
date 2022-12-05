@@ -1,6 +1,8 @@
-Types:
-    - Primitives:
-        -
-    - Defined:
+Structure
+    : 'structure' <Identifier> ('<' <TemplateInput>)? ['=' <Structure>|'{' <Body>|';']
 
-    - Derived:
+Procedure
+    : 'procedure' <Identifier> ('<' <TemplateInput>)? ('(' <ParameterInput>)? ('->' <TypeUse>)? ['=' <Procedure>|'{' <Body>|';']
+
+Datum
+    : 'datum' <Identifier> ':' <TypeUse> ['=' <Datum>|'{' <Body>|';']
