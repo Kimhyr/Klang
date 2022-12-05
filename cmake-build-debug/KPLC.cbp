@@ -82,12 +82,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="E:/Projects/KPLC/Source/Analyzer/Lexer.cpp">
-			<Option target="KPLC"/>
-		</Unit>
-		<Unit filename="E:/Projects/KPLC/Source/Analyzer/Token.cpp">
-			<Option target="KPLC"/>
-		</Unit>
 		<Unit filename="E:/Projects/KPLC/Source/Compiler.cpp">
 			<Option target="KPLC"/>
 		</Unit>
@@ -98,6 +92,21 @@
 			<Option target="KPLC"/>
 		</Unit>
 		<Unit filename="E:/Projects/KPLC/Source/Exception.cpp">
+			<Option target="KPLC"/>
+		</Unit>
+		<Unit filename="E:/Projects/KPLC/Source/Utilities/Dynar.cpp">
+			<Option target="KPLC"/>
+		</Unit>
+		<Unit filename="E:/Projects/KPLC/Source/Utilities/Flag.cpp">
+			<Option target="KPLC"/>
+		</Unit>
+		<Unit filename="E:/Projects/KPLC/Source/Utilities/Memory.cpp">
+			<Option target="KPLC"/>
+		</Unit>
+		<Unit filename="E:/Projects/KPLC/Source/Utilities/Table.cpp">
+			<Option target="KPLC"/>
+		</Unit>
+		<Unit filename="E:/Projects/KPLC/Source/Utilities/Text.cpp">
 			<Option target="KPLC"/>
 		</Unit>
 		<Unit filename="E:/Projects/KPLC/CMakeLists.txt">

@@ -147,7 +147,14 @@ CMakeFiles/KPLC.dir/Source/Entry.cpp.obj: \
  D:/JetBrains/CLion\ 2022.2.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/ostream.tcc \
  D:/JetBrains/CLion\ 2022.2.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/istream \
  D:/JetBrains/CLion\ 2022.2.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/istream.tcc \
- E:\Projects\KPLC\Source\Utilities/Dynar.cpp \
+ E:\Projects\KPLC\Source\Analyzer/Lexer.cpp \
+ E:/Projects/KPLC/Source/Exception.cpp \
+ E:/Projects/KPLC/Source/Compiler.cpp \
  E:/Projects/KPLC/Source/Definitions.cpp \
- E:\Projects\KPLC\Source\Utilities/Memory.cpp \
+ E:/Projects/KPLC/Source/Utilities/Text.cpp \
+ E:/Projects/KPLC/Source/Definitions.cpp \
+ E:/Projects/KPLC/Source/Utilities/Dynar.cpp \
+ E:/Projects/KPLC/Source/Utilities/Memory.cpp \
+ E:\Projects\KPLC\Source\Analyzer/Token.cpp \
+ E:/Projects/KPLC/Source/Definitions.cpp \
  E:\Projects\KPLC\Source\Definitions.cpp

@@ -124,33 +124,75 @@ CMakeFiles/KPLC.dir/Source/Exception.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/KPLC.dir/Source/Exception.cpp.s"
 	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Projects\KPLC\Source\Exception.cpp -o CMakeFiles\KPLC.dir\Source\Exception.cpp.s
 
-CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.obj: CMakeFiles/KPLC.dir/flags.make
-CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.obj: ../Source/Analyzer/Lexer.cpp
-CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.obj: CMakeFiles/KPLC.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\Projects\KPLC\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.obj"
-	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.obj -MF CMakeFiles\KPLC.dir\Source\Analyzer\Lexer.cpp.obj.d -o CMakeFiles\KPLC.dir\Source\Analyzer\Lexer.cpp.obj -c E:\Projects\KPLC\Source\Analyzer\Lexer.cpp
+CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.obj: CMakeFiles/KPLC.dir/flags.make
+CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.obj: ../Source/Utilities/Dynar.cpp
+CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.obj: CMakeFiles/KPLC.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\Projects\KPLC\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.obj"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.obj -MF CMakeFiles\KPLC.dir\Source\Utilities\Dynar.cpp.obj.d -o CMakeFiles\KPLC.dir\Source\Utilities\Dynar.cpp.obj -c E:\Projects\KPLC\Source\Utilities\Dynar.cpp
 
-CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.i"
-	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Projects\KPLC\Source\Analyzer\Lexer.cpp > CMakeFiles\KPLC.dir\Source\Analyzer\Lexer.cpp.i
+CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.i"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Projects\KPLC\Source\Utilities\Dynar.cpp > CMakeFiles\KPLC.dir\Source\Utilities\Dynar.cpp.i
 
-CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.s"
-	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Projects\KPLC\Source\Analyzer\Lexer.cpp -o CMakeFiles\KPLC.dir\Source\Analyzer\Lexer.cpp.s
+CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.s"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Projects\KPLC\Source\Utilities\Dynar.cpp -o CMakeFiles\KPLC.dir\Source\Utilities\Dynar.cpp.s
 
-CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.obj: CMakeFiles/KPLC.dir/flags.make
-CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.obj: ../Source/Analyzer/Token.cpp
-CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.obj: CMakeFiles/KPLC.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\Projects\KPLC\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.obj"
-	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.obj -MF CMakeFiles\KPLC.dir\Source\Analyzer\Token.cpp.obj.d -o CMakeFiles\KPLC.dir\Source\Analyzer\Token.cpp.obj -c E:\Projects\KPLC\Source\Analyzer\Token.cpp
+CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.obj: CMakeFiles/KPLC.dir/flags.make
+CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.obj: ../Source/Utilities/Flag.cpp
+CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.obj: CMakeFiles/KPLC.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\Projects\KPLC\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.obj"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.obj -MF CMakeFiles\KPLC.dir\Source\Utilities\Flag.cpp.obj.d -o CMakeFiles\KPLC.dir\Source\Utilities\Flag.cpp.obj -c E:\Projects\KPLC\Source\Utilities\Flag.cpp
 
-CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.i"
-	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Projects\KPLC\Source\Analyzer\Token.cpp > CMakeFiles\KPLC.dir\Source\Analyzer\Token.cpp.i
+CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.i"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Projects\KPLC\Source\Utilities\Flag.cpp > CMakeFiles\KPLC.dir\Source\Utilities\Flag.cpp.i
 
-CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.s"
-	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Projects\KPLC\Source\Analyzer\Token.cpp -o CMakeFiles\KPLC.dir\Source\Analyzer\Token.cpp.s
+CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.s"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Projects\KPLC\Source\Utilities\Flag.cpp -o CMakeFiles\KPLC.dir\Source\Utilities\Flag.cpp.s
+
+CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.obj: CMakeFiles/KPLC.dir/flags.make
+CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.obj: ../Source/Utilities/Memory.cpp
+CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.obj: CMakeFiles/KPLC.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\Projects\KPLC\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.obj"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.obj -MF CMakeFiles\KPLC.dir\Source\Utilities\Memory.cpp.obj.d -o CMakeFiles\KPLC.dir\Source\Utilities\Memory.cpp.obj -c E:\Projects\KPLC\Source\Utilities\Memory.cpp
+
+CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.i"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Projects\KPLC\Source\Utilities\Memory.cpp > CMakeFiles\KPLC.dir\Source\Utilities\Memory.cpp.i
+
+CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.s"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Projects\KPLC\Source\Utilities\Memory.cpp -o CMakeFiles\KPLC.dir\Source\Utilities\Memory.cpp.s
+
+CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.obj: CMakeFiles/KPLC.dir/flags.make
+CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.obj: ../Source/Utilities/Table.cpp
+CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.obj: CMakeFiles/KPLC.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\Projects\KPLC\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.obj"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.obj -MF CMakeFiles\KPLC.dir\Source\Utilities\Table.cpp.obj.d -o CMakeFiles\KPLC.dir\Source\Utilities\Table.cpp.obj -c E:\Projects\KPLC\Source\Utilities\Table.cpp
+
+CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.i"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Projects\KPLC\Source\Utilities\Table.cpp > CMakeFiles\KPLC.dir\Source\Utilities\Table.cpp.i
+
+CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.s"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Projects\KPLC\Source\Utilities\Table.cpp -o CMakeFiles\KPLC.dir\Source\Utilities\Table.cpp.s
+
+CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.obj: CMakeFiles/KPLC.dir/flags.make
+CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.obj: ../Source/Utilities/Text.cpp
+CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.obj: CMakeFiles/KPLC.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\Projects\KPLC\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.obj"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.obj -MF CMakeFiles\KPLC.dir\Source\Utilities\Text.cpp.obj.d -o CMakeFiles\KPLC.dir\Source\Utilities\Text.cpp.obj -c E:\Projects\KPLC\Source\Utilities\Text.cpp
+
+CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.i"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Projects\KPLC\Source\Utilities\Text.cpp > CMakeFiles\KPLC.dir\Source\Utilities\Text.cpp.i
+
+CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.s"
+	"D:\JetBrains\CLion 2022.2.4\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Projects\KPLC\Source\Utilities\Text.cpp -o CMakeFiles\KPLC.dir\Source\Utilities\Text.cpp.s
 
 # Object files for target KPLC
 KPLC_OBJECTS = \
@@ -158,8 +200,11 @@ KPLC_OBJECTS = \
 "CMakeFiles/KPLC.dir/Source/Definitions.cpp.obj" \
 "CMakeFiles/KPLC.dir/Source/Entry.cpp.obj" \
 "CMakeFiles/KPLC.dir/Source/Exception.cpp.obj" \
-"CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.obj" \
-"CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.obj"
+"CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.obj" \
+"CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.obj" \
+"CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.obj" \
+"CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.obj" \
+"CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.obj"
 
 # External object files for target KPLC
 KPLC_EXTERNAL_OBJECTS =
@@ -168,13 +213,16 @@ KPLC.exe: CMakeFiles/KPLC.dir/Source/Compiler.cpp.obj
 KPLC.exe: CMakeFiles/KPLC.dir/Source/Definitions.cpp.obj
 KPLC.exe: CMakeFiles/KPLC.dir/Source/Entry.cpp.obj
 KPLC.exe: CMakeFiles/KPLC.dir/Source/Exception.cpp.obj
-KPLC.exe: CMakeFiles/KPLC.dir/Source/Analyzer/Lexer.cpp.obj
-KPLC.exe: CMakeFiles/KPLC.dir/Source/Analyzer/Token.cpp.obj
+KPLC.exe: CMakeFiles/KPLC.dir/Source/Utilities/Dynar.cpp.obj
+KPLC.exe: CMakeFiles/KPLC.dir/Source/Utilities/Flag.cpp.obj
+KPLC.exe: CMakeFiles/KPLC.dir/Source/Utilities/Memory.cpp.obj
+KPLC.exe: CMakeFiles/KPLC.dir/Source/Utilities/Table.cpp.obj
+KPLC.exe: CMakeFiles/KPLC.dir/Source/Utilities/Text.cpp.obj
 KPLC.exe: CMakeFiles/KPLC.dir/build.make
 KPLC.exe: CMakeFiles/KPLC.dir/linklibs.rsp
 KPLC.exe: CMakeFiles/KPLC.dir/objects1.rsp
 KPLC.exe: CMakeFiles/KPLC.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=E:\Projects\KPLC\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable KPLC.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=E:\Projects\KPLC\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable KPLC.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\KPLC.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

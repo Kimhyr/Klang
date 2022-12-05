@@ -11,6 +11,7 @@ struct Token {
 
     enum class Symbol : Nat16 {
         None = 0,
+        End,
 
         OpenBrace = '{',
         CloseBrace = '}',
@@ -66,10 +67,10 @@ struct Token {
         Int32,
         Int64,
 
+        Machine,
         Natural,
         Integer,
         Real,
-        Machine,
         Text,
 
         DoubleColon, // ::

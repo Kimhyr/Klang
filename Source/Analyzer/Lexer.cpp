@@ -15,10 +15,11 @@ public:
         Binary,
         Hexadecimal,
         Real,
+        Scientific,
+        Symbolic,
     };
 
     enum Flag : Bit8 {
-        None = 0,
         End = 1 << 0,
         Continue = 1 << 1,
     };
@@ -35,8 +36,7 @@ public:
     [[nodiscard]]
     explicit constexpr
     Lexer(const Text8 *source)
-        : flags(Lexer::Flag::None),
-          point({1, 1}),
+        : point({1, 1}),
           index(-1),
           source(source),
           peek(source[0]),
@@ -45,15 +45,14 @@ public:
     Void Destroy() { delete[] $ source; }
 
 public:
-    [[nodiscard]]
-    constexpr
-    Bit8 GetFlags()
-    const noexcept { return $ flags; }
-
-public:
     Token Lex() {
         while (U::Text::IsWhitespace($ peek))
             $ Advance();
+        if ($ peek == '\0') {
+            $ token.Symbol = Token::Symbol::End;
+            goto EPILOGUE;
+        }
+
         $ token.Start = $ point;
         if (U::Text::IsAlphabetic($ peek))
             $ LexAlphabetic();
@@ -61,17 +60,16 @@ public:
             $ LexNumeric();
         else
             $ LexSymbolic();
+
+    EPILOGUE:
         $ token.End = {
             .Line = $ point.Line,
             .Column = $ point.Column - 1
         };
-        if ($ peek == '\0')
-            $ flags |= Lexer::Flag::End;
         return $ token;
     }
 
 private:
-    Bit8 flags;
     Token::Point point;
     Int64 index;
     const Text8 *source;
@@ -112,6 +110,7 @@ private:
 private:
     inline
     Void LexNumeric() {
+        U::Dynar<Text8> buf;
         if ($ peek == '0') {
             $ Advance();
             switch ($ peek) {
@@ -122,20 +121,19 @@ private:
             case 'b':
             case 'B':
                 $ Advance();
-                return $ LexBinary();
+                return $ LexBinary(&buf);
             case 'x':
             case 'X':
                 $ Advance();
-                return $ LexHexadecimal();
+                return $ LexHexadecimal(&buf);
             default:
                 break;
             }
         }
 
         if ($ PeekIsValidNatural())
-            $ LexNatural();
+            $ LexNatural(&buf);
         else if ($ peek == '.') {
-            U::Dynar<Text8> buf;
             $ LexReal(&buf);
         } else {
             $ token.Symbol = Token::Symbol::Natural;
@@ -160,11 +158,10 @@ private:
     Void BinaryYeet(Lexer::ErrorCode error) { $ Yeet(Lexer::Module::Binary, error); }
 
     inline
-    Void LexBinary() {
-        U::Dynar<Text8> buf;
+    Void LexBinary(U::Dynar<Text8> *buf) {
         $ token.Symbol = Token::Symbol::Machine;
         if ($ PeekIsValidBinary()) {
-            do $ PutNumericBuf(&buf);
+            do $ PutNumericBuf(buf);
             while ($ PeekIsValidBinary());
         } else {
             if (U::Text::IsWhitespace($ peek))
@@ -173,10 +170,11 @@ private:
                 $ BinaryYeet(Lexer::ErrorCode::WrongFormat);
         }
 
-        if (buf.Size() == 0)
+        if (buf->Size() == 0)
             $ BinaryYeet(Lexer::ErrorCode::Valueless);
+        buf->Put(0);
         try {
-            $ token.Value.Machine = U::Text::ConvertToNatural(buf.Flush(), 2);
+            $ token.Value.Machine = U::Text::ConvertToNatural(buf->Flush(), 2);
         } catch (const Exception::InvalidArgument &) {
             $ BinaryYeet(Lexer::ErrorCode::Inconvertible);
         } catch (const Exception::OutOfRange &) {
@@ -197,11 +195,10 @@ private:
     Void HexadecimalYeet(Lexer::ErrorCode error) { $ Yeet(Lexer::Module::Hexadecimal, error); }
 
     inline
-    Void LexHexadecimal() {
-        U::Dynar<Text8> buf;
+    Void LexHexadecimal(U::Dynar<Text8> *buf) {
         $ token.Symbol = Token::Symbol::Machine;
         if ($ PeekIsValidHexadecimal()) {
-            do $ PutNumericBuf(&buf);
+            do $ PutNumericBuf(buf);
             while ($ PeekIsValidHexadecimal());
         } else {
             if (U::Text::IsAlphabetic($ peek))
@@ -210,10 +207,12 @@ private:
                 HexadecimalYeet(Lexer::ErrorCode::Incomplete);
         }
 
-        if (buf.Size() == 0)
+
+        if (buf->Size() == 0)
             HexadecimalYeet(Lexer::ErrorCode::Valueless);
+        buf->Put(0);
         try {
-            $ token.Value.Machine = U::Text::ConvertToNatural(buf.Flush());
+            $ token.Value.Machine = U::Text::ConvertToNatural(buf->Flush(), 16);
         } catch (const Exception::InvalidArgument &) {
             $ HexadecimalYeet(Lexer::ErrorCode::Inconvertible);
         } catch (const Exception::OutOfRange &) {
@@ -230,19 +229,19 @@ private:
     inline
     Void NaturalYeet(Lexer::ErrorCode error) { $ Yeet(Lexer::Module::Natural, error); }
 
-    Void LexNatural() {
-        U::Dynar<Text8> buf;
+    Void LexNatural(U::Dynar<Text8> *buf) {
         do {
-            $ PutNumericBuf(&buf);
+            $ PutNumericBuf(buf);
             if ($ peek == '.')
-                return $ LexReal(&buf);
+                return $ LexReal(buf);
         } while ($ PeekIsValidNatural());
         $ token.Symbol = Token::Symbol::Natural;
 
-        if (buf.Size() == 0)
+        if (buf->Size() == 0)
             $ NaturalYeet(Lexer::ErrorCode::Valueless);
+        buf->Put(0);
         try {
-            $ token.Value.Integer = U::Text::ConvertToInteger(buf.Flush());
+            $ token.Value.Integer = U::Text::ConvertToInteger(buf->Flush());
         } catch (const Exception::InvalidArgument &) {
             $ NaturalYeet(Lexer::ErrorCode::Inconvertible);
         } catch (const Exception::OutOfRange &) {
@@ -262,6 +261,7 @@ private:
                 $ RealYeet(Lexer::ErrorCode::WrongFormat);
         } while ($ PeekIsValidNatural());
 
+        buf->Put(0);
         try {
             $ token.Value.Real = U::Text::ConvertToReal(buf->Flush());
         } catch (const Exception::InvalidArgument &) {
@@ -273,7 +273,7 @@ private:
 
 private:
     Void LexSymbolic() {
-
+        $ Yeet(Lexer::Module::Symbolic, Lexer::ErrorCode::Incomplete);
     }
 
 private:
