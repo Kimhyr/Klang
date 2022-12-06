@@ -5,15 +5,14 @@
 
 template<typename Bit_T>
 class Flag {
+    Bit_T bits;
+
 public:
     Flag()
         : bits(0) {
     }
 
     Void Set();
-
-private:
-    Bit_T bits;
 };
 
 using Flag8 = Flag<Bit8>;

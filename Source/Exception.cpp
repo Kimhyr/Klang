@@ -7,28 +7,21 @@
 #include "Definitions.cpp"
 
 struct Exception {
-    using OutOfRange = std::out_of_range;
-    using InvalidArgument = std::invalid_argument;
-
-    enum class Type {
-        Verbose,
-        Info,
-        Warning,
-        Error,
-    };
-
-    Compiler::Module CompilerModule;
-    Exception::Type ExceptionType;
+    CompilerModule Module;
     Nat64 Code;
     const Text8 *Description;
 
+public:
+    using OutOfRange = std::out_of_range;
+    using InvalidArgument = std::invalid_argument;
+
+public:
     constexpr
     Exception(
-        Compiler::Module compilerModule, Type exceptionType,
+        CompilerModule module,
         Nat64 code, const Text8 *description
     )
-        : CompilerModule(compilerModule),
-          ExceptionType(exceptionType),
+        : Module(module),
           Code(code),
           Description(description) {}
 

@@ -5,21 +5,17 @@
 
 namespace U {
     template<typename Key_T, typename Value_T>
+    struct TableEntry {
+        Key_T Key;
+        Value_T Value;
+    };
+
+    template<typename Key_T, typename Value_T>
     class Table {
-    public:
-        struct Entry {
-            Key_T Key;
-            Value_T Value;
-        };
+        Dynar<TableEntry<Key_T, Value_T>> entries;
 
     public:
         Table();
-
-    private:
-        Dynar<Table::Entry> entries;
-
-    private:
-
     };
 } // U
 

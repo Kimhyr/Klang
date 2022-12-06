@@ -7,6 +7,10 @@
 namespace U {
     template<typename Data_T>
     class Dynar {
+        Nat64 space;
+        Nat64 size;
+        Data_T *data;
+
     public:
         static constexpr
         const Nat64 INITIAL_SPACE = 8;
@@ -51,11 +55,6 @@ namespace U {
         constexpr
         const Data_T *Data()
         const noexcept { return $ data; }
-
-    private:
-        Nat64 space;
-        Nat64 size;
-        Data_T *data;
 
     private:
         inline

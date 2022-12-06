@@ -1,4 +1,0 @@
-"D:\JetBrains\CLion 2022.2.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" -S E:\Projects\KPLC -B E:\Projects\KPLC\cmake-build-debug
--- Configuring done
--- Generating done
--- Build files have been written to: E:/Projects/KPLC/cmake-build-debug
