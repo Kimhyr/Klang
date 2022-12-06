@@ -215,11 +215,9 @@ private:
         buf->Put(0);
         try {
             $ token.Value.Machine = U::Text::ConvertToNatural(buf->Flush(), 16);
-        }
-        catch (const Exception::InvalidArgument &) {
+        } catch (const Exception::InvalidArgument &) {
             $ HexadecimalYeet(LexerError::Inconvertible);
-        }
-        catch (const Exception::OutOfRange &) {
+        } catch (const Exception::OutOfRange &) {
             $ HexadecimalYeet(LexerError::OutOfRange);
         }
     }
@@ -341,7 +339,7 @@ private:
                 return;
             case '*': $ token.Symbol = TokenSymbol::Comment;
                 do $ Advance();
-                while ($ peek != '*' && $ Peek(2) != '\\' && $ peek != '\0');
+                while (($ peek != '*' && $ Peek(2) != '\\') || $ peek != '\0');
                 return;
             default: $ token.Symbol = TokenSymbol::Slosh;
                 goto SINGLE;
