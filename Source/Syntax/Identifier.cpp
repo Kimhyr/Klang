@@ -13,7 +13,7 @@ namespace L {
 
     struct Identifier {
         Nat64 Depth; // I don't fucking know LOL
-        U::Dynar<Identifier> Path;
+        U::Dynar<L::Identifier> Path;
         const Text8 *Identity;
         IdentifierFlag Flag;
     };

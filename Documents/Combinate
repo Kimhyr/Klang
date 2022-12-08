@@ -1,0 +1,34 @@
+enumerare Day {
+        Monday, \\ Discriminator: 0
+        Tuesday, \\ Discriminator: 1
+}
+
+\\ An enumerare but it is discriminated by bit offsets.
+combinate State {
+        Eating, \\ Discriminator: 00000001
+        Pooping, \\ Discriminator: 00000010
+}
+
+datum state::State {State:Eating || State:Pooping}
+if state == State:Eating || State:Pooping {
+        Out.Write("Jhit is shitting and eating.");
+}
+if state.Pooping.Color == Color:Brown {
+        Out.Write("Brown poop.");
+}
+
+\\ Before overflow:
+structure Combinate {
+        Value1::Bit64,
+}
+
+\\ Overflow:
+If Combnate.Size > Combinate.MaxSize {
+        Combinate.PushDiscriminator;
+}
+
+\\ After overflow:
+structure Combinate {
+        Value1::Bit64,
+        Value2::Bit8,
+}
