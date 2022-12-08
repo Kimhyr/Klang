@@ -3,11 +3,21 @@
 
 #include "Lexer.cpp"
 
+#include "../Syntax/Identifier.cpp"
+
+enum class ParserState {
+
+};
+
 class Parser {
-    Table<>
-    Lexer lexer;
+    U::Dynar<Symbol> symbols;
 
 public:
+    Parser()
+    {}
+
+    template<typename Syntax_T>
+    Syntax_T Parse();
 };
 
 #endif // KPLC_ANALYZER_PARSER_CPP

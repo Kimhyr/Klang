@@ -18,8 +18,7 @@ Int32 main() {
     do {
         try {
             token = lexer.Lex();
-        }
-        catch (const Exception &e) {
+        } catch (const Exception &e) {
             std::cout << "Exception Code: " << e.Code << '\n';
             continue;
         }

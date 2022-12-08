@@ -17,15 +17,15 @@ public:
 
 public:
     constexpr
-    Exception(
-        CompilerModule module,
-        Nat64 code, const Text8 *description
-    )
+    Exception(CompilerModule module, Nat64 code,
+              const Text8 *description)
         : Module(module),
           Code(code),
-          Description(description) {}
+          Description(description)
+    {}
 
-    Void Destroy() { delete[] $ Description; }
+    Void Destroy()
+    { delete[] $ Description; }
 };
 
 #endif // KPLC_EXCEPTION_CPP

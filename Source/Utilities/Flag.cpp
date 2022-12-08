@@ -9,8 +9,8 @@ class Flag {
 
 public:
     Flag()
-        : bits(0) {
-    }
+        : bits(0)
+    {}
 
     Void Set();
 };

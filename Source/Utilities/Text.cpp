@@ -20,22 +20,28 @@ namespace U {
         }
 
         static inline
-        Nat64 ConvertToNatural(const Text8 *string, Int32 base = 10) { return std::stoull(string, 0, base); }
+        Nat64 ConvertToNatural(const Text8 *string, Int32 base = 10)
+        { return std::stoull(string, 0, base); }
 
         static inline
-        Int64 ConvertToInteger(const Text8 *string, Int32 base = 10) { return std::stoll(string, 0, base); }
+        Int64 ConvertToInteger(const Text8 *string, Int32 base = 10)
+        { return std::stoll(string, 0, base); }
 
         static inline
-        Real64 ConvertToReal(const Text8 *string) { return std::stod(string, 0); }
+        Real64 ConvertToReal(const Text8 *string)
+        { return std::stod(string, 0); }
 
         static constexpr
-        Bool IsWhitespace(Text8 text) { return (text == ' ') || (text >= '\t' && text <= '\r'); }
+        Bool IsWhitespace(Text8 text)
+        { return (text == ' ') || (text >= '\t' && text <= '\r'); }
 
         static constexpr
-        Bool IsAlphabetic(Text8 text) { return (text >= 'A' && text <= 'Z') || (text >= 'a' && text <= 'z'); }
+        Bool IsAlphabetic(Text8 text)
+        { return (text >= 'A' && text <= 'Z') || (text >= 'a' && text <= 'z'); }
 
         static constexpr
-        Bool IsNumeric(Text8 text) { return text >= '0' && text <= '9'; };
+        Bool IsNumeric(Text8 text)
+        { return text >= '0' && text <= '9'; };
     };
 } // U
 

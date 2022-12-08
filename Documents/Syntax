@@ -2,7 +2,7 @@ Structure
     : 'structure' <Identifier> ('<' <TemplateInput>)? ['=' <Structure>|'{' <Body>|';']
 
 Procedure
-    : 'procedure' <Identifier> ('<' <TemplateInput>)? ('(' <ParameterInput>)? ('->' <TypeUse>)? ['=' <Procedure>|'{' <Body>|';']
+    : 'procedure' <Identifier> ('<' <TemplateInput>)? ('(' <ParameterInput>)? ('->' <Type>)? ['=' <Procedure>|'{' <Body>|';']
 
 Datum
-    : 'datum' <Identifier> ':' <TypeUse> ['=' <Datum>|'{' <Body>|';']
+    : 'datum' <Identifier> ':' <Cast> ['=' <Datum>|'{' <Body>|';']

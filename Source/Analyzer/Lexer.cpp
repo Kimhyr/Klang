@@ -45,9 +45,11 @@ public:
           index(-1),
           source(source),
           peek(source[0]),
-          token() {}
+          token()
+    {}
 
-    Void Destroy() { delete[] $ source; }
+    Void Destroy()
+    { delete[] $ source; }
 
 public:
     Token Lex() {
@@ -63,7 +65,8 @@ public:
             $ LexAlphabetic();
         else if (U::Text::IsNumeric($ peek))
             $ LexNumeric();
-        else $ LexSymbolic();
+        else
+            $ LexSymbolic();
 
     EPILOGUE:
         $ token.End = {
@@ -75,9 +78,9 @@ public:
 
 private:
     [[nodiscard]]
-    constexpr
-    Bool PeekIsValidIdentity()
-    const noexcept { return U::Text::IsAlphabetic($ peek) || $ peek == '_'; }
+    constexpr Bool PeekIsValidIdentity()
+    const noexcept
+    { return U::Text::IsAlphabetic($ peek) || $ peek == '_'; }
 
     Void LexAlphabetic() {
         U::Dynar<Text8> buf;
@@ -99,7 +102,7 @@ private:
         else if (U::Text::Compare("give", buf) == 0)
             $ token.Symbol = TokenSymbol::Give;
 
-        // TODO This shit could be more efficient.
+            // TODO This shit could be more efficient.
         else if (U::Text::Compare("Nat8", buf) == 0)
             $ token.Symbol = TokenSymbol::Nat8;
         else if (U::Text::Compare("Nat16", buf) == 0)
@@ -165,10 +168,12 @@ private:
     [[nodiscard]]
     constexpr
     Bool PeekIsValidBinary()
-    const noexcept { return $ peek == '0' || $ peek == '1' || $ peek == '_'; }
+    const noexcept
+    { return $ peek == '0' || $ peek == '1' || $ peek == '_'; }
 
     inline
-    Void BinaryYeet(LexerError error) { $ Yeet(LexerModule::Binary, error); }
+    Void BinaryYeet(LexerError error)
+    { $ Yeet(LexerModule::Binary, error); }
 
     inline
     Void LexBinary(U::Dynar<Text8> *buf) {
@@ -176,8 +181,8 @@ private:
         if ($ PeekIsValidBinary()) {
             do $ PutNumericBuf(buf);
             while ($ PeekIsValidBinary());
-        } else $ BinaryYeet(LexerError::WrongFormat);
-
+        } else
+            $ BinaryYeet(LexerError::WrongFormat);
         if (buf->Size() == 0)
             $ BinaryYeet(LexerError::Valueless);
         buf->Put(0);
@@ -200,7 +205,8 @@ private:
     }
 
     inline
-    Void HexadecimalYeet(LexerError error) { $ Yeet(LexerModule::Hexadecimal, error); }
+    Void HexadecimalYeet(LexerError error)
+    { $ Yeet(LexerModule::Hexadecimal, error); }
 
     inline
     Void LexHexadecimal(U::Dynar<Text8> *buf) {
@@ -208,7 +214,8 @@ private:
         if ($ PeekIsValidHexadecimal()) {
             do $ PutNumericBuf(buf);
             while ($ PeekIsValidHexadecimal());
-        } else $ HexadecimalYeet(LexerError::WrongFormat);
+        } else
+            $ HexadecimalYeet(LexerError::WrongFormat);
 
         if (buf->Size() == 0)
             HexadecimalYeet(LexerError::Valueless);
@@ -226,10 +233,12 @@ private:
     [[nodiscard]]
     constexpr
     Bool PeekIsValidNatural()
-    const noexcept { return U::Text::IsNumeric($ peek) || $ peek == '_'; }
+    const noexcept
+    { return U::Text::IsNumeric($ peek) || $ peek == '_'; }
 
     inline
-    Void NaturalYeet(LexerError error) { $ Yeet(LexerModule::Natural, error); }
+    Void NaturalYeet(LexerError error)
+    { $ Yeet(LexerModule::Natural, error); }
 
     Void LexNatural(U::Dynar<Text8> *buf) {
         do {
@@ -253,7 +262,8 @@ private:
 
 private:
     inline
-    Void RealYeet(LexerError error) { $ Yeet(LexerModule::Real, error); }
+    Void RealYeet(LexerError error)
+    { $ Yeet(LexerModule::Real, error); }
 
     Void LexReal(U::Dynar<Text8> *buf) {
         $ token.Symbol = TokenSymbol::Real;
@@ -262,7 +272,6 @@ private:
             if ($ peek == '.')
                 $ RealYeet(LexerError::WrongFormat);
         } while ($ PeekIsValidNatural());
-
         buf->Put(0);
         try {
             $ token.Value.Real = U::Text::ConvertToReal(buf->Flush());
@@ -278,77 +287,99 @@ private:
         switch ($ peek) {
         case '<':
             switch ($ Peek(2)) {
-            case '=': $ token.Symbol = TokenSymbol::LesserEquivalent;
+            case '=':
+                $ token.Symbol = TokenSymbol::LesserEquivalent;
                 goto DOUBLE;
-            case '<': $ token.Symbol = TokenSymbol::LeftShift;
+            case '<':
+                $ token.Symbol = TokenSymbol::LeftShift;
                 goto DOUBLE;
-            default: $ token.Symbol = TokenSymbol::Lesser;
+            default:
+                $ token.Symbol = TokenSymbol::Lesser;
                 goto SINGLE;
             }
         case '>':
             switch ($ Peek(2)) {
-            case '=': $ token.Symbol = TokenSymbol::GreaterEquivalent;
+            case '=':
+                $ token.Symbol = TokenSymbol::GreaterEquivalent;
                 goto DOUBLE;
-            case '<': $ token.Symbol = TokenSymbol::RightShift;
+            case '<':
+                $ token.Symbol = TokenSymbol::RightShift;
                 goto DOUBLE;
-            default: $ token.Symbol = TokenSymbol::Greater;
+            default:
+                $ token.Symbol = TokenSymbol::Greater;
                 goto SINGLE;
             }
         case ':':
             switch ($ Peek(2)) {
-            case ':': $ token.Symbol = TokenSymbol::DoubleColon;
+            case ':':
+                $ token.Symbol = TokenSymbol::DoubleColon;
                 goto DOUBLE;
-            default: $ token.Symbol = TokenSymbol::Colon;
+            default:
+                $ token.Symbol = TokenSymbol::Colon;
                 goto SINGLE;
             }
         case '+':
             switch ($ Peek(2)) {
-            case '+': $ token.Symbol = TokenSymbol::Increment;
+            case '+':
+                $ token.Symbol = TokenSymbol::Increment;
                 goto DOUBLE;
-            default: $ token.Symbol = TokenSymbol::Plus;
+            default:
+                $ token.Symbol = TokenSymbol::Plus;
                 goto SINGLE;
             }
         case '-':
             switch ($ Peek(2)) {
-            case '-': $ token.Symbol = TokenSymbol::Increment;
+            case '-':
+                $ token.Symbol = TokenSymbol::Increment;
                 goto DOUBLE;
-            case '>': $ token.Symbol = TokenSymbol::RightArrow;
+            case '>':
+                $ token.Symbol = TokenSymbol::RightArrow;
                 goto DOUBLE;
-            default: $ token.Symbol = TokenSymbol::Minus;
+            default:
+                $ token.Symbol = TokenSymbol::Minus;
                 goto SINGLE;
             }
         case '&':
             switch ($ Peek(2)) {
-            case '&': $ token.Symbol = TokenSymbol::DoubleAnd;
+            case '&':
+                $ token.Symbol = TokenSymbol::DoubleAnd;
                 goto DOUBLE;
-            default: $ token.Symbol = TokenSymbol::And;
+            default:
+                $ token.Symbol = TokenSymbol::And;
                 goto SINGLE;
             }
         case '|':
             switch ($ Peek(2)) {
-            case '+': $ token.Symbol = TokenSymbol::DoubleLine;
+            case '+':
+                $ token.Symbol = TokenSymbol::DoubleLine;
                 goto DOUBLE;
-            default: $ token.Symbol = TokenSymbol::Line;
+            default:
+                $ token.Symbol = TokenSymbol::Line;
                 goto SINGLE;
             }
         case '\\':
             switch ($ Peek(2)) {
-            case '\\': $ token.Symbol = TokenSymbol::Comment;
+            case '\\':
+                $ token.Symbol = TokenSymbol::Comment;
                 do $ Advance();
                 while ($ peek != '\n' && $ peek != '\0');
                 return;
-            case '*': $ token.Symbol = TokenSymbol::Comment;
+            case '*':
+                $ token.Symbol = TokenSymbol::Comment;
                 do $ Advance();
                 while (($ peek != '*' && $ Peek(2) != '\\') || $ peek != '\0');
                 return;
-            default: $ token.Symbol = TokenSymbol::Slosh;
+            default:
+                $ token.Symbol = TokenSymbol::Slosh;
                 goto SINGLE;
             }
         case '=':
             switch ($ Peek(2)) {
-            case '=': $ token.Symbol = TokenSymbol::Equivalent;
+            case '=':
+                $ token.Symbol = TokenSymbol::Equivalent;
                 goto DOUBLE;
-            default: $ token.Symbol = TokenSymbol::Equal;
+            default:
+                $ token.Symbol = TokenSymbol::Equal;
                 goto SINGLE;
             }
         case '{':
@@ -362,7 +393,8 @@ private:
         case ';':
         case '!':
         case '?':
-        case '@': $ token.Symbol = (TokenSymbol) $ peek;
+        case '@':
+            $ token.Symbol = (TokenSymbol) $ peek;
             goto SINGLE;
         default:
             $ token.Symbol = TokenSymbol::None;
@@ -380,17 +412,16 @@ private:
 private:
     Void Yeet(LexerModule way, LexerError error) {
         const Text8 *description = "";
-        throw Exception(
-            CompilerModule::Lexer, (Nat64) error + (Nat64) way,
-            description
-        );
+        throw Exception(CompilerModule::Lexer, (Nat64) error + (Nat64) way,
+                        description);
     }
 
 private:
     [[nodiscard]]
     constexpr
     Text8 Peek(Nat64 offset = 1)
-    const noexcept { return $ source[$ index + offset]; }
+    const noexcept
+    { return $ source[$ index + offset]; }
 
     constexpr
     Void Advance()
