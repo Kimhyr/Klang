@@ -16,22 +16,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7672e9b-5cae-4075-8fbc-195393fe46e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Syntax/Identifier.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Syntax/Syntax.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/Syntax/TASKS" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Analyzer/Symbol.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documents/Syntax" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/Syntax" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Analyzer/Lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Analyzer/Lexer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Analyzer/Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Analyzer/Parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Analyzer/Syntax.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Entry.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Entry.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Exception.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Exception.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Symbol.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Utilities/Dynar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utilities/Dynar.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Analyzer/Token.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Analyzer/Token.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Compiler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Compiler.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Syntax/Identifier.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Syntax/Identifier.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Syntax/Syntax.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Syntax/TASKS" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Utilities/Flag.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utilities/Flag.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Utilities/Memory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utilities/Memory.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Utilities/Text.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utilities/Text.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tests/Basic.kpl" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Basic.kpl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,23 +88,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C/C++"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C/C++&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Projects\KPLC\Source\Syntax" />
@@ -130,7 +124,12 @@
       <updated>1670285082277</updated>
       <workItem from="1670285087902" duration="3301000" />
       <workItem from="1670325672116" duration="3179000" />
-      <workItem from="1670454579633" duration="8720000" />
+      <workItem from="1670454579633" duration="8764000" />
+      <workItem from="1670466412266" duration="6000" />
+      <workItem from="1670543262659" duration="3566000" />
+      <workItem from="1670552003641" duration="248000" />
+      <workItem from="1670638961043" duration="1414000" />
+      <workItem from="1670645333424" duration="5827000" />
     </task>
     <servers />
   </component>

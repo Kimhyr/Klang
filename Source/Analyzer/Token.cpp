@@ -8,7 +8,7 @@ struct TokenPoint {
     Nat64 Column;
 };
 
-enum class TokenSymbol : Nat16 {
+enum class TokenEnum : Nat16 {
 #include "Defs/Token.defs"
 };
 
@@ -25,16 +25,16 @@ union TokenValue {
 struct Token {
     TokenPoint Start;
     TokenPoint End;
-    TokenSymbol Symbol;
+    TokenEnum Enum;
     TokenValue Value;
 
 public:
     Void Destroy() {
         switch (this->Symbol) {
-        case TokenSymbol::Identity:
+        case TokenEnum::Identity:
             delete[] this->Value.Identity;
             return;
-        case TokenSymbol::Text:
+        case TokenEnum::Text:
             delete[] this->Value.Text;
             return;
         default:

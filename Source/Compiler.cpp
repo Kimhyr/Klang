@@ -3,6 +3,7 @@
 
 enum class CompilerModule {
     Lexer,
+    Parser,
 };
 
 class Compiler {

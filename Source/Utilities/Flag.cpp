@@ -3,7 +3,7 @@
 
 #include "../Definitions.cpp"
 
-template<typename Bit_T>
+template<typename Bit_T, typename Type_T>
 class Flag {
     Bit_T bits;
 
@@ -12,12 +12,25 @@ public:
         : bits(0)
     {}
 
-    Void Set();
+    Bool Check(Type_T check) {
+        return $ (bits | ~((Bit_T)check)) & (Bit_T)check;
+    }
+
+    Void Set(Type_T check) {
+        $ bits |= (Bit_T)check;
+    }
 };
 
-using Flag8 = Flag<Bit8>;
-using Flag16 = Flag<Bit16>;
-using Flag32 = Flag<Bit32>;
-using Flag64 = Flag<Bit64>;
+template<typename Type_T>
+using Flag8 = Flag<Bit8, Type_T>;
+
+template<typename Type_T>
+using Flag16 = Flag<Bit16, Type_T>;
+
+template<typename Type_T>
+using Flag32 = Flag<Bit32, Type_T>;
+
+template<typename Type_T>
+using Flag64 = Flag<Bit64, Type_T>;
 
 #endif // KPLC_UTILITIES_FLAG_CPP

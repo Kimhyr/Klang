@@ -1,23 +1,18 @@
-// <L:Identifier> <- <T:Identity> [<T:Exclaim>|<T:Question>]?
+#ifndef KPLC_SYNTAX_IDENTIFIER_CPP
+#define KPLC_SYNTAX_IDENTIFIER_CPP
 
-#ifndef KPLC_SYNTAX_LEXEMES_IDENTIFIER_CPP
-#define KPLC_SYNTAX_LEXEMES_IDENTIFIER_CPP
+#include "../Utilities/Flag.cpp"
 
-#include "../Utilities/Dynar.cpp"
-
-namespace L {
+namespace S {
     enum class IdentifierFlag {
         Mutable,
-        PublicMutable,
+        Public,
     };
 
     struct Identifier {
-        Nat64 Depth; // I don't fucking know LOL
-        U::Dynar<Identifier> Path;
+        Flag8<IdentifierFlag> Flag;
         const Text8 *Identity;
-        IdentifierFlag Flag;
     };
-} // L
+} // S
 
-
-#endif // KPLC_SYNTAX_LEXEMES_IDENTIFIER_CPP
+#endif // KPLC_SYNTAX_IDENTIFIER_CPP

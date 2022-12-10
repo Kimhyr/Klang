@@ -56,7 +56,7 @@ public:
         while (U::Text::IsWhitespace($ peek))
             $ Advance();
         if ($ peek == '\0') {
-            $ token.Symbol = TokenSymbol::End;
+            $ token.Enum = TokenEnum::End;
             goto EPILOGUE;
         }
 
@@ -96,31 +96,31 @@ private:
 
     Void MatchWord(const Text8 *buf) {
         if (U::Text::Compare("procedure", buf) == 0)
-            $ token.Symbol = TokenSymbol::Procedure;
+            $ token.Enum = TokenEnum::Procedure;
         else if (U::Text::Compare("datum", buf) == 0)
-            $ token.Symbol = TokenSymbol::Datum;
+            $ token.Enum = TokenEnum::Datum;
         else if (U::Text::Compare("give", buf) == 0)
-            $ token.Symbol = TokenSymbol::Give;
+            $ token.Enum = TokenEnum::Give;
 
             // TODO This shit could be more efficient.
         else if (U::Text::Compare("Nat8", buf) == 0)
-            $ token.Symbol = TokenSymbol::Nat8;
+            $ token.Enum = TokenEnum::Nat8;
         else if (U::Text::Compare("Nat16", buf) == 0)
-            $ token.Symbol = TokenSymbol::Nat16;
+            $ token.Enum = TokenEnum::Nat16;
         else if (U::Text::Compare("Nat32", buf) == 0)
-            $ token.Symbol = TokenSymbol::Nat32;
+            $ token.Enum = TokenEnum::Nat32;
         else if (U::Text::Compare("Nat64", buf) == 0)
-            $ token.Symbol = TokenSymbol::Nat64;
+            $ token.Enum = TokenEnum::Nat64;
         else if (U::Text::Compare("Int8", buf) == 0)
-            $ token.Symbol = TokenSymbol::Int8;
+            $ token.Enum = TokenEnum::Int8;
         else if (U::Text::Compare("Int16", buf) == 0)
-            $ token.Symbol = TokenSymbol::Int16;
+            $ token.Enum = TokenEnum::Int16;
         else if (U::Text::Compare("Int32", buf) == 0)
-            $ token.Symbol = TokenSymbol::Int32;
+            $ token.Enum = TokenEnum::Int32;
         else if (U::Text::Compare("Int64", buf) == 0)
-            $ token.Symbol = TokenSymbol::Int64;
+            $ token.Enum = TokenEnum::Int64;
         else {
-            $ token.Symbol = TokenSymbol::Identity;
+            $ token.Enum = TokenEnum::Identity;
             $ token.Value.Identity = buf;
         }
     }
@@ -153,7 +153,7 @@ private:
             return $ LexNatural(&buf);
         else if ($ peek == '.')
             return $ LexReal(&buf);
-        $ token.Symbol = TokenSymbol::Natural;
+        $ token.Enum = TokenEnum::Natural;
         $ token.Value.Integer = 0;
     }
 
@@ -177,7 +177,7 @@ private:
 
     inline
     Void LexBinary(U::Dynar<Text8> *buf) {
-        $ token.Symbol = TokenSymbol::Machine;
+        $ token.Enum = TokenEnum::Machine;
         if ($ PeekIsValidBinary()) {
             do $ PutNumericBuf(buf);
             while ($ PeekIsValidBinary());
@@ -210,7 +210,7 @@ private:
 
     inline
     Void LexHexadecimal(U::Dynar<Text8> *buf) {
-        $ token.Symbol = TokenSymbol::Machine;
+        $ token.Enum = TokenEnum::Machine;
         if ($ PeekIsValidHexadecimal()) {
             do $ PutNumericBuf(buf);
             while ($ PeekIsValidHexadecimal());
@@ -246,7 +246,7 @@ private:
             if ($ peek == '.')
                 return $ LexReal(buf);
         } while ($ PeekIsValidNatural());
-        $ token.Symbol = TokenSymbol::Natural;
+        $ token.Enum = TokenEnum::Natural;
 
         if (buf->Size() == 0)
             $ NaturalYeet(LexerError::Valueless);
@@ -266,7 +266,7 @@ private:
     { $ Yeet(LexerModule::Real, error); }
 
     Void LexReal(U::Dynar<Text8> *buf) {
-        $ token.Symbol = TokenSymbol::Real;
+        $ token.Enum = TokenEnum::Real;
         do {
             $ PutNumericBuf(buf);
             if ($ peek == '.')
@@ -288,98 +288,98 @@ private:
         case '<':
             switch ($ Peek(2)) {
             case '=':
-                $ token.Symbol = TokenSymbol::LesserEquivalent;
+                $ token.Enum = TokenEnum::LesserEquivalent;
                 goto DOUBLE;
             case '<':
-                $ token.Symbol = TokenSymbol::LeftShift;
+                $ token.Enum = TokenEnum::LeftShift;
                 goto DOUBLE;
             default:
-                $ token.Symbol = TokenSymbol::Lesser;
+                $ token.Enum = TokenEnum::Lesser;
                 goto SINGLE;
             }
         case '>':
             switch ($ Peek(2)) {
             case '=':
-                $ token.Symbol = TokenSymbol::GreaterEquivalent;
+                $ token.Enum = TokenEnum::GreaterEquivalent;
                 goto DOUBLE;
             case '<':
-                $ token.Symbol = TokenSymbol::RightShift;
+                $ token.Enum = TokenEnum::RightShift;
                 goto DOUBLE;
             default:
-                $ token.Symbol = TokenSymbol::Greater;
+                $ token.Enum = TokenEnum::Greater;
                 goto SINGLE;
             }
         case ':':
             switch ($ Peek(2)) {
             case ':':
-                $ token.Symbol = TokenSymbol::DoubleColon;
+                $ token.Enum = TokenEnum::DoubleColon;
                 goto DOUBLE;
             default:
-                $ token.Symbol = TokenSymbol::Colon;
+                $ token.Enum = TokenEnum::Colon;
                 goto SINGLE;
             }
         case '+':
             switch ($ Peek(2)) {
             case '+':
-                $ token.Symbol = TokenSymbol::Increment;
+                $ token.Enum = TokenEnum::Increment;
                 goto DOUBLE;
             default:
-                $ token.Symbol = TokenSymbol::Plus;
+                $ token.Enum = TokenEnum::Plus;
                 goto SINGLE;
             }
         case '-':
             switch ($ Peek(2)) {
             case '-':
-                $ token.Symbol = TokenSymbol::Increment;
+                $ token.Enum = TokenEnum::Increment;
                 goto DOUBLE;
             case '>':
-                $ token.Symbol = TokenSymbol::RightArrow;
+                $ token.Enum = TokenEnum::RightArrow;
                 goto DOUBLE;
             default:
-                $ token.Symbol = TokenSymbol::Minus;
+                $ token.Enum = TokenEnum::Minus;
                 goto SINGLE;
             }
         case '&':
             switch ($ Peek(2)) {
             case '&':
-                $ token.Symbol = TokenSymbol::DoubleAnd;
+                $ token.Enum = TokenEnum::DoubleAnd;
                 goto DOUBLE;
             default:
-                $ token.Symbol = TokenSymbol::And;
+                $ token.Enum = TokenEnum::And;
                 goto SINGLE;
             }
         case '|':
             switch ($ Peek(2)) {
             case '+':
-                $ token.Symbol = TokenSymbol::DoubleLine;
+                $ token.Enum = TokenEnum::DoubleLine;
                 goto DOUBLE;
             default:
-                $ token.Symbol = TokenSymbol::Line;
+                $ token.Enum = TokenEnum::Line;
                 goto SINGLE;
             }
         case '\\':
             switch ($ Peek(2)) {
             case '\\':
-                $ token.Symbol = TokenSymbol::Comment;
+                $ token.Enum = TokenEnum::Comment;
                 do $ Advance();
                 while ($ peek != '\n' && $ peek != '\0');
                 return;
             case '*':
-                $ token.Symbol = TokenSymbol::Comment;
+                $ token.Enum = TokenEnum::Comment;
                 do $ Advance();
                 while (($ peek != '*' && $ Peek(2) != '\\') || $ peek != '\0');
                 return;
             default:
-                $ token.Symbol = TokenSymbol::Slosh;
+                $ token.Enum = TokenEnum::Slosh;
                 goto SINGLE;
             }
         case '=':
             switch ($ Peek(2)) {
             case '=':
-                $ token.Symbol = TokenSymbol::Equivalent;
+                $ token.Enum = TokenEnum::Equivalent;
                 goto DOUBLE;
             default:
-                $ token.Symbol = TokenSymbol::Equal;
+                $ token.Enum = TokenEnum::Equal;
                 goto SINGLE;
             }
         case '{':
@@ -394,10 +394,10 @@ private:
         case '!':
         case '?':
         case '@':
-            $ token.Symbol = (TokenSymbol) $ peek;
+            $ token.Enum = (TokenEnum) $ peek;
             goto SINGLE;
         default:
-            $ token.Symbol = TokenSymbol::None;
+            $ token.Enum = TokenEnum::None;
             $ token.Value.None = $ peek;
             goto SINGLE;
         }
