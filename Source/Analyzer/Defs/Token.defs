@@ -29,6 +29,7 @@ Line = '|',
 
 Identity = 256,
 Namespace,
+Combinate,
 Enumerare,
 Structure,
 Unistruct,
