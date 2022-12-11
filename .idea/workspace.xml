@@ -16,17 +16,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7672e9b-5cae-4075-8fbc-195393fe46e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/Analyzer/Symbol.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/Syntax/Cast.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Analyzer/Lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Analyzer/Lexer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Analyzer/Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Analyzer/Parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Analyzer/Token.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Analyzer/Token.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Compiler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Compiler.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/Syntax/Identifier.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Syntax/Identifier.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Syntax/Syntax.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Syntax/TASKS" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Utilities/Flag.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Utilities/Flag.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/Basic.kpl" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Basic.kpl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +122,9 @@
       <workItem from="1670543262659" duration="3566000" />
       <workItem from="1670552003641" duration="248000" />
       <workItem from="1670638961043" duration="1414000" />
-      <workItem from="1670645333424" duration="6128000" />
+      <workItem from="1670645333424" duration="6147000" />
+      <workItem from="1670713515103" duration="789000" />
+      <workItem from="1670794625512" duration="2561000" />
     </task>
     <servers />
   </component>

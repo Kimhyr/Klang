@@ -3,14 +3,16 @@
 
 #include "Lexer.cpp"
 
+#include "../Syntax/Cast.cpp"
 #include "../Syntax/Identifier.cpp"
+#include "Symbol.cpp"
 
 enum class ParserState {
 
 };
 
 class Parser {
-    U::Dynar<Symbol> symbols;
+    U::Table<const Text8 *, Symbol> symbols;
     Lexer lexer;
     Token token;
 
@@ -58,11 +60,15 @@ public:
         S::Cast cast;
         while (($ token = $ lexer.Lex()).Enum == TokenEnum::At)
             ++cast.PointerCount;
-        // TODO
+        if (token.Enum != TokenEnum::Identity)
+            throw Exception(CompilerModule::Parser, 0, "");
+        cast.Identifier = $ symbols.Get(token.Value.Identity);
+        return cast;
     }
 
     template<>
     S::Datum Parse() {
+        
     }
 
 
