@@ -1,0 +1,43 @@
+#ifndef KC_UTILITIES_TEXT_H
+#define KC_UTILITIES_TEXT_H
+
+#include "../Include.H"
+
+namespace U {
+    template<typename Sym_T>
+    class Text {
+    public:
+        static
+        Bool Compare(const Sym_T *first, const Sym_T *second);
+
+    public:
+        static
+        Nat64 ToNatural(const Sym_T *text, Nat8 base = 10);
+
+        static
+        Int64 ToInteger(const Sym_T *text, Nat8 base = 10);
+
+        static
+        Real64 ToReal(const Sym_T *text);
+
+    public:
+        static constexpr
+        Bool IsWhitespace(Sym_T text) {
+            return (text == ' ') || (text >= '\t' && text <= '\r');
+        }
+
+        static constexpr
+        Bool IsAlphabetic(Sym_T text) {
+            return (text >= 'A' && text <= 'Z') || (text >= 'a' && text <= 'z');
+        }
+
+        static constexpr
+        Bool IsNumeric(Sym_T text) {
+            return text >= '0' && text <= '9';
+        };
+    };
+
+    using Text8 = Text<Sym8>;
+} // U
+
+#endif // KC_UTILITIES_TEXT_H

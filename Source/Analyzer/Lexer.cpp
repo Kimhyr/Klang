@@ -7,27 +7,27 @@
 #include "Token.cpp"
 
 enum class LexerModule : Nat8 {
-    Alphabetic,
-    Numeric,
-    Natural,
-    Binary,
-    Hexadecimal,
+    ALPHABETIC,
+    NUMERIC,
+    NATURAL,
+    BINARY,
+    HEXADECIMAL,
     Real,
     Scientific,
     Symbolic,
 };
 
 enum LexerFlag : Bit8 {
-    End = 1 << 0,
-    Continue = 1 << 1,
+    END = 1 << 0,
+    CONTINUE = 1 << 1,
 };
 
 enum class LexerError : Nat8 {
-    WrongFormat = 1,
-    Valueless,
-    Incomplete,
-    Inconvertible,
-    OutOfRange,
+    WRONG_FORMAT = 1,
+    VALUELESS,
+    INCOMPLETE,
+    INCONVERTABLE,
+    OUT_OF_RANGE,
 };
 
 class Lexer {
@@ -86,7 +86,7 @@ private:
         U::Dynar<Text8> buf;
         do {
             if (buf.Size() > 1024)
-                $ Yeet(LexerModule::Alphabetic, LexerError::OutOfRange);
+                $ Yeet(LexerModule::ALPHABETIC, LexerError::OUT_OF_RANGE);
             buf.Put($ peek);
             $ Advance();
         } while (U::Text::IsNumeric($ peek) || $ PeekIsValidIdentity());
@@ -120,7 +120,7 @@ private:
         else if (U::Text::Compare("Int64", buf) == 0)
             $ token.Enum = TokenEnum::Int64;
         else {
-            $ token.Enum = TokenEnum::Identity;
+            $ token.Enum = TokenEnum::IDENTIFIER;
             $ token.Value.Identity = buf;
         }
     }
@@ -173,7 +173,7 @@ private:
 
     inline
     Void BinaryYeet(LexerError error)
-    { $ Yeet(LexerModule::Binary, error); }
+    { $ Yeet(LexerModule::BINARY, error); }
 
     inline
     Void LexBinary(U::Dynar<Text8> *buf) {
@@ -182,16 +182,16 @@ private:
             do $ PutNumericBuf(buf);
             while ($ PeekIsValidBinary());
         } else
-            $ BinaryYeet(LexerError::WrongFormat);
+            $ BinaryYeet(LexerError::WRONG_FORMAT);
         if (buf->Size() == 0)
-            $ BinaryYeet(LexerError::Valueless);
+            $ BinaryYeet(LexerError::VALUELESS);
         buf->Put(0);
         try {
             $ token.Value.Machine = U::Text::ConvertToNatural(buf->Flush(), 2);
         } catch (const Exception::InvalidArgument &) {
-            $ BinaryYeet(LexerError::Inconvertible);
+            $ BinaryYeet(LexerError::INCONVERTABLE);
         } catch (const Exception::OutOfRange &) {
-            $ BinaryYeet(LexerError::OutOfRange);
+            $ BinaryYeet(LexerError::OUT_OF_RANGE);
         }
     }
 
@@ -206,7 +206,7 @@ private:
 
     inline
     Void HexadecimalYeet(LexerError error)
-    { $ Yeet(LexerModule::Hexadecimal, error); }
+    { $ Yeet(LexerModule::HEXADECIMAL, error); }
 
     inline
     Void LexHexadecimal(U::Dynar<Text8> *buf) {
@@ -215,17 +215,17 @@ private:
             do $ PutNumericBuf(buf);
             while ($ PeekIsValidHexadecimal());
         } else
-            $ HexadecimalYeet(LexerError::WrongFormat);
+            $ HexadecimalYeet(LexerError::WRONG_FORMAT);
 
         if (buf->Size() == 0)
-            HexadecimalYeet(LexerError::Valueless);
+            HexadecimalYeet(LexerError::VALUELESS);
         buf->Put(0);
         try {
             $ token.Value.Machine = U::Text::ConvertToNatural(buf->Flush(), 16);
         } catch (const Exception::InvalidArgument &) {
-            $ HexadecimalYeet(LexerError::Inconvertible);
+            $ HexadecimalYeet(LexerError::INCONVERTABLE);
         } catch (const Exception::OutOfRange &) {
-            $ HexadecimalYeet(LexerError::OutOfRange);
+            $ HexadecimalYeet(LexerError::OUT_OF_RANGE);
         }
     }
 
@@ -238,7 +238,7 @@ private:
 
     inline
     Void NaturalYeet(LexerError error)
-    { $ Yeet(LexerModule::Natural, error); }
+    { $ Yeet(LexerModule::NATURAL, error); }
 
     Void LexNatural(U::Dynar<Text8> *buf) {
         do {
@@ -249,14 +249,14 @@ private:
         $ token.Enum = TokenEnum::Natural;
 
         if (buf->Size() == 0)
-            $ NaturalYeet(LexerError::Valueless);
+            $ NaturalYeet(LexerError::VALUELESS);
         buf->Put(0);
         try {
             $ token.Value.Integer = U::Text::ConvertToInteger(buf->Flush());
         } catch (const Exception::InvalidArgument &) {
-            $ NaturalYeet(LexerError::Inconvertible);
+            $ NaturalYeet(LexerError::INCONVERTABLE);
         } catch (const Exception::OutOfRange &) {
-            $ NaturalYeet(LexerError::OutOfRange);
+            $ NaturalYeet(LexerError::OUT_OF_RANGE);
         }
     }
 
@@ -270,15 +270,15 @@ private:
         do {
             $ PutNumericBuf(buf);
             if ($ peek == '.')
-                $ RealYeet(LexerError::WrongFormat);
+                $ RealYeet(LexerError::WRONG_FORMAT);
         } while ($ PeekIsValidNatural());
         buf->Put(0);
         try {
             $ token.Value.Real = U::Text::ConvertToReal(buf->Flush());
         } catch (const Exception::InvalidArgument &) {
-            $ RealYeet(LexerError::Inconvertible);
+            $ RealYeet(LexerError::INCONVERTABLE);
         } catch (const Exception::OutOfRange &) {
-            $ RealYeet(LexerError::OutOfRange);
+            $ RealYeet(LexerError::OUT_OF_RANGE);
         }
     }
 
