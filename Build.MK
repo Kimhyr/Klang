@@ -1,4 +1,4 @@
-NAME=kplc
+NAME=kc
 
 # Directories
 SRCD=./Source
@@ -7,8 +7,8 @@ OBJD=$(OUTD)/Objects
 DIRS=. Analyzer Utilities
 
 # Files
-SRCS=$(foreach D,$(DIRS),$(wildcard $(SRCD)/$(D)/*.cpp))
-OBJS=$(patsubst $(SRCD)/%.cpp,$(OBJD)/%.obj,$(SRCS))
+SRCS=$(foreach D,$(DIRS),$(wildcard $(SRCD)/$(D)/*.CC))
+OBJS=$(patsubst $(SRCD)/%.CC,$(OBJD)/%.OBJ,$(SRCS))
 BIN=$(OUTD)/$(NAME).exe
 
 # Build command
@@ -21,16 +21,13 @@ FLGS=$(CFLGS) $(WFLGS) $(IFLGS)
 
 all:$(BIN)
 
-entry:$(SRCD)/Entry.cpp
-	$(CC) $(SRCD)/Entry.cpp -o ./Entry.exe $(FLGS)
-
 run:$(BIN)
 	$(BIN)
 
 $(BIN):$(OBJS)
 	$(CC) $^ -o $@ $(LFLGS)
 
-$(OBJD)/%.obj:$(SRCD)/%.cpp
+$(OBJD)/%.OBJ:$(SRCD)/%.CC
 	$(CC) -c $^ -o $@ $(FLGS)
 
 clean:$(OUTD)

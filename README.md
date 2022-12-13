@@ -6,16 +6,18 @@
 
 `Basic.kpl`
 
-```kpl
-procedure Initiate(argc: Int32, argv: @@Nat8) -> Int32 {
-	datum x?: Int32 = 7;
-	x = 21 + 14;
-	give x;
+```k
+procedure Initiate(
+		argc::Int32, argv::@@Nat8
+) -> Int32 {
+	datum value?::Int32 {7}
+	value = 21 + 14;
+	return value;
 }
 ```
 
 ```sh
-$ kplc build ./Basic.kpl --out ./Basic.exe
+$ kc build ./Basic.kpl --out ./Basic.exe
 $ ./Basic.exe
 35
 ```
