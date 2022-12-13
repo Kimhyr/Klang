@@ -1,4 +1,4 @@
-# KPLC (King's Programming Language Compiler)
+# KC (K/King Compiler)
 
 ## Examples
 
