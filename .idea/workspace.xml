@@ -15,33 +15,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7672e9b-5cae-4075-8fbc-195393fe46e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/source/include.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documents/Combinate" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Documents/Combinate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documents/Literals" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Documents/Literals" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documents/Pattern_matching" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Documents/Pattern_matching" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documents/Primitives" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Documents/Primitives" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documents/Syntax" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Documents/Syntax" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documents/Tokens" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Documents/Tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documents/Types" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Documents/Types" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Analyzer/Defs/Token.defs" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Analyzer/Defs/Token.defs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Analyzer/Lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Analyzer/Lexer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Analyzer/Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Analyzer/Parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Analyzer/Symbol.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Analyzer/Symbol.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Analyzer/Token.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Analyzer/Token.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Compiler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Compiler.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Definitions.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Definitions.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Entry.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Entry.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Exception.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Exception.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Syntax/Cast.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Syntax/Cast.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Syntax/Identifier.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Syntax/Identifier.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Utilities/Dynar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Utilities/Dynar.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Utilities/Flag.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Utilities/Flag.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Utilities/Memory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Utilities/Memory.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Utilities/Text.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Source/Utilities/Text.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/Basic.kpl" beforeDir="false" afterPath="$PROJECT_DIR$/legacy/Tests/Basic.kpl" afterDir="false" />
-    </list>
+    <list default="true" id="a7672e9b-5cae-4075-8fbc-195393fe46e4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -146,6 +120,7 @@
       <workItem from="1670645333424" duration="6147000" />
       <workItem from="1670713515103" duration="789000" />
       <workItem from="1670794625512" duration="3149000" />
+      <workItem from="1670892884516" duration="8000" />
     </task>
     <servers />
   </component>
