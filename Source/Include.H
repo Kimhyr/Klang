@@ -1,10 +1,20 @@
 #ifndef KC_INCLUDE_H
 #define KC_INCLUDE_H
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #define $ this->
 
-#define null NULL
-#define nil nullptr
+#define TRUE true
+#define FALSE false
+#define NIL nullptr
+#define UNIMPLEMENTED(msg) \
+        do { \
+                printf("Unimplemented [%s:%i]: %s", \
+                       __FILE__, __LINE__, msg); \
+                exit(1); \
+        } while (0)
 
 using Void = void;
 
@@ -32,5 +42,10 @@ using Real32= float;
 using Real64 = double;
 
 using Size = unsigned long long int;
+
+enum class Result : Int8 {
+    FAILURE = -1,
+    SUCCESS,
+};
 
 #endif // KC_INCLUDE_H

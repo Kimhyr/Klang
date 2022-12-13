@@ -54,7 +54,7 @@ enum class TokenID {
 
 union TokenValue {
     Sym8 None;
-    const Sym8 *Identifier;
+    Sym8 *Identifier;
     Bit64 Machine;
     Nat64 Natural;
     Int64 Integer;
