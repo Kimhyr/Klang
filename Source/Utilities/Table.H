@@ -27,4 +27,7 @@ public:
     Nat64 Hash(Key_T key, Size size);
 };
 
+template<typename Value_T, Size Size_V>
+using StringTable = Table<const Sym8 *, Value_T, Size_V>;
+
 #endif // KC_UTILITIES_TABLE_H
