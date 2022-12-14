@@ -2,7 +2,6 @@
 #define KC_ANALLYZER_LEXER_H
 
 #include "../Utilities/Text.H"
-#include "../Utilities/Table.H"
 #include "../Utilities/Buffer.H"
 #include "Token.H"
 
@@ -30,14 +29,14 @@ enum class LexerError : Nat8 {
 };
 
 class Lexer {
-    U::Point point;
+    Point point;
     Int64 index;
     const Sym8 *source;
     Sym8 peek;
 
 public:
     static
-    U::Table<const Sym8 *, TokenID> KEYWORD_TABLE;
+    Table<const Sym8 *, TokenID> KEYWORD_TABLE;
 
     static constexpr
     const Nat16 MAX_IDENTIFIER_LENGTH = 1028;
@@ -59,7 +58,7 @@ public:
     Result Lex(Token *token);
 
 private:
-    Void LexNatural(const U::Buffer<Sym8, Lexer::MAX_NUMBER_LENGTH> *buffer, Token *token);
+    Void LexNatural(const Buffer<Sym8, Lexer::MAX_NUMBER_LENGTH> *buffer, Token *token);
 
 private:
     constexpr

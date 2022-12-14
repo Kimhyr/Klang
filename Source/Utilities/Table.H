@@ -1,22 +1,30 @@
 #ifndef KC_UTILITIES_TABLE_H
 #define KC_UTILITIES_TABLE_H
 
-#include "../Include.H"
+#include "Dynar.H"
 
-namespace U {
-    template<typename Key_T, typename Value_T>
-    struct TableEntry {
-        Key_T Key;
-        Value_T Value;
-    };
+template<typename Key_T, typename Value_T>
+struct TableEntry {
+    Key_T Key;
+    Value_T Value;
+    TableEntry<Key_T, Value_T> *Next;
 
-    template<typename Key_T, typename Value_T>
-    class Table {
-        TableEntry<Key_T, Value_T> *entries;
+    TableEntry(Key_T key, Value_T value);
+};
 
-    public:
-        Result Get(Key_T key, Value_T *out);
-    };
-} // U
+template<typename Key_T, typename Value_T, Size Size_V>
+class Table {
+    TableEntry<Key_T, Value_T> entries[Size_V];
+
+public:
+    Table();
+
+public:
+    Void Put(Key_T key, Value_T value);
+
+    Value_T *Get(Key_T key);
+
+    Nat64 Hash(Key_T key, Size size);
+};
 
 #endif // KC_UTILITIES_TABLE_H

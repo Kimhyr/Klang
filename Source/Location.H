@@ -3,11 +3,9 @@
 
 #include "Include.H"
 
-namespace U {
-    struct Point {
-        Size Row;
-        Size Column;
-    };
-} // U
+struct Point {
+    Size Row;
+    Size Column;
+};
 
 #endif // KC_LOCATION_H

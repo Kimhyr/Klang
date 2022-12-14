@@ -8,7 +8,7 @@ Void Lexer::Destroy() {
 }
 
 Result Lexer::Lex(Token *token) {
-    while (U::Text8::IsWhitespace($ peek))
+    while (Text8::IsWhitespace($ peek))
         $ Advance();
     token->Start = $ point;
     if ($ peek == '\0') {
@@ -16,15 +16,15 @@ Result Lexer::Lex(Token *token) {
         goto Epilogue;
     }
 
-    if (U::Text8::IsAlphabetic($ peek) || $ peek == '_') {
-        U::Buffer<Sym8, Lexer::MAX_IDENTIFIER_LENGTH> buffer;
+    if (Text8::IsAlphabetic($ peek) || $ peek == '_') {
+        Buffer<Sym8, Lexer::MAX_IDENTIFIER_LENGTH> buffer;
         do {
             if (!buffer.Put($ peek)) {
                 Doctor::Diagnose("Buffer overflow!");
                 goto Failure;
             }
             $ Advance();
-        } while (U::Text8::IsNumeric($ peek) || U::Text8::IsAlphabetic($ peek) || $ peek == '_');
+        } while (Text8::IsNumeric($ peek) || Text8::IsAlphabetic($ peek) || $ peek == '_');
         buffer.Put('\0');
         TokenID keyword;
         if (Lexer::KEYWORD_TABLE.Get(buffer.GetData(), &keyword) == Result::SUCCESS)
@@ -33,8 +33,8 @@ Result Lexer::Lex(Token *token) {
             token->ID = TokenID::IDENTIFIER;
             token->Value.Identifier = buffer.Flush();
         }
-    } else if (U::Text8::IsNumeric($ peek)) {
-        U::Buffer<Sym8, Lexer::MAX_NUMBER_LENGTH> buffer;
+    } else if (Text8::IsNumeric($ peek)) {
+        Buffer<Sym8, Lexer::MAX_NUMBER_LENGTH> buffer;
         if ($ peek == '0') {
             $ Advance();
             switch ($ peek) {
