@@ -12,7 +12,7 @@ Result Lexer::Lex(Token *token) {
         $ Advance();
     token->Start = $ point;
     if ($ peek == '\0') {
-        token->ID = TokenID::END;
+        token->ID = Token::END;
         goto Epilogue;
     }
 
@@ -26,11 +26,11 @@ Result Lexer::Lex(Token *token) {
             $ Advance();
         } while (Text8::IsNumeric($ peek) || Text8::IsAlphabetic($ peek) || $ peek == '_');
         buffer.Put('\0');
-        TokenID keyword;
-        if (Lexer::KEYWORD_TABLE.Get(buffer.GetData(), &keyword) == Result::SUCCESS)
-            token->ID = keyword;
+        Sym8 *keyword = Lexer::KEYWORD_TABLE.Get(buffer.GetData());
+        if (keyword)
+            token->ID = *keyword;
         else {
-            token->ID = TokenID::IDENTIFIER;
+            token->ID = Token::IDENTIFIER;
             token->Value.Identifier = buffer.Flush();
         }
     } else if (Text8::IsNumeric($ peek)) {
@@ -61,7 +61,7 @@ Result Lexer::Lex(Token *token) {
             buffer.Put($ peek);
             $ LexNatural(&buffer, token);
         }
-        token->ID = TokenID::NATURAL;
+        token->ID = Token::NATURAL;
         token->Value.Natural = 0;
     } else {
 

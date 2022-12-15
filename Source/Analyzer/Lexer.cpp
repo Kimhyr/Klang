@@ -1,10 +1,9 @@
 #ifndef KPLC_ANALYZER_LEXER_CPP
 #define KPLC_ANALYZER_LEXER_CPP
 
-#include "../Exception.cpp"
-#include "../Utilities/Text.cpp"
-#include "../Utilities/Dynar.cpp"
-#include "Token.cpp"
+#include "../Utilities/Text.H"
+#include "../Utilities/Dynar.H"
+#include "Token.H"
 
 enum class LexerModule : Nat8 {
     ALPHABETIC,

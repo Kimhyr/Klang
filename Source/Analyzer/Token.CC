@@ -2,10 +2,10 @@
 
 Void Token::Destroy() {
     switch ($ ID) {
-    case TokenID::IDENTIFIER:
+    case Token::IDENTIFIER:
         delete[] $ Value.Identifier;
         break;
-    case TokenID::TEXT:
+    case Token::TEXT:
         delete[] $ Value.Text;
         break;
     default:

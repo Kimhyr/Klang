@@ -1,6 +1,7 @@
 #ifndef KC_ANALLYZER_LEXER_H
 #define KC_ANALLYZER_LEXER_H
 
+#include "../Utilities/Table.H"
 #include "../Utilities/Text.H"
 #include "../Utilities/Buffer.H"
 #include "Token.H"
@@ -36,7 +37,7 @@ class Lexer {
 
 public:
     static
-    Table<const Sym8 *, TokenID> KEYWORD_TABLE;
+    Table<const Sym8 *, Sym8, 3> KEYWORD_TABLE;
 
     static constexpr
     const Nat16 MAX_IDENTIFIER_LENGTH = 1028;
