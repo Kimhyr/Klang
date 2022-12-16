@@ -8,11 +8,12 @@ Void Lexer::Destroy() {
 }
 
 Result Lexer::Lex(Token *token) {
+    Result result = Result::SUCCESS;
     while (Text8::IsWhitespace($ peek))
         $ Advance();
     token->Start = $ point;
     if ($ peek == '\0') {
-        token->ID = Token::END;
+        token->Kind = Token::END;
         goto Epilogue;
     }
 
@@ -26,11 +27,11 @@ Result Lexer::Lex(Token *token) {
             $ Advance();
         } while (Text8::IsNumeric($ peek) || Text8::IsAlphabetic($ peek) || $ peek == '_');
         buffer.Put('\0');
-        Sym8 *keyword = Lexer::KEYWORD_TABLE.Get(buffer.GetData());
+        Token::Id *keyword = Lexer::KEYWORD_TABLE.Get(buffer.GetData());
         if (keyword)
-            token->ID = *keyword;
+            token->Kind = *keyword;
         else {
-            token->ID = Token::IDENTIFIER;
+            token->Kind = Token::IDENTIFIER;
             token->Value.Identifier = buffer.Flush();
         }
     } else if (Text8::IsNumeric($ peek)) {
@@ -44,11 +45,31 @@ Result Lexer::Lex(Token *token) {
                 break;
             case 'b': case 'B':
                 $ Advance();
-                // TODO: Lex binary.
+                if ($ peek == '0' || $ peek == '1') {
+                    Doctor::Diagnose("Binary literal has the wrong format.`");
+                    goto Failure;
+                } do {
+                    if (!buffer.Put($ peek)) {
+                        Doctor::Diagnose("Buffer overflow!");
+                        goto Failure;
+                    }
+                    $ Advance();
+                } while ($ peek == '0' || $ peek == '1' || $ peek == '_');
+                // TODO: Convert to `Nat64`
                 goto Epilogue;
             case 'x': case 'X':
                 $ Advance();
-                // TODO: Lex hexadecimal
+                if (!Text8::IsNumeric($ peek) || !($ peek >= 'A' && $ peek <= 'F') || !($ peek >= 'a' && $ peek <= 'f')) {
+                    Doctor::Diagnose("Hexadecimal literal has the wrong format.");
+                    goto Failure;
+                } do {
+                    if (!buffer.Put($ peek)) {
+                        Doctor::Diagnose("Buffer overflow!");
+                        goto Failure;
+                    }
+                    $ Advance();
+                } while (Text8::IsNumeric($ peek) || ($ peek >= 'A' && $ peek <= 'F') || ($ peek >= 'a' && $ peek <= 'f'));
+                // TODO: Convert to `Nat64`
                 goto Epilogue;
             default:
                 break;
@@ -61,19 +82,20 @@ Result Lexer::Lex(Token *token) {
             buffer.Put($ peek);
             $ LexNatural(&buffer, token);
         }
-        token->ID = Token::NATURAL;
+        token->Kind = Token::NATURAL;
         token->Value.Natural = 0;
     } else {
 
     }
+
+Failure:
+    result = Result::FAILURE;
 
 Epilogue:
     token->End = {
         .Row = $ point.Row,
         .Column = $ point.Column,
     };
-    return Result::SUCCESS;
+    return result;
 
-Failure:
-    return Result::FAILURE;
 }

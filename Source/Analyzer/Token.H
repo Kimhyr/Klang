@@ -4,60 +4,16 @@
 #include "../Include.H"
 #include "../Location.H"
 
-enum class TokenID {
-    // Exotic
-    NONE = 0,
-    END,
-    COMMENT,
-
-    // Keywords
-    INT32,
-    NAT8,
-
-    // Literals
-    MACHINE,
-    NATURAL,
-    INTEGER,
-    REAL,
-    TEXT,
-
-    // Symbols
-    OPEN_PAREN = '(',
-    CLOSE_PAREN = ')',
-    OPEN_BRACE = '{',
-    CLOSE_BRACE = '}',
-
-    COMMA = ',',
-    SEMICOLON = ';',
-
-    SLOSH = '\\',
-
-    AT = '@',
-    QUESTION = '?',
-
-    EQUAL = '=',
-    PLUS = '+',
-    MINUS = '-',
-
-    // Exotic
-    IDENTIFIER = -128,
-
-    // Keywords
-    PROCEDURE,
-    DATUM,
-    RETURN,
-
-    // Symbols
-    DOUBLE_COLON, // ::
-    RIGHT_ARROW, // ->
-};
-
 struct Token {
 public:
-    using IDType = Sym8;
+    using Id = Sym8;
 
 public:
-    enum : IDType {
+
+public:
+    Point Start;
+    Point End;
+    enum : Id {
         // Exotic
         NONE = 0,
         END,
@@ -103,12 +59,7 @@ public:
         // Symbols
         DOUBLE_COLON, // ::
         RIGHT_ARROW, // ->
-    };
-
-public:
-    Point Start;
-    Point End;
-    IDType ID;
+    }; Id Kind;
     union {
         Sym8 None;
         Sym8 *Identifier;

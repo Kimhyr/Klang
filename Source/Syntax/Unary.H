@@ -1,3 +1,5 @@
+// ['return'] <Syntax>
+
 #ifndef KC_SYNTAX_UNARY_H
 #define KC_SYNTAX_UNARY_H
 
@@ -5,17 +7,14 @@
 
 namespace S {
     struct Unary {
-    public:
-        using IDType = Nat8;
+        static constexpr
+        const Syntax::Id Id = Syntax::UNARY;
 
     public:
-        enum : IDType {
+        enum : Nat8 {
             RETURN,
-        };
-
-    public:
-        IDType ID;
-        Syntax Value;
+        } Operand;
+        Syntax Factor;
     };
 } // S
 

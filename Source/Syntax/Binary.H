@@ -1,27 +1,25 @@
-#ifndef KC_SYNTAX_BINARY_H
-#define KC_SYNTAX_BINARY_H
+// <Syntax> ['::'|'='|'+'] <Syntax>
+
+#ifndef KC_SYNTAX_BINRY_H
+#define KC_SYNTAX_BINRY_H
 
 #include "Syntax.H"
 
 namespace S {
-
     struct Binary {
-    public:
-        using IDType = Nat8;
+        static constexpr
+        const Syntax::Id Id = Syntax::BINARY;
 
     public:
-        enum : IDType {
-            PLUS,
-            MINUS,
-            EQUAL,
+        enum : Nat8 {
+            ADD,
+            ASSIGN,
             CAST,
-        };
-
-    public:
+            SUBTRACT,
+        } Operand;
+        Syntax First;
         Syntax Second;
-        Syntax *First;
-        IDType Operand;
     };
 } // S
 
-#endif // KC_SYNTAX_BINARY_H
+#endif // KC_SYNTAX_BINRY_H

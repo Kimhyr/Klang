@@ -37,7 +37,7 @@ class Lexer {
 
 public:
     static
-    Table<const Sym8 *, Sym8, 3> KEYWORD_TABLE;
+    Table<const Sym8 *, Token::Id, 3> KEYWORD_TABLE;
 
     static constexpr
     const Nat16 MAX_IDENTIFIER_LENGTH = 1028;
