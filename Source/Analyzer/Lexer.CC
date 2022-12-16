@@ -45,6 +45,7 @@ Result Lexer::Lex(Token *token) {
                 break;
             case 'b': case 'B':
                 $ Advance();
+                token->Kind = Token::MACHINE;
                 if ($ peek == '0' || $ peek == '1') {
                     Doctor::Diagnose("Binary literal has the wrong format.`");
                     goto Failure;
@@ -55,10 +56,13 @@ Result Lexer::Lex(Token *token) {
                     }
                     $ Advance();
                 } while ($ peek == '0' || $ peek == '1' || $ peek == '_');
-                // TODO: Convert to `Nat64`
+                buffer.Put(0);
+                if (!Text8::ToNatural(&token->Value.Machine, buffer.GetData()))
+                    Doctor::Diagnose("Failed to convert binary literal.");
                 goto Epilogue;
             case 'x': case 'X':
                 $ Advance();
+                token->Kind = Token::MACHINE;
                 if (!Text8::IsNumeric($ peek) || !($ peek >= 'A' && $ peek <= 'F') || !($ peek >= 'a' && $ peek <= 'f')) {
                     Doctor::Diagnose("Hexadecimal literal has the wrong format.");
                     goto Failure;
@@ -69,6 +73,9 @@ Result Lexer::Lex(Token *token) {
                     }
                     $ Advance();
                 } while (Text8::IsNumeric($ peek) || ($ peek >= 'A' && $ peek <= 'F') || ($ peek >= 'a' && $ peek <= 'f'));
+                buffer.Put(0);
+                if (!Text8::ToNatural(&token->Value.Machine, buffer.GetData()))
+                    Doctor::Diagnose("Failed to convert binary literal.");
                 // TODO: Convert to `Nat64`
                 goto Epilogue;
             default:
