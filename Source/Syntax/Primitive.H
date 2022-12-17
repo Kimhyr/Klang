@@ -13,7 +13,7 @@ namespace S {
     public:
         enum : Nat8 {
             INT32 = 3,
-            Nat8,
+            NAT8,
         } Kind;
     };
 } // S

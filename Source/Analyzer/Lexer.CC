@@ -2,6 +2,7 @@
 
 #include "../Utilities/Buffer.H"
 #include "../Doctor.H"
+#include <corecrt_math.h>
 
 Void Lexer::Destroy() {
     delete[] $ source;
@@ -34,6 +35,7 @@ Result Lexer::Lex(Token *token) {
             token->Kind = Token::IDENTIFIER;
             token->Value.Identifier = buffer.Flush();
         }
+        goto Epilogue;
     } else if (Text8::IsNumeric($ peek)) {
         Buffer<Sym8, Lexer::MAX_NUMBER_LENGTH> buffer;
         if ($ peek == '0') {
@@ -57,9 +59,10 @@ Result Lexer::Lex(Token *token) {
                     $ Advance();
                 } while ($ peek == '0' || $ peek == '1' || $ peek == '_');
                 buffer.Put(0);
-                if (!Text8::ToNatural(&token->Value.Machine, buffer.GetData()))
-                    Doctor::Diagnose("Failed to convert binary literal.");
-                goto Epilogue;
+                if (Text8::ToNatural(&token->Value.Machine, buffer.GetData()))
+                    goto Epilogue;
+                Doctor::Diagnose("Failed to convert binary literal.");
+                goto Failure;
             case 'x': case 'X':
                 $ Advance();
                 token->Kind = Token::MACHINE;
@@ -74,16 +77,16 @@ Result Lexer::Lex(Token *token) {
                     $ Advance();
                 } while (Text8::IsNumeric($ peek) || ($ peek >= 'A' && $ peek <= 'F') || ($ peek >= 'a' && $ peek <= 'f'));
                 buffer.Put(0);
-                if (!Text8::ToNatural(&token->Value.Machine, buffer.GetData()))
-                    Doctor::Diagnose("Failed to convert binary literal.");
-                // TODO: Convert to `Nat64`
-                goto Epilogue;
+                if (Text8::ToNatural(&token->Value.Machine, buffer.GetData()))
+                    goto Epilogue;
+                Doctor::Diagnose("Failed to convert binary literal.");
+                goto Failure;
             default:
                 break;
             }
         }
 
-        if ("Is valid natural symbol")
+        if (Text8::IsNumeric($ peek) || $ peek == '_')
             $ LexNatural(&buffer, token);
         else if ($ peek == '.') {
             buffer.Put($ peek);
@@ -91,8 +94,51 @@ Result Lexer::Lex(Token *token) {
         }
         token->Kind = Token::NATURAL;
         token->Value.Natural = 0;
+        goto Epilogue;
     } else {
-
+        switch ($ peek) {
+        case '\\':
+            switch ($ Peek(2)) {
+            case '\\':
+                token->Kind = Token::COMMENT;
+                do $ Advance();
+                while ($ peek != '\n' && $ peek != '\0');
+                goto Single;
+            case '*':
+                token->Kind = Token::COMMENT;
+                do $ Advance();
+                while ($ peek != '*' && $ Peek(2) != '\\' || $ peek != '\0');
+                if ($ peek == '\0')
+                    goto Single;
+                goto Double;
+            default:
+                break;
+            }
+        case '-':
+            if ($ Peek(2) == '>') {
+                token->Kind = Token::RIGHT_ARROW;
+                goto Double;
+            }
+        case ':':
+            if ($ Peek(2) == ':') {
+                token->Kind = Token::DOUBLE_COLON;
+                goto Double;
+            }
+        case '(':case ')':case '{':case '}':
+        case ',':case ';':case '@':case '?':
+        case '=':case '+':
+            token->Kind = (Token::Id) $ peek;
+            goto Single;
+        default:
+            result = Result::FAILURE;
+            Doctor::Diagnose("Unknown token.");
+            goto Single;
+        }
+    Double:
+        $ Advance();
+    Single:
+        $ Advance();
+        goto Epilogue;
     }
 
 Failure:

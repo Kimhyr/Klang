@@ -1,7 +1,7 @@
 #include "Token.H"
 
 Void Token::Destroy() {
-    switch ($ ID) {
+    switch ($ Kind) {
     case Token::IDENTIFIER:
         delete[] $ Value.Identifier;
         break;
