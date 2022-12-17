@@ -4,7 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define $ this->
+#define NULLABLE(type) \
+        type *
+
+#define $ \
+        this ->
 
 #define TRUE true
 #define FALSE false

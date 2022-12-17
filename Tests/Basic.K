@@ -1,7 +1,7 @@
 procedure Initiate(
 		argc::Int32, argv::@@Nat8
 ) -> Int32 {
-	datum value?::Int32 {7}
+	datum value?::Int32 {7};
 	value = 21 + 14;
 	return value;
 }

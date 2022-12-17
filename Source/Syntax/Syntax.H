@@ -3,33 +3,51 @@
 
 #include "../Include.H"
 
+#define KIND(N) \
+    NULLABLE(N) N
+
 namespace S {
-    struct Unary;
     struct Binary;
-    struct Sequential;
+    struct Body;
     struct Datum;
+    struct Identifier;
+    struct Initializer;
+    struct Parameter;
+    struct Primitive;
+    struct Procedure;
+    struct Simple;
+    struct Type;
+    struct Unary;
 
     struct Syntax {
     public:
-        using Id = Sym8;
+        using Id = Nat8;
 
     public:
         enum : Id {
-            UNARY,
             BINARY,
-            SEQUENTIAL,
-            IDENTIFIER,
-            PROCEDURE,
+            BODY,
             DATUM,
-        };
-
-    public:
-        Id ID;
+            IDENTIFIER,
+            INITIALIZER,
+            PARAMETER,
+            PRIMITIVE,
+            PROCEDURE,
+            TYPE,
+            UNARY,
+        } Kind;
         union {
-            Unary *Unary;
-            Binary *Binary;
-            Sequential *Sequential;
-            Datum *Datum;
+            KIND(Binary);
+            KIND(Body);
+            KIND(Datum);
+            KIND(Identifier);
+            KIND(Initializer);
+            KIND(Parameter);
+            KIND(Primitive);
+            KIND(Procedure);
+            KIND(Syntax);
+            KIND(Type);
+            KIND(Unary);
         } Value;
     };
 } // S

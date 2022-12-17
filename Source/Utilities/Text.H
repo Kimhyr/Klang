@@ -11,13 +11,13 @@ public:
 
 public:
     static
-    Nat64 ToNatural(const Sym_T *text, Nat8 base = 10);
+    Bool ToNatural(Nat64 *out, const Sym_T *text, Nat8 base = 10);
 
     static
-    Int64 ToInteger(const Sym_T *text, Nat8 base = 10);
+    Bool ToInteger(Int64 *out, const Sym_T *text, Nat8 base = 10);
 
     static
-    Real64 ToReal(const Sym_T *text);
+    Bool ToReal(Real64 *out, const Sym_T *text);
 
 public:
     static constexpr

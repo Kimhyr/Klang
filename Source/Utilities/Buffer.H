@@ -5,7 +5,7 @@
 
 template<typename Type_T, Size Size_V>
 class Buffer {
-    Size index;
+    Size size;
     Type_T *data;
 
 public:
@@ -14,9 +14,9 @@ public:
 
 public:
     constexpr
-    Size GetIndex()
+    Size GetSize()
     const {
-        return $ index;
+        return $ size;
     }
 
     constexpr
