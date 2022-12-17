@@ -11,10 +11,10 @@ namespace S {
 
     struct Syntax {
     public:
-        using IDType = Sym8;
+        using Id = Sym8;
 
     public:
-        enum : IDType {
+        enum : Id {
             UNARY,
             BINARY,
             SEQUENTIAL,
@@ -24,11 +24,12 @@ namespace S {
         };
 
     public:
-        IDType ID;
+        Id ID;
         union {
             Unary *Unary;
             Binary *Binary;
             Sequential *Sequential;
+            Datum *Datum;
         } Value;
     };
 } // S

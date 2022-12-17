@@ -1,5 +1,5 @@
-#ifndef KC_SYNTAX_INCLUDE_H
-#define KC_SYNTAX_INCLUDE_H
+#ifndef KC_SYNTAX_SEQUENTIAL_H
+#define KC_SYNTAX_SEQUENTIAL_H
 
 #include "../Utilities/Dynar.H"
 #include "Syntax.H"
@@ -24,4 +24,4 @@ namespace S {
     };
 } // S
 
-#endif // KC_SYNTAX_INCLUDE_H
+#endif // KC_SYNTAX_SEQUENTIAL_H
