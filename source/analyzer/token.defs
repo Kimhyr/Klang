@@ -1,0 +1,23 @@
+IDENTIFIER = -128,
+
+DATUM,
+
+END = 0,
+
+MACHINE,
+NATURAL,
+INTEGER,
+REAL,
+TEXT,
+
+OPEN_PAREN = '(',
+CLOSE_PAREN = ')',
+
+SLOSH = '\\',
+
+EQUAL = '=',
+PLUS = '+',
+MINUS = '-',
+ASTERISKS = '*',
+SLASH = '/',
+PERCENT = '%',
