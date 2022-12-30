@@ -1,7 +1,9 @@
-#ifndef _BUFFER_HPP
-#define _BUFFER_HPP
+#ifndef KC_BUFFER_HPP
+#define KC_BUFFER_HPP
 
 #include "../definitions.hpp"
+
+namespace KC {
 
 template<typename Data_T, Nat64 Space_T>
 class Buffer {
@@ -14,9 +16,11 @@ public:
 	~Buffer() = default;
 
 public:
-	Bool put(Data_T value);
+	Void put(Data_T value);
 
-	Data_T *flush();
+	Data_T *flush() noexcept;
 };
 
-#endif // _BUFFER_HPP
+}
+
+#endif // KC_BUFFER_HPP

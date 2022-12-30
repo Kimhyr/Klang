@@ -1,5 +1,5 @@
-#ifndef _DEFINITIONS_HPP
-#define _DEFINITIONS_HPP
+#ifndef KC_DEFINITIONS_HPP
+#define KC_DEFINITIONS_HPP
 
 using Void = void;
 
@@ -23,4 +23,4 @@ using Real = double;
 using Real32 = float;
 using Real64 = double;
 
-#endif // _DEFINITIONS_HPP
+#endif // KC_DEFINITIONS_HPP

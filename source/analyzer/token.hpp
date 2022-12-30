@@ -1,5 +1,5 @@
-#ifndef _TOKEN_HPP
-#define _TOKEN_HPP
+#ifndef KC_TOKEN_HPP
+#define KC_TOKEN_HPP
 
 #include "../doctor.hpp"
 
@@ -12,10 +12,11 @@ struct Token {
         } tag;
         Sym *value;
 
+public:
         Token(Location::Point start);
         ~Token();
 };
 
 } // namespace KC
 
-#endif // _TOKEN_HPP
+#endif // KC_TOKEN_HPP
