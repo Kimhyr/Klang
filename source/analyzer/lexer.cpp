@@ -9,44 +9,67 @@ Token Lexer::lex() {
         Token token(this->point);
         switch (*this->cursor) {
         case '0':
+                token.tag = (Token::Tag)*this->cursor;
+                this->advance();
+                
+                break;
         default:
-                if (this->isOnIdentifier()) {
+                Buffer<Sym, Lexer::BUFFER_SIZE> buffer;
+                if (this->isOnIdentifierSym()) {
                         token.tag = Token::Tag::IDENTIFIER;
-                        Buffer<Sym, Lexer::MAX_IDENTIFIER_LENGTH> buffer;
-                        do {
-                                try { buffer.put(*this->cursor); }
-                                catch (Int) { throw Diagnosis(); }
-                                this->advance();
-                        } while (this->isOnIdentifier());
-                        try { buffer.put(0); }
-                        catch (Bool) { throw Diagnosis(); } 
-                        token.value = buffer.flush();
-                        break;
-                } else if (this->isOnDigit()) {
-                        if (*this->cursor == '0') {
-                                this->advance();
-                                switch (*this->cursor) {
-                                case 'X':
-                                case 'x':
-                                        break;
-                                case 'B':
-                                case 'b':
-                                        break;
-                                default:
-                                        break;
-                                }
-                        }
+                        this->lexIdentifier(&buffer);
+                        goto Flush_Buffer;
+                } else if (this->isOnDigitSym()) {
                         token.tag = Token::Tag::NATURAL;
-                        Buffer<Sym, Lexer::MAX_NUMBER_LENGTH> buffer;
-                        this->lexNatural(&buffer);
-                        try { buffer.put(0); }
-                        catch (Bool) { throw Diagnosis(); } 
-                        token.value = buffer.flush();
-                        break;
+                        do {
+                                if (*this->cursor != '_')
+                                        buffer.put(*this->cursor);
+                                this->advance();
+                        } while (this->isOnDigitSym() || *this->cursor == '_');
+                        goto Flush_Buffer;
+                //         try { buffer.put(*this->cursor); }
+                //         catch (Result) { throw Diagnosis(); } 
+                //         this->advance();
+                //         if (this->cursor[-1] == '0') {
+                //                 switch (*this->cursor) {
+                //                 case 'B':
+                //                 case 'b':
+                //                         this->advance();
+                //                         if (!this->isOnBinarySym())
+                //                                 throw Diagnosis();
+                //                         token.tag = Token::Tag::MACHINE;
+                //                         this->lexBinary(&buffer);
+                //                         goto Flush_Buffer;
+                //                 case 'X':
+                //                 case 'x':
+                //                         this->advance();
+                //                         if (!this->isOnHexadecimalSym())
+                //                                 throw Diagnosis();
+                //                         token.tag = Token::Tag::MACHINE;
+                //                         this->lexHexadecimal(&buffer);
+                //                         goto Flush_Buffer;
+                //                 case '.':
+                //                         token.tag = Token::Tag::REAL;
+                //                         goto Lex_Natural;
+                //                 default: break;
+                //                 }
+                //         }
+                //         token.tag = Token::Tag::NATURAL;
+                //         if (!this->isOnDigitSym())
+                //                 goto Flush_Buffer;
+                // Lex_Natural:
+                //         this->lexNaturalAndReal(&buffer, &token);
+                //         goto Flush_Buffer;
                 }
                 throw Diagnosis();
+        Flush_Buffer:
+                try { buffer.put(0); }
+                catch (Result) { throw Diagnosis(); } 
+                token.value = buffer.flush();
                 break;
         }
+
+// Epilogue:
         token.location.end = this->point;
         return token;
 }
@@ -60,14 +83,49 @@ Void Lexer::advance() noexcept{
 }
 
 
-Void Lexer::lexNatural(Buffer<Sym, Lexer::MAX_NUMBER_LENGTH> *buffer) {
+Void Lexer::lexNaturalAndReal(Buffer<Sym, Lexer::BUFFER_SIZE> *buffer, Token *token) {
+        do {
+                switch (*this->cursor) {
+                case '.':
+                        if (token->tag == Token::Tag::REAL)
+                                throw Diagnosis();
+                        token->tag = Token::Tag::REAL;
+                        break;
+                case '_': goto Advance;
+                }
+                try { buffer->put(*this->cursor); }
+                catch(Result) { throw Diagnosis(); }
+        Advance:
+                this->advance();
+        } while (this->isOnDigitSym() || *this->cursor == '_');
+}
+
+Void Lexer::lexIdentifier(Buffer<Sym, Lexer::BUFFER_SIZE> *buffer) {
+         do {
+                try { buffer->put(*this->cursor); }
+                catch (Result) { throw Diagnosis(); }
+                this->advance();
+        } while (this->isOnIdentifierSym());
+}
+
+Void Lexer::lexBinary(Buffer<Sym, Lexer::BUFFER_SIZE> *buffer) {
         do {
                 if (*this->cursor != '_') {
                         try { buffer->put(*this->cursor); }
-                        catch(Bool) { throw Diagnosis(); }
+                        catch (Result) { throw Diagnosis(); }
                 }
                 this->advance();
-        } while (this->isOnNatural());
+        } while (this->isOnBinarySym() || *this->cursor == '_');
+}
+
+Void Lexer::lexHexadecimal(Buffer<Sym, Lexer::BUFFER_SIZE> *buffer) {
+        do {
+                if (*this->cursor != '_') {
+                        try { buffer->put(*this->cursor); }
+                        catch (Result) { throw Diagnosis(); }
+                }
+                this->advance();
+        } while (this->isOnHexadecimalSym() || *this->cursor == '_');
 }
 
 } // namespace KC

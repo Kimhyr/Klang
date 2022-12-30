@@ -3,6 +3,8 @@
 
 #include "definitions.hpp"
 
+#include <stdio.h>
+
 namespace KC {
 
 struct Location {
@@ -30,7 +32,11 @@ struct Diagnosis {
 public:
         Diagnosis(Location location = {}, Severity severity = Severity::MILD,
                   Disease disease = Disease::UNKNOWN_TOKEN,
-                  const Sym *node = "TEMPERARY DIAGNOSTIC");
+                  const Sym *note= "TEMPERARY DIAGNOSTIC")
+                : location(location), severity(severity),
+                  disease(disease), note(note) {
+                puts(note);
+        }
 };
 
 } // namespace KC

@@ -11,8 +11,7 @@ class Lexer {
         Location::Point point;
 
 public:
-        static constexpr const Nat16 MAX_IDENTIFIER_LENGTH = 1028;
-        static constexpr const Nat8 MAX_NUMBER_LENGTH = 64 * 2;
+        static constexpr const Nat16 BUFFER_SIZE= 1028 / 2;
 
 public:
         explicit Lexer(const Sym *path);
@@ -22,32 +21,30 @@ public:
         Token lex();
 
 private:
-        Void lexNatural(Buffer<Sym, Lexer::MAX_NUMBER_LENGTH> *buffer);
+        Void lexNaturalAndReal(Buffer<Sym, Lexer::BUFFER_SIZE> *buffer, Token *token);
+
+        inline Void lexIdentifier(Buffer<Sym, Lexer::BUFFER_SIZE> *buffer);
+        inline Void lexBinary(Buffer<Sym, Lexer::BUFFER_SIZE> *buffer);
+        inline Void lexHexadecimal(Buffer<Sym, Lexer::BUFFER_SIZE> *buffer);
 
 private:
-        constexpr Bool isOnDigit() const noexcept {
+        constexpr Bool isOnDigitSym() const noexcept {
                 return *this->cursor >= '0' && *this->cursor <= '9';
         }
 
-        constexpr Bool isOnNatural() const noexcept {
-                return this->isOnDigit() || *this->cursor == '_';
-        }
-
-        constexpr Bool isOnIdentifier() const noexcept {
+        constexpr Bool isOnIdentifierSym() const noexcept {
                 return (*this->cursor >= 'A' && *this->cursor <= 'Z') ||
-                       (*this->cursor >= 'a' && *this->cursor <= 'z') ||
-                        *this->cursor == '_';
+                       (*this->cursor >= 'a' && *this->cursor <= 'z');
         }
 
-        constexpr Bool isOnHexadecimal() const noexcept {
+        constexpr Bool isOnHexadecimalSym() const noexcept {
                 return (*this->cursor >= 'A' && *this->cursor <= 'F') ||
                        (*this->cursor >= 'a' && *this->cursor <= 'f') ||
-                        this->isOnDigit();
+                        this->isOnDigitSym();
         }
 
-        constexpr Bool isOnBinary() const noexcept{
-                return *this->cursor == '0' || *this->cursor == '1' ||
-                       *this->cursor == '_';
+        constexpr Bool isOnBinarySym() const noexcept{
+                return *this->cursor == '0' || *this->cursor == '1';
         }
 
 private:

@@ -5,7 +5,7 @@ namespace KC {
 template<typename Data_T, Nat64 Space_T>
 Void Buffer<Data_T, Space_T>::put(Data_T value) {
 	if (++this->size > Space_T)
-		throw Bool(1);
+		throw Result::FAILURE;
 	this->data[this->size - 1]= value;
 }
 
