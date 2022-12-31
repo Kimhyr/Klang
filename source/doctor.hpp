@@ -8,8 +8,7 @@
 namespace KC {
 
 struct Location {
-        const Sym *path;
-        Nat64 index;
+        const Sym *sourcePath;
         struct Point {
                 Nat64 row;
                 Nat64 column;

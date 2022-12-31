@@ -1,9 +1,8 @@
-IDENTIFIER = -128,
-
-DATUM,
+DATUM = -128,
 
 END = 0,
 
+IDENTIFIER,
 MACHINE,
 NATURAL,
 INTEGER,
@@ -12,6 +11,9 @@ TEXT,
 
 OPEN_PAREN = '(',
 CLOSE_PAREN = ')',
+
+COLON = ':', 
+SEMICOLON = ';',
 
 SLOSH = '\\',
 

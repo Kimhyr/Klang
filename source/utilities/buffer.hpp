@@ -1,5 +1,5 @@
-#ifndef KC_BUFFER_HPP
-#define KC_BUFFER_HPP
+#ifndef KC_UTILITIES_BUFFER_HPP
+#define KC_UTILITIES_BUFFER_HPP
 
 #include "../definitions.hpp"
 
@@ -11,16 +11,30 @@ class Buffer {
 	Data_T data[Space_T];
 
 public:
-	Buffer() = default;
+	Buffer()
+		: size(0) {}
 
 	~Buffer() = default;
 
 public:
-	Void put(Data_T value);
+	Void put(Data_T value) {
+		if (++this->size > Space_T)
+			throw Result::FAILURE;
+		this->data[this->size - 1]= value;
+	}
 
-	Data_T *flush() noexcept;
+	Data_T *flush() {
+		Data_T *mlock = new Data_T[this->size];
+		for (Nat64 i = 0; i < this->size; ++i)
+			mlock[i] = this->data[i];
+		return mlock;
+	}
+
+	constexpr const Data_T *getData() const noexcept {
+		return this->data;
+	}
 };
 
 }
 
-#endif // KC_BUFFER_HPP
+#endif // KC_UTILITIES_BUFFER_HPP
