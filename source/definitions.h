@@ -1,12 +1,15 @@
-#ifndef KC_DEFINITIONS_HPP
-#define KC_DEFINITIONS_HPP
+#ifndef KC_DEFINITIONS_H
+#define KC_DEFINITIONS_H
+
+namespace KC {
+
+#define nil nullptr
 
 using Void = void;
 
 using Sym = char;
 
 using Bool = bool;
-
 
 using Int = int;
 using Int8 = signed char;
@@ -29,4 +32,6 @@ enum class Result: Bool {
         SUCCESS,
 };
 
-#endif // KC_DEFINITIONS_HPP
+}
+
+#endif // KC_DEFINITIONS_H

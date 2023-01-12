@@ -1,9 +1,9 @@
-#ifndef KC_ANALYZER_TOKEN_HPP
-#define KC_ANALYZER_TOKEN_HPP
+#ifndef KC_ANALYZER_TOKEN_H
+#define KC_ANALYZER_TOKEN_H
 
-#include "../doctor.hpp"
+#include "../doctor.h"
 
-namespace KC {
+namespace KC::Analyzer {
 
 struct Token {
         Location location;
@@ -20,6 +20,6 @@ public:
         Void print();
 };
 
-} // namespace KC
+}
 
-#endif // KC_ANALYZER_TOKEN_HPP
+#endif // KC_ANALYZER_TOKEN_H

@@ -1,9 +1,9 @@
-#ifndef KC_ANALYZER_LEXER_HPP
-#define KC_ANALYZER_LEXER_HPP
+#ifndef KC_ANALYZER_LEXER_H
+#define KC_ANALYZER_LEXER_H
 
-#include "token.hpp"
+#include "token.h"
 
-namespace KC {
+namespace KC::Analyzer {
 
 class Lexer {
         const Sym *cursor;
@@ -38,6 +38,6 @@ private:
         Void advance() noexcept;
 };
 
-} // namespace KC
+}
 
-#endif // KC_ANALYZER_LEXER_HPP
+#endif // KC_ANALYZER_LEXER_H

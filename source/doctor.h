@@ -1,7 +1,7 @@
-#ifndef KC_DOCTOR_HPP
-#define KC_DOCTOR_HPP
+#ifndef KC_DOCTOR_H
+#define KC_DOCTOR_H
 
-#include "definitions.hpp"
+#include "definitions.h"
 
 #include <stdio.h>
 
@@ -38,6 +38,6 @@ public:
         }
 };
 
-} // namespace KC
+}
 
 #endif // KC_DOCTOR_HPP

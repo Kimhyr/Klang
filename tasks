@@ -1,0 +1,1 @@
+[ ] Dynamic::search(Bool queryf(const Type_T *, Args_T...), const Type_T *queries, Args_T... args);

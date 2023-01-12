@@ -1,9 +1,10 @@
-#include "lexer.hpp"
-#include "../utilities/buffer.hpp"
+#include "lexer.h"
 
 #include <string.h>
 
-namespace KC {
+#include "../utilities/buffer.h"
+
+namespace KC::Analyzer {
 
 Lexer::Lexer(const Sym *source)
         : cursor(source), point({.row = 1, .column = 1}) {}
@@ -58,7 +59,7 @@ Token Lexer::lex() {
         return token;
 }
 
-Void Lexer::advance() noexcept{
+Void Lexer::advance() noexcept {
         if (*(++this->cursor) == '\n') {
                 ++this->point.row;
                 this->point.column = 0;
