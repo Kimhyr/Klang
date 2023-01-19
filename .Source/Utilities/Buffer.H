@@ -1,7 +1,7 @@
-#ifndef KC_UTILITIES_BUFFER_H
-#define KC_UTILITIES_BUFFER_H
+#ifndef KC_Utilities_Buffer_H
+#define KC_Utilities_Buffer_H
 
-#include "../definitions.h"
+#include "../Definitions.H"
 
 namespace KC {
 
@@ -37,4 +37,4 @@ public:
 
 }
 
-#endif // KC_UTILITIES_BUFFER_H
+#endif // :
