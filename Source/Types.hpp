@@ -1,17 +1,18 @@
-#ifndef KC_DEFINITIONS_H
-#define KC_DEFINITIONS_H
+#ifndef KLANG_TYPES_HPP
+#define KLANG_TYPES_HPP
 
-namespace KC {
+namespace Klang {
 
 #define nil nullptr
+#define neg = -1
 
 using Void = void;
 
-using Sym = char;
-
 using Bool = bool;
 
-using Int = int;
+using Sym = char;
+
+using Int = signed int;
 using Int8 = signed char;
 using Int16 = signed short int;
 using Int32 = signed int;
@@ -27,11 +28,21 @@ using Real = double;
 using Real32 = float;
 using Real64 = double;
 
-enum class Result: Bool {
-        FAILURE,
-        SUCCESS,
+struct Position {
+	Nat64 row;
+	Nat64 column;
+};
+
+struct Span {
+	Position start;
+	Position end;
+};
+
+struct Location {
+	const Sym *path;
+	Span span;
 };
 
 }
 
-#endif // KC_DEFINITIONS_H
+#endif // KLANG_TYPES_HPP

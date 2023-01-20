@@ -4,12 +4,12 @@ NAME=kc
 SRCD=./Source
 BLDD=./Build
 OBJD=$(BLDD)/Objects
-DIRS=. Analyzer Utilities
+DIRS=. Compiler Utilities
 
 # Files
-SRCS=$(foreach D,$(DIRS),$(wildcard $(SRCD)/$(D)/*.CPP))
-OBJS=$(patsubst $(SRCD)/%.CPP,$(OBJD)/%.OBJ,$(SRCS))
-BIN=$(BLDD)/$(NAME).EXE
+SRCS=$(foreach D,$(DIRS),$(wildcard $(SRCD)/$(D)/*.cpp))
+OBJS=$(patsubst $(SRCD)/%.cpp,$(OBJD)/%.obj,$(SRCS))
+BIN=$(BLDD)/$(NAME).exe
 
 # Build
 CC=clang++
@@ -22,7 +22,7 @@ all:$(BIN)
 $(BIN):$(OBJS)
 	$(CC) $^ -o $@ $(LFLGS)
 
-$(OBJD)/%.OBJ:$(SRCD)/%.CPP
+$(OBJD)/%.obj:$(SRCD)/%.cpp
 	$(CC) -c $^ -o $@ $(FLGS)
 
 r:$(BIN)
@@ -33,6 +33,6 @@ c:$(BLDD)
 	rm -rf $(OBJS) $(BIN)
 
 f:
-	clang-format -i $(SRCS) $(foreach D,$(DIRS),$(wildcard $(SRCD)/$(D)/*.H))
+	clang-format -i $(SRCS) $(foreach D,$(DIRS),$(wildcard $(SRCD)/$(D)/*.hpp))
 
 .PHONY:all r c f
