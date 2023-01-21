@@ -2,71 +2,9 @@
 #ifndef KLANG_COMPILER_LEXER_HPP
 #define KLANG_COMPILER_LEXER_HPP
 
-#include "../Types.hpp"
+#include "Token.hpp"
 
 namespace Klang::Compiler {
-
-class Token {
-public:
-	friend class Lexer;
-	
-public:
-	enum class Tag: Sym {
-		DATUM = -128,
-
-		END = 0,
-
-		IDENTIFIER,
-		MACHINE,
-		NATURAL,
-		INTEGER,
-		REAL,
-		TEXT,
-
-		OPEN_PAREN = '(',
-		CLOSE_PAREN = ')',
-
-		COLON = ':', 
-		SEMICOLON = ';',
-
-		SLOSH = '\\',
-
-		EQUAL = '=',
-		PLUS = '+',
-		MINUS = '-',
-		ASTERISKS = '*',
-		SLASH = '/',
-		PERCENT = '%',
-	};
-
-public:
-	static constexpr
-	Nat64 VALUE_SPACE = 1024;
-
-public:
-	Token();
-	Token(Position position);
-
-	~Token();
-
-public:
-	inline constexpr
-	const Span *span()
-	const noexcept {return &this->_span;}
-
-	inline constexpr
-	Tag tag()
-	const noexcept {return this->_tag;}
-
-	inline constexpr
-	const Sym *value()
-	const noexcept {return this->_value;}
-
-private:
-	Span _span;
-	Tag _tag;
-	Sym *_value;
-};
 
 class Lexer {
 public:

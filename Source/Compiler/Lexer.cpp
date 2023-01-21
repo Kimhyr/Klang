@@ -9,17 +9,6 @@ namespace Klang::Compiler {
 
 using namespace Klang::Utilities;
 
-Token::Token()
-	: _value(nil) {}
-
-Token::Token(Position position)
-	: _span({.start = position}), _value(nil) {}
-
-Token::~Token() {
-	if (_value)
-		delete this->_value;
-}
-
 Lexer::Lexer(const Sym *source)
 	: _source(source), _position({.row = 1, .column = 1}) {
 }
