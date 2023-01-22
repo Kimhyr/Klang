@@ -1,3 +1,4 @@
+#pragma once
 #ifndef KLANG_UTILITIES_ERROR_HPP
 #define KLANG_UTILITIES_ERROR_HPP
 

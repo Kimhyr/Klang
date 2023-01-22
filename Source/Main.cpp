@@ -19,7 +19,7 @@ Int main() {
 	try {
 		do {
 			token = lexer.lex();
-			printf("%lu,%lu;%lu,%lu\t\t", token.span()->start.row, token.span()->start.column, token.span()->end.row, token.span()->end.column);
+			printf("%lu,%lu;%lu,%lu\t\t", token.span().start.row, token.span().start.column, token.span().end.row, token.span().end.column);
 			switch (token.tag()) {
 			case Token::Tag::IDENTIFIER: fputs("IDENTIFIER", stdout); break;
 			case Token::Tag::NATURAL: fputs("NATURAL", stdout); break;

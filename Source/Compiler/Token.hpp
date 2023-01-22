@@ -1,3 +1,4 @@
+#pragma once
 #ifndef KLANG_COMPILER_TOKEN_HPP
 #define KLANG_COMPILER_TOKEN_HPP
 
@@ -51,11 +52,7 @@ public:
 	Token(Position position)
 		: _span({.start = position}), _value(nil) {}
 
-	constexpr
-	~Token() {
-		if (_value)
-			delete this->_value;
-	}
+	~Token() = default;
 
 public:
 	inline constexpr

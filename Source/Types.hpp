@@ -1,3 +1,4 @@
+#pragma once
 #ifndef KLANG_TYPES_HPP
 #define KLANG_TYPES_HPP
 

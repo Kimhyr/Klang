@@ -49,7 +49,7 @@ Token Lexer::lex() {
 			}
 			goto No_Post_Advance; 
 		} else if (this->isNumeric(this->current())) {
-			this->lexNumeric(&token);
+			this->lexNumeric(token);
 			token._tag = Token::Tag::NATURAL;
 				goto No_Post_Advance; 
 		} else throw Error::UNKNOWN_TOKEN;

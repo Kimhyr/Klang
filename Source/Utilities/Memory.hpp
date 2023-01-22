@@ -1,3 +1,4 @@
+#pragma once
 #ifndef KLANG_UTILITIES_MEMORY_HPP
 #define KLANG_UTILITIES_MEMORY_HPP
 

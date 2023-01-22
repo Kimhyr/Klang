@@ -1,3 +1,4 @@
+#pragma once
 #ifndef KLANG_COMPILER_TABLE_HPP
 #define KLANG_COMPILER_TABLE_HPP
 

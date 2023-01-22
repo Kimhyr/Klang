@@ -1,3 +1,4 @@
+#pragma once
 #ifndef KLANG_COMPILER_PARSER_HPP
 #define KLANG_COMPILER_PARSER_HPP
 
@@ -30,10 +31,17 @@ public:
 
 public:
 	template<class T = Expression, class ...Args_T>
-	T *parse(Expression *under, Args_T ...args);
+	T *parse(Args_T ...args);
 
 private:
+	Token _token;
 	Lexer _lexer;
+
+private:
+	inline
+	Void lex() {
+		this->_token = this->_lexer.lex();
+	}
 };
 
 }
