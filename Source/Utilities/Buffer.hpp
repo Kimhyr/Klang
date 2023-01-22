@@ -7,9 +7,10 @@
 
 namespace Klang::Utilities {
 
-template<class Data_T, Nat64 Size_T>
+template<class T, Nat64 Size_T>
 class Buffer {
 public:
+	constexpr
 	Buffer()
 		: _size(0) {}
 

@@ -9,6 +9,10 @@ namespace Klang {
 using Void = void;
 
 using Bool = bool;
+using Bool8 = unsigned char;
+using Bool16 = unsigned short int;
+using Bool32 = unsigned int;
+using Bool64 = unsigned long int;
 
 using Sym = char;
 

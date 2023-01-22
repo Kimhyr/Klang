@@ -43,15 +43,24 @@ public:
 	Nat64 VALUE_SPACE = 1024;
 
 public:
-	Token();
-	Token(Position position);
+	constexpr
+	Token()
+		: _value(nil) {}
 
-	~Token();
+	constexpr
+	Token(Position position)
+		: _span({.start = position}), _value(nil) {}
+
+	constexpr
+	~Token() {
+		if (_value)
+			delete this->_value;
+	}
 
 public:
 	inline constexpr
-	const Span *span()
-	const noexcept {return &this->_span;}
+	const Span &span()
+	const noexcept {return this->_span;}
 
 	inline constexpr
 	Tag tag()

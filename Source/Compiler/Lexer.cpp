@@ -9,10 +9,6 @@ namespace Klang::Compiler {
 
 using namespace Klang::Utilities;
 
-Lexer::Lexer(const Sym *source)
-	: _source(source), _position({.row = 1, .column = 1}) {
-}
-
 Token Lexer::lex() {
 	while (this->isSpace(this->current()))
 		this->advance();
@@ -21,7 +17,7 @@ Token Lexer::lex() {
 	case Token::Tag::PLUS:
 	case Token::Tag::MINUS:
 		if (this->isNumeric(this->peek())) {
-			this->lexNumeric(&token);
+			this->lexNumeric(token);
 			token._tag = Token::Tag::INTEGER;
 			goto No_Post_Advance; 
 		}
@@ -74,7 +70,7 @@ Void Lexer::advance() {
 	++this->_position.column;
 }
 
-Void Lexer::lexNumeric(Token *token) {
+Void Lexer::lexNumeric(Token &token) {
 	Buffer<Sym, Token::VALUE_SPACE> buffer;
 	do {
 		if (this->current() != '_')
@@ -82,7 +78,7 @@ Void Lexer::lexNumeric(Token *token) {
 		this->advance();
 	} while (this->isNumeric(this->current()) || this->current() == '_');
 	buffer.push(0);
-	token->_value = buffer.flush();
+	token._value = buffer.flush();
 }
 
 }

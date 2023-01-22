@@ -5,12 +5,12 @@
 
 namespace Klang::Utilities {
 
-template<class Data_T>
+template<class T>
 class Memory {
 public:
 	static
-	Data_T *reallocate(Nat64 size, Data_T *data, Nat64 space) {
-		auto mlock = new Data_T[space];
+	T *reallocate(Nat64 size, T *data, Nat64 space) {
+		auto mlock = new T[space];
 		for (Nat64 i = 0; i < size; ++i)
 			mlock[i] = data[i];
 		return mlock;

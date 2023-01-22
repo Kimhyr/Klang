@@ -5,6 +5,7 @@ namespace Klang::Utilities {
 
 enum class Error {
 	OVERFLOW,
+	UNDERFLOW,
 };
 
 }

@@ -8,7 +8,9 @@ namespace Klang::Compiler {
 
 class Lexer {
 public:
-	Lexer(const Sym *source);
+	constexpr
+	Lexer(const Sym *source)
+		: _source(source), _position({.row = 1, .column = 1}) {}
 
 	~Lexer() = default;
 
@@ -18,8 +20,8 @@ public:
 	const noexcept { return this->_source; }
 
 	inline constexpr
-	const Position *position()
-	const noexcept { return &this->_position; }
+	const Position &position()
+	const noexcept { return this->_position; }
 
 	inline constexpr
 	Sym current()
@@ -52,7 +54,7 @@ private:
 private:
 	Void advance();
 
-	Void lexNumeric(Token *token);
+	Void lexNumeric(Token &token);
 };
 
 }
