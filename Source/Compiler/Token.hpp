@@ -6,10 +6,10 @@
 
 namespace Klang::Compiler {
 
-class Token {
+struct Token {
 public:
 	friend class Lexer;
-	
+
 public:
 	enum class Tag: Sym {
 		DATUM = -128,
@@ -44,33 +44,26 @@ public:
 	Nat64 VALUE_SPACE = 1024;
 
 public:
-	constexpr
-	Token()
+	inline Token() noexcept
 		: _value(nil) {}
 
-	constexpr
-	Token(Position position)
-		: _span({.start = position}), _value(nil) {}
+	inline Token(Position start) noexcept
+		: _span({.start = start}), _value(nil) {}
+	
+	inline Token(Span span, Tag tag, const Sym *value = nil) noexcept
+		: _span(span), _tag(tag), _value(value) {}
 
 	~Token() = default;
 
 public:
-	inline constexpr
-	const Span &span()
-	const noexcept {return this->_span;}
-
-	inline constexpr
-	Tag tag()
-	const noexcept {return this->_tag;}
-
-	inline constexpr
-	const Sym *value()
-	const noexcept {return this->_value;}
+	inline const Span &span() const noexcept {return this->_span;}
+	inline Tag tag() const noexcept {return this->_tag;}
+	inline const Sym *value() const noexcept {return this->_value;}
 
 private:
 	Span _span;
 	Tag _tag;
-	Sym *_value;
+	const Sym *_value;
 };
 
 }

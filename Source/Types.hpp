@@ -7,6 +7,8 @@ namespace Klang {
 #define nil nullptr
 #define neg = -1
 
+using Size = unsigned long int;
+
 using Void = void;
 
 using Bool = bool;

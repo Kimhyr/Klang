@@ -12,7 +12,7 @@ using namespace Klang::Utilities;
 Token Lexer::lex() {
 	while (this->isSpace(this->current()))
 		this->advance();
-	Token token = Token(this->_position);
+	Token token(this->_position);
 	switch ((Token::Tag)this->current()) {
 	case Token::Tag::PLUS:
 	case Token::Tag::MINUS:
@@ -61,7 +61,7 @@ No_Post_Advance:
 	return token;
 }
 
-Void Lexer::advance() {
+constexpr Void Lexer::advance() noexcept {
 	++this->_source;
 	if (this->current() == '\n') {
 		++this->_position.row;

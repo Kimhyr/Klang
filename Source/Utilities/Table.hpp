@@ -2,9 +2,16 @@
 #ifndef KLANG_COMPILER_TABLE_HPP
 #define KLANG_COMPILER_TABLE_HPP
 
+#include "../Types.hpp"
+
 namespace Klang::Utilities {
 
-template<class Key_T, class T>
+class Hashable {
+public:
+	virtual constexpr Size hash() const noexcept = 0;
+};
+
+template<class T, class Key_T = Hashable>
 class Table {
 public:
 	const T &get(const Key_T &key);

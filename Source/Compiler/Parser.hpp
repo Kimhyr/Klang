@@ -18,30 +18,25 @@ public:
 	};
 	
 public:
-	constexpr
-	Parser(const Sym *source)
+	inline Parser(const Sym *source) noexcept
 		: _lexer(source) {}
 
 	~Parser() = default;
 
 public:
-	inline
-	const Lexer &lexer()
-	const noexcept {return this->_lexer;}
+	inline const Lexer &lexer() const noexcept { return this->_lexer; }
+	inline const Sym *source() const noexcept { return this->_lexer.source(); }
+	inline const Token &token() const noexcept { return this->_token; }
 
 public:
-	template<class T = Expression, class ...Args_T>
-	T *parse(Args_T ...args);
+
 
 private:
 	Token _token;
 	Lexer _lexer;
 
 private:
-	inline
-	Void lex() {
-		this->_token = this->_lexer.lex();
-	}
+	inline Void advance() { this->_token = this->_lexer.lex(); }
 };
 
 }
