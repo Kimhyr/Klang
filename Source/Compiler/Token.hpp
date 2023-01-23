@@ -11,7 +11,7 @@ public:
 	friend class Lexer;
 
 public:
-	enum class Tag: Sym {
+	enum class Kind: Sym {
 		DATUM = -128,
 
 		END = 0,
@@ -50,19 +50,19 @@ public:
 	inline Token(Position start) noexcept
 		: _span({.start = start}), _value(nil) {}
 	
-	inline Token(Span span, Tag tag, const Sym *value = nil) noexcept
-		: _span(span), _tag(tag), _value(value) {}
+	inline Token(Span span, Kind tag, const Sym *value = nil) noexcept
+		: _span(span), _kind(tag), _value(value) {}
 
 	~Token() = default;
 
 public:
 	inline const Span &span() const noexcept {return this->_span;}
-	inline Tag tag() const noexcept {return this->_tag;}
+	inline Kind kind() const noexcept {return this->_kind;}
 	inline const Sym *value() const noexcept {return this->_value;}
 
 private:
 	Span _span;
-	Tag _tag;
+	Kind _kind;
 	const Sym *_value;
 };
 

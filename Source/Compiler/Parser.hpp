@@ -29,7 +29,12 @@ public:
 	inline const Token &token() const noexcept { return this->_token; }
 
 public:
-
+	inline Void lex() noexcept { this->_lexer.lex(); }
+	
+	inline E::Program parse() {
+		E::Program program;
+		return program.parse(*this);
+	}
 
 private:
 	Token _token;

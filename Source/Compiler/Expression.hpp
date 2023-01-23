@@ -25,19 +25,29 @@ using namespace Klang::Utilities;
 template<class T>
 class Identifier: public Expression<Identifier<T>>, public Hashable {
 public:
-	inline Identifier(const T &person)
-		: _person(person) {}
+	enum class Type {
+		DATUM,
+		TYPE,
+	};
+
+public:
+	inline Identifier(const T &person, Type type)
+		: _person(person), _type(type) {}
+	
+	inline Identifier(const T &person, Type type, const Sym *name)
+		: _person(person), _type(type), _name(name) {}
 
 	~Identifier() = default;
 
 public:
 	inline const T &person() const noexcept { return this->_person; }
+	inline Type type() const noexcept { return this->_type; }
 	inline const Sym *name() const noexcept { return this->_name; }
 
 public:
 	const Identifier &parse(Parser &parser) override;
 
-	constexpr Size hash() const noexcept override {
+	constexpr Size hash() override {
 		Size result = 0;
 		for (Nat16 i = 0; this->_name[i]; ++i)
 			result += this->_name[i];
@@ -45,7 +55,13 @@ public:
 	};
 
 public:
+	constexpr Bool operator ==(const Identifier &rhs) const noexcept {
+		return this->_type == rhs._type && strcmp(this->_name, rhs._name) == 0;
+	}
+
+public:
 	const T &_person;
+	Type _type;
 	const Sym *_name;
 };
 
@@ -76,7 +92,7 @@ private:
 class Datum: public Expression<Datum> {
 public:
 	inline Datum()
-		: _identifier(*this) {}
+		: _identifier(*this, Identifier<Datum>::Type::DATUM) {}
 
 	~Datum() = default;
 
@@ -89,7 +105,7 @@ public:
 
 private:
 	Identifier<Datum> _identifier;
-	Expression *_type;
+	Identifier &_type;
 };
 
 // [Literal|Datum] 
@@ -179,7 +195,8 @@ public:
 	const Program &parse(Parser &parser) override;
 
 private:
-	Table<Expression, Identifier<Expression>> identifiers;
+	Table<Expression &, Identifier<Expression>> _identifiers;
+	Void **_root;
 };
 
 }
