@@ -10,6 +10,11 @@ namespace Klang::Compiler {
 
 using namespace Klang::Utilities;
 
+const E::Type PRIMITIVES[] = {
+	E::Type(E::Primitive::SYM),
+	E::Type(E::Primitive::INT),
+};
+
 enum class ParserState {
 	ANY,
 	DATUM,

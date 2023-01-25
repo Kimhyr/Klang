@@ -1,4 +1,5 @@
 #include "Parser.hpp"
+#include "Expression.hpp"
 
 namespace Klang::Compiler {
 
@@ -6,14 +7,12 @@ template<>
 const E::Type *Parser::parse() {
 	this->lexer_.lex();
 	switch (this->token_.tag()) {
+	case TokenTag::SYM: return &PRIMITIVES[(Int)E::Primitive::SYM];
+	case TokenTag::INT: return &PRIMITIVES[(Int)E::Primitive::INT];
 	case TokenTag::IDENTIFIER:
-		
-		break;
-	case TokenTag::INT:
-		break;
+		this->symbols_()
 	default: throw Error::UNEXPECTED_TOKEN;
 	}
-	return 
 }
 
 template<>

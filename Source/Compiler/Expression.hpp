@@ -58,20 +58,23 @@ public:
 	};
 };
 
-struct Type: public Symbol {};
+enum class Primitive {
+	SYM,
+	INT,
+};
 
-// '-'? ['64'|'32'|'16'|'8'|'0'] '.'?
-struct Primitive: public Type {
+struct Type: public Symbol {
 public:
-	enum Type {
-		INT32,
-	};
+	inline Type() = default;
+	inline Type(Primitive prim)
+		: person({.primitive = prim}){}
 	
 public:
-	static constexpr const ExpressionTag TAG = ExpressionTag::PRIMITIVE;
+	union {
+		Primitive primitive;
+		const Expression *defined; 
+	} person;
 
-public:
-	Type type;
 };
 
 // 'datum' Identifier ':' Type '=' E ';'

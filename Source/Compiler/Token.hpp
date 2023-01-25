@@ -8,6 +8,8 @@ namespace Klang::Compiler {
 
 enum class TokenTag: Sym {
 	DATUM = -128,
+	INT,
+	SYM,
 	END = 0,
 	IDENTIFIER,
 	MACHINE,
@@ -26,7 +28,6 @@ enum class TokenTag: Sym {
 	ASTERISKS = '*',
 	SLASH = '/',
 	PERCENT = '%',
-	INT,
 };
 
 struct Token {
