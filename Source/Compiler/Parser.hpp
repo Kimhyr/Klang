@@ -4,44 +4,58 @@
 
 #include "Lexer.hpp"
 #include "Expression.hpp"
+#include "Error.hpp"
 
 namespace Klang::Compiler {
 
+using namespace Klang::Utilities;
+
+enum class ParserState {
+	ANY,
+	DATUM,
+	IDENTIFIER,
+	TYPE,
+	PRIMITIVE,
+	ASSIGN,
+};
+
 class Parser {
 public:
-	enum class State {
-		DATUM,
-		IDENTIFIER,
-		TYPE,
-		PRIMITIVE,
-		ASSIGN,
-	};
-	
-public:
 	inline Parser(const Sym *source) noexcept
-		: _lexer(source) {}
+		: state_(ParserState::ANY), lexer_(source) {}
 
 	~Parser() = default;
 
 public:
-	inline const Lexer &lexer() const noexcept { return this->_lexer; }
-	inline const Sym *source() const noexcept { return this->_lexer.source(); }
-	inline const Token &token() const noexcept { return this->_token; }
+	inline const Lexer &lexer() const noexcept { return this->lexer_; }
+	inline const Sym *source() const noexcept { return this->lexer_.source(); }
+	inline const Token &token() const noexcept { return this->token_; }
 
 public:
-	inline Void lex() noexcept { this->_lexer.lex(); }
-	
-	inline E::Program parse() {
-		E::Program program;
-		return program.parse(*this);
+	template<typename Expression_T = Expression, typename ...Args_T>
+	const Expression_T *parse(Args_T...);
+
+	// T::Identifier
+	template<> const E::Identifier *parse(const E::Symbol *symbol);
+
+	// 'datum' E::Identifier ':' E::Type (E ';')?
+	template<> const E::Datum *parse(const Expression *prior);
+
+	// E ['='|'+'|'-'|'*'|'/'|'%'] E
+	template<> const E::Binary *parse(const Expression *lhs);
+
+private:
+	ParserState state_;
+	Token token_;
+	Lexer lexer_;
+	Table<Expression *, E::Identifier> symbols_;
+
+private:
+	inline Void lex(TokenTag expected) {
+		this->token_ = this->lexer_.lex();
+		if (this->token_.tag() != expected)
+			throw Compiler::Error::UNEXPECTED_TOKEN;
 	}
-
-private:
-	Token _token;
-	Lexer _lexer;
-
-private:
-	inline Void advance() { this->_token = this->_lexer.lex(); }
 };
 
 }

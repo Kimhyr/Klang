@@ -6,64 +6,57 @@
 
 namespace Klang::Compiler {
 
+enum class TokenTag: Sym {
+	DATUM = -128,
+	END = 0,
+	IDENTIFIER,
+	MACHINE,
+	NATURAL,
+	INTEGER,
+	REAL,
+	TEXT,
+	OPEN_PAREN = '(',
+	CLOSE_PAREN = ')',
+	COLON = ':', 
+	SEMICOLON = ';',
+	SLOSH = '\\',
+	EQUAL = '=',
+	PLUS = '+',
+	MINUS = '-',
+	ASTERISKS = '*',
+	SLASH = '/',
+	PERCENT = '%',
+	INT,
+};
+
 struct Token {
 public:
 	friend class Lexer;
 
 public:
-	enum class Kind: Sym {
-		DATUM = -128,
-
-		END = 0,
-
-		IDENTIFIER,
-		MACHINE,
-		NATURAL,
-		INTEGER,
-		REAL,
-		TEXT,
-
-		OPEN_PAREN = '(',
-		CLOSE_PAREN = ')',
-
-		COLON = ':', 
-		SEMICOLON = ';',
-
-		SLOSH = '\\',
-
-		EQUAL = '=',
-		PLUS = '+',
-		MINUS = '-',
-		ASTERISKS = '*',
-		SLASH = '/',
-		PERCENT = '%',
-	};
-
-public:
-	static constexpr
-	Nat64 VALUE_SPACE = 1024;
+	static constexpr Nat64 VALUE_SPACE = 1024;
 
 public:
 	inline Token() noexcept
-		: _value(nil) {}
+		: value_(nil) {}
 
 	inline Token(Position start) noexcept
-		: _span({.start = start}), _value(nil) {}
+		: span_({.start = start}), value_(nil) {}
 	
-	inline Token(Span span, Kind tag, const Sym *value = nil) noexcept
-		: _span(span), _kind(tag), _value(value) {}
+	inline Token(Span span, TokenTag tag, const Sym *value = nil) noexcept
+		: span_(span), tag_(tag), value_(value) {}
 
 	~Token() = default;
 
 public:
-	inline const Span &span() const noexcept {return this->_span;}
-	inline Kind kind() const noexcept {return this->_kind;}
-	inline const Sym *value() const noexcept {return this->_value;}
+	inline const Span &span() const noexcept {return this->span_;}
+	inline TokenTag tag() const noexcept {return this->tag_;}
+	inline const Sym *value() const noexcept {return this->value_;}
 
 private:
-	Span _span;
-	Kind _kind;
-	const Sym *_value;
+	Span span_;
+	TokenTag tag_;
+	const Sym *value_;
 };
 
 }

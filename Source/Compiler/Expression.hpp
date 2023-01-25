@@ -5,113 +5,89 @@
 #include "../Types.hpp"
 #include "../Utilities/Table.hpp"
 
+#include <string.h>
+
 namespace Klang::Compiler {
 
 class Parser;
 
-template<class T>
-class Expression {
+enum class ExpressionTag {
+	EXPRESSION,
+	IDENTIFIER,
+	PRIMITIVE,
+	DATUM,
+	FACTOR,
+	BINARY,
+};
+
+struct Expression {
 public:
+
 	virtual ~Expression() = 0;
 
 public:
-	virtual const T &parse(Parser &parser) = 0;
+	const Nat8 EPRE = 0;
+	static constexpr const ExpressionTag ETAG = ExpressionTag::EXPRESSION;
 };
 
 namespace E {
 
 using namespace Klang::Utilities;
 
-template<class T>
-class Identifier: public Expression<Identifier<T>>, public Hashable {
+struct Symbol: public Expression {};
+
+struct Identifier: public Expression, public Hashable {
 public:
-	enum class Type {
-		DATUM,
-		TYPE,
-	};
+	static constexpr const ExpressionTag ETAG = ExpressionTag::IDENTIFIER;
 
 public:
-	inline Identifier(const T &person, Type type)
-		: _person(person), _type(type) {}
-	
-	inline Identifier(const T &person, Type type, const Sym *name)
-		: _person(person), _type(type), _name(name) {}
-
-	~Identifier() = default;
-
-public:
-	inline const T &person() const noexcept { return this->_person; }
-	inline Type type() const noexcept { return this->_type; }
-	inline const Sym *name() const noexcept { return this->_name; }
-
-public:
-	const Identifier &parse(Parser &parser) override;
-
-	constexpr Size hash() override {
-		Size result = 0;
-		for (Nat16 i = 0; this->_name[i]; ++i)
-			result += this->_name[i];
-		return result;
-	};
+	ExpressionTag tag;
+	const Sym *name;
 
 public:
 	constexpr Bool operator ==(const Identifier &rhs) const noexcept {
-		return this->_type == rhs._type && strcmp(this->_name, rhs._name) == 0;
+		return this->tag == rhs.tag && strcmp(this->name, rhs.name) == 0;
 	}
 
 public:
-	const T &_person;
-	Type _type;
-	const Sym *_name;
+	constexpr Size hash() override {
+		Size result = 0;
+		for (Nat16 i = 0; this->name[i]; ++i)
+			result += this->name[i];
+		return result;
+	};
 };
 
+struct Type: public Symbol {};
+
 // '-'? ['64'|'32'|'16'|'8'|'0'] '.'?
-class Primitive: public Expression<Primitive> {
+struct Primitive: public Type {
 public:
-	enum class Type {
+	enum Type {
 		INT32,
 	};
 	
 public:
-	inline Primitive(Type type)
-		: _type(type) {}
-
-	~Primitive() = default;
+	static constexpr const ExpressionTag TAG = ExpressionTag::PRIMITIVE;
 
 public:
-	inline Type type() const noexcept { return this->_type; }
-
-public:
-	const Primitive &parse(Parser &parser) override;
-
-private:
-	Type _type;
+	Type type;
 };
 
 // 'datum' Identifier ':' Type '=' E ';'
-class Datum: public Expression<Datum> {
+struct Datum: public Symbol {
 public:
-	inline Datum()
-		: _identifier(*this, Identifier<Datum>::Type::DATUM) {}
-
-	~Datum() = default;
+	static constexpr const ExpressionTag ETAG = ExpressionTag::DATUM;
 
 public:
-	inline const Identifier<Datum> &_name() const noexcept { return this->_identifier; }
-	inline const Expression &type() const noexcept { return *this->_type; }
-
-public:
-	const Datum &parse(Parser &parser) override;
-
-private:
-	Identifier<Datum> _identifier;
-	Identifier &_type;
+	const Identifier *identifier;
+	const Type *type;
 };
 
 // [Literal|Datum] 
-class Factor: public Expression<Factor> {
+struct Factor: public Expression {
 public:
-	enum class Kind {
+	enum Kind {
 		INTEGER,
 		NATURAL,
 		REAL,
@@ -125,38 +101,20 @@ public:
 		Real64 real;
 		const Sym *text;
 	};
-	
-public:
-	inline Factor(Kind type, Nat64 natural) noexcept
-		: _type(type), _value({.natural = natural}) {}
-
-	inline Factor(Kind type, Int64 integer) noexcept 
-		: _type(type), _value({.integer = integer}) {}
-
-	inline Factor(Kind type, Real64 real) noexcept
-		: _type(type), _value({.real = real}) {}
-	
-	inline Factor(Kind type, const Sym *text) noexcept
-		: _type(type), _value({.text = text}) {}
-
-	~Factor() = default;
 
 public:
-	const Factor &parse(Parser &parser) override;
+	static constexpr const ExpressionTag ETAG = ExpressionTag::FACTOR;
 
 public:
-	inline Kind type() const noexcept { return this->_type; }
-	inline const Value &value() const noexcept { return this->_value; }
-
-private:
-	Kind _type;
-	Value _value;
+	Kind kind;
+	Value value;
 };
 
 // E ['='|'+'|'-'|'*'|'/'|'%'] E
-class Binary: public Expression<Binary> {
+struct Binary: public Expression {
 public:
-	enum class Operation: Sym {
+	enum Operation: Sym {
+		STATEMENT,
 		ASSIGN,
 		ADD,
 		SUBTRACT,
@@ -166,37 +124,12 @@ public:
 	};
 
 public:
-	inline Binary(Operation operation, Expression &left) noexcept
-		: _operation(operation), _left(left) {}
-
-	~Binary() = default;
+	static constexpr const ExpressionTag ETAG = ExpressionTag::BINARY;
 
 public:
-	inline Operation operation() const noexcept { return this->_operation; }
-	inline const Expression &left() const noexcept { return this->_left; }
-	inline const Expression &right() const noexcept { return *this->_right; }
-
-public:
-	const Binary &parse(Parser &parser) override;
-	
-private:
-	Operation _operation;
-	Expression &_left;
-	Expression *_right;
-};
-
-class Program: public Expression<Program> {
-public:
-	inline Program() noexcept {}
-
-	~Program() = default;
-
-public:
-	const Program &parse(Parser &parser) override;
-
-private:
-	Table<Expression &, Identifier<Expression>> _identifiers;
-	Void **_root;
+	Operation operation;
+	Expression *left;
+	Expression *right;
 };
 
 }

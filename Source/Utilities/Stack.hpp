@@ -11,29 +11,29 @@ class Stack {
 public:
 	constexpr
 	Stack()
-		: _top(nil), _size(0) {}
+		: top_(nil), size_(0) {}
 
 	~Stack() {
-		for (Frame *frame; this->_top; this->_top = frame) {
-			frame = &this->_top->under;
-			delete this->_top;
+		for (Frame *frame; this->top_; this->top_ = frame) {
+			frame = &this->top_->under;
+			delete this->top_;
 		}
 	}
 
 public:
 	inline
 	const T &top()
-	const noexcept {return this->_top->value;}
+	const noexcept {return this->top_->value;}
 
 	inline
 	Nat64 size()
-	const noexcept {return this->_size;}
+	const noexcept {return this->size_;}
 
 public:
 	inline
 	Void push(T item) {
-		this->_top = new Frame(item, *this->_top);
-		++_size;
+		this->top_ = new Frame(item, *this->top_);
+		++size_;
 	}
 
 	T pick();
@@ -56,8 +56,8 @@ private:
 	};
 
 private:
-	Frame *_top;
-	Nat64 _size;
+	Frame *top_;
+	Nat64 size_;
 };
 
 }

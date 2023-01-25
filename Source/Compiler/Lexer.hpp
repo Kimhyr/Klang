@@ -9,22 +9,22 @@ namespace Klang::Compiler {
 class Lexer {
 public:
 	inline Lexer(const Sym *source) noexcept
-		: _source(source), _position({.row = 1, .column = 1}) {}
+		: source_(source), position_({.row = 1, .column = 1}) {}
 	
 	~Lexer() = default;
 
 public:
-	inline const Sym *source() const noexcept { return this->_source; }
-	inline const Position &position() const noexcept { return this->_position; }
-	inline Sym current() const noexcept { return *this->_source; }
-	inline constexpr Sym peek(Nat64 offset = 1) const noexcept { return this->_source[offset]; }
+	inline const Sym *source() const noexcept { return this->source_; }
+	inline const Position &position() const noexcept { return this->position_; }
+	inline Sym current() const noexcept { return *this->source_; }
+	inline constexpr Sym peek(Nat64 offset = 1) const noexcept { return this->source_[offset]; }
 
 public:
 	Token lex();
 
 private:
-	const Sym *_source;
-	Position _position;
+	const Sym *source_;
+	Position position_;
 
 private:
 	constexpr Bool isSpace(Sym sym) const noexcept { return (sym == ' ') || (sym >= '\t' && sym <= '\r'); }

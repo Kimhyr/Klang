@@ -12,26 +12,26 @@ using namespace Klang::Utilities;
 Token Lexer::lex() {
 	while (this->isSpace(this->current()))
 		this->advance();
-	Token token(this->_position);
-	switch ((Token::Tag)this->current()) {
-	case Token::Tag::PLUS:
-	case Token::Tag::MINUS:
+	Token token(this->position_);
+	switch ((TokenTag)this->current()) {
+	case TokenTag::PLUS:
+	case TokenTag::MINUS:
 		if (this->isNumeric(this->peek())) {
 			this->lexNumeric(token);
-			token._tag = Token::Tag::INTEGER;
+			token.tag_ = TokenTag::INTEGER;
 			goto No_Post_Advance; 
 		}
-	case Token::Tag::OPEN_PAREN:
-	case Token::Tag::CLOSE_PAREN:
-	case Token::Tag::COLON: 
-	case Token::Tag::SEMICOLON:
-	case Token::Tag::SLOSH:
-	case Token::Tag::EQUAL:
-	case Token::Tag::ASTERISKS:
-	case Token::Tag::SLASH:
-	case Token::Tag::PERCENT:
-	case Token::Tag::END:
-		token._tag = (Token::Tag)this->current();
+	case TokenTag::OPEN_PAREN:
+	case TokenTag::CLOSE_PAREN:
+	case TokenTag::COLON: 
+	case TokenTag::SEMICOLON:
+	case TokenTag::SLOSH:
+	case TokenTag::EQUAL:
+	case TokenTag::ASTERISKS:
+	case TokenTag::SLASH:
+	case TokenTag::PERCENT:
+	case TokenTag::END:
+		token.tag_ = (TokenTag)this->current();
 		break;
 	default:
 		if (this->isAlphabetic(this->current())) {
@@ -42,32 +42,32 @@ Token Lexer::lex() {
 			} while (this->isAlphabetic(this->current()) || this->current() == '_');
 			buffer.push(0);
 			if (strcmp(buffer.data(), "datum") == 0)
-				token._tag = Token::Tag::DATUM;
+				token.tag_ = TokenTag::DATUM;
 			else {
-				token._value = buffer.flush();
-				token._tag = Token::Tag::IDENTIFIER;
+				token.value_ = buffer.flush();
+				token.tag_= TokenTag::IDENTIFIER;
 			}
 			goto No_Post_Advance; 
 		} else if (this->isNumeric(this->current())) {
 			this->lexNumeric(token);
-			token._tag = Token::Tag::NATURAL;
+			token.tag_ = TokenTag::NATURAL;
 				goto No_Post_Advance; 
 		} else throw Error::UNKNOWN_TOKEN;
 	}
 	this->advance();
 No_Post_Advance:
-	token._span.end = this->_position;
-	--token._span.end.column;
+	token.span_.end = this->position_;
+	--token.span_.end.column;
 	return token;
 }
 
 constexpr Void Lexer::advance() noexcept {
-	++this->_source;
+	++this->source_;
 	if (this->current() == '\n') {
-		++this->_position.row;
-		this->_position.column = 0;
+		++this->position_.row;
+		this->position_.column = 0;
 	}
-	++this->_position.column;
+	++this->position_.column;
 }
 
 Void Lexer::lexNumeric(Token &token) {
@@ -78,7 +78,7 @@ Void Lexer::lexNumeric(Token &token) {
 		this->advance();
 	} while (this->isNumeric(this->current()) || this->current() == '_');
 	buffer.push(0);
-	token._value = buffer.flush();
+	token.value_ = buffer.flush();
 }
 
 }
