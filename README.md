@@ -3,12 +3,15 @@
 ## Examples
 
 ```klang
-add<NumT: [Nat, Int, Real]>(
-	first: NumT = 0, second: NumT): NumT = {
-	return first + second;
-}
+\\ Cool type system.
+\\ Functions are treated as variables.
+add<NumT: [Nat, Int, Real]>(first: NumT = 0, second: NumT): NumT
+	= first + second;
 
 execute() -> Int = {
-	return add(21, 14);
+	first: Int = 21;
+	second: Real = 14;
+	\\ Cool
+	return add(.first=first, .second=second);
 }
 ```
