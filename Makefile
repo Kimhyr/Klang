@@ -1,38 +1,64 @@
-NAME=kc
+# This Makefile was taken from
+# [https://gist.github.com/mauriciopoppe/de8908f67923091982c8c8136a063ea6].
+
+CC=clang++
 
 # Directories
-SRCD=./Source
-BLDD=./Build
-OBJD=$(BLDD)/Objects
-DIRS=. Compiler Utilities
+SRCDIR=./Source
+BLDDIR=./Build
+
+# Extensions
+SRCEXT=cpp
+HDREXT=hpp
 
 # Files
-SRCS=$(foreach D,$(DIRS),$(wildcard $(SRCD)/$(D)/*.cpp))
-OBJS=$(patsubst $(SRCD)/%.cpp,$(OBJD)/%.obj,$(SRCS))
-BIN=$(BLDD)/$(NAME).exe
+BIN=klang.exe
+SRCS=$(shell find $(SRCDIR) -name '*.$(SRCEXT)' | sort -k 1nr | cut -f2-)
+OBJS=$(SRCS:$(SRCDIR)/%.$(SRCEXT)=$(BLDDIR)/%.obj)
+DEPS=$(OBJS:.obj=.d)
 
-# Build
-CC=clang++
-CFLGS=-std=c++20 -O3
-WFLGS=-Wall -Wextra
-FLGS=$(CFLGS) $(WFLGS) $(IFLGS)
+# Flags
+FLGS=-O2 -std=c++20 -Wall -Wextra -g
+INCS=
+LIBS=
 
-all:$(BIN)
+.PHONY:default
+default:release
 
-$(BIN):$(OBJS)
-	$(CC) $^ -o $@ $(LFLGS)
+.PHONY:release
+release:dirs
+	@$(MAKE) all
 
-$(OBJD)/%.obj:$(SRCD)/%.cpp
-	$(CC) -c $^ -o $@ $(FLGS)
+.PHONY:dirs
+dirs:
+	@echo "Creating directories..."
+	@mkdir -p $(dir $(OBJS))
+	@mkdir -p $(BLDDIR)
 
-r:$(BIN)
-	clear
-	$(BIN)
+.PHONY:r
+r:default
+	./kedit.exe
 
-c:$(BLDD)
-	rm -rf $(OBJS) $(BIN)
+.PHONY:c
+c:
+	@echo "Deleting $(BIN) symlink..."
+	@$(RM) $(BINNAME)
+	@echo "Deleting directories..."
+	@$(RM) -r $(BLDDIR)
 
-f:
-	clang-format -i $(SRCS) $(foreach D,$(DIRS),$(wildcard $(SRCD)/$(D)/*.hpp))
+.PHONY:all
+all:$(BLDDIR)/$(BIN)
+	@echo "Making symlink for $(BIN) -> $<..."
+	@$(RM) $(BIN)
+	@ln -s $(BLDDIR)/$(BIN) $(BIN)
 
-.PHONY:all r c f
+$(BLDDIR)/$(BIN):$(OBJS)
+	@echo "Linking $@..."
+	$(CC) $(OBJS) -o $@ ${LIBS}
+
+-include $(DEPS)
+
+$(BLDDIR)/%.obj: $(SRCDIR)/%.$(SRCEXT)
+	@echo "Compiling $< -> $@..."
+	$(CC) $(FLGS) $(INCS) -MP -MMD -c $< -o $@
+
