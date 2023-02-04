@@ -1,0 +1,72 @@
+define Size<NumT: [Nat|Int|Real]> = {
+	width: NumT;
+	height: NumT;
+
+	Object::create(width: NumT, height: NumT): Size
+		= { .width = width,
+		    .height = height }
+
+	Object::destroy() = {}
+
+	area(): NumT
+		= .width * .height;
+}
+
+define TokenKind = enumerate<Int8> {
+	Identifier: Text;
+}
+
+define NaiveTokenKind = enumerate<Int8> {
+	Identifier;
+	Define;
+	Equals = '=';
+	Integer;
+	Natural;
+	Real;
+}
+
+define NaiveTokenValue = unify {
+	Identifier: Array<Sym>;
+	Integer: Int;
+	Natural: Nat;
+	Real: Real;
+}
+
+structure NaiveToken = {
+	kind: NaiveTokenKind;
+	value: NaiveTokenValue;
+}
+
+$enumerate<DiscT> = {
+	\| Take in elements and create a new struct for each of the elements with the
+	\| discriminator being the first property followed by the type given to the
+	\| element; then, replace the element's type to the new struct, and set the
+	\| discriminator to the incremented saved discriminator.
+}
+
+define TokenKind = enumerate<Int8> {
+	Identifier: Array<Sym>;
+	Define;
+	Equals = '=';
+	Integer: Int;
+	Natural: Nat;
+	Real: Real; 
+}
+
+
+define Token = {
+	kind: TokenKind;
+
+	create(kind: TokenKind): Token = {
+		return Token {
+			
+		};
+	}
+}
+
+add<NumT: [Nat|Int|Real]>(first: NumT, second: NumT): NumT
+	= first + second;
+
+execute(args: Array(Text)): Int = {
+	token: Token = ;
+}

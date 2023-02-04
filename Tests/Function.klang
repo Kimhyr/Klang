@@ -1,0 +1,4 @@
+\| This is a cool function.
+add<NumT: [Nat, Int, Real]>(first: NumT = 0, second: NumT): NumT = {
+	return first + second;
+}
