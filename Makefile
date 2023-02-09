@@ -9,7 +9,7 @@ BLDDIR=./Build
 
 # Extensions
 SRCEXT=cpp
-HDREXT=hpp
+HDREXT=h
 
 # Files
 BIN=klang.exe
@@ -37,7 +37,7 @@ dirs:
 
 .PHONY:r
 r:default
-	./kedit.exe
+	./$(BIN)
 
 .PHONY:c
 c:
