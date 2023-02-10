@@ -23,7 +23,7 @@ public:
 	constexpr const Position& position() const noexcept { return this->_position; }
 
 public:
-	Token lex();
+	void lex(Token& token);
 
 private:
 	std::ifstream _source;

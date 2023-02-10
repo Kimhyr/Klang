@@ -3,9 +3,10 @@
 namespace Klang {
 
 Lexer::Lexer(const char* path)
-	: _source(path), _index(0), _position(1, 0) {
+	: _source(path), _index(0), _position(1, 1) {
 	if (!this->_source.is_open())
 		throw std::invalid_argument("The source file failed to open.");
+	this->_current = this->_source.get();
 }
 
 void Lexer::load(const char* path) {
@@ -19,11 +20,10 @@ void Lexer::load(const char* path) {
 	this->_index = 0;
 }
 
-Token Lexer::lex() {
-	// TODO: `std::isspace` does not work.
+void Lexer::lex(Token& token) {
 	while (std::isspace(this->current()))
 		this->advance();
-	Token token = { .start = this->position() };
+	token.start = this->position();
 	switch (static_cast<TokenKind>(this->current())) {
 	case TokenKind::SLOSH:
 		do this->advance();
@@ -72,8 +72,6 @@ Token Lexer::lex() {
 		}
 		token.end = this->position();
 	}
-	--token.end.column;
-	return token;
 }
 
 void Lexer::lexNumeric(Token& token) {

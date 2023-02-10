@@ -1,5 +1,9 @@
 #include "Token.h"
 
+namespace Klang {
+
+}
+
 std::ostream& operator<<(std::ostream& os, Klang::TokenKind kind) {
 	const char*  str;
 	os << "TokenKind::";
@@ -28,7 +32,12 @@ std::ostream& operator<<(std::ostream& os, Klang::TokenKind kind) {
 std::ostream& operator<<(std::ostream& os, const Klang::Token& token) {
 	os << "Token{.start=" << token.start <<
 		",.end=" << token.end <<
-		",.kind=" << token.kind <<
-		",.value=\"" << token.value << "\"}";
+		",.kind=" << token.kind;
+	switch (token.kind) {
+	case Klang::TokenKind::NAME:
+	case Klang::TokenKind::NATURAL:
+	case Klang::TokenKind::INTEGER: os << ",.value=" << token.value;
+	default: os << '}'; break;
+	}
 	return os;
 }

@@ -15,8 +15,8 @@ public:
 
 public:
 	enum class Kind: char {
-		NAME = -128,
-		COMMENT,
+		COMMENT = -128,
+		NAME,
 		NATURAL,
 		INTEGER,
 		EOT = 0,
@@ -38,6 +38,19 @@ public:
 	Position end;
 	Kind kind;
 	const char* value;
+
+public:
+	Token()
+		: start(0, 0), end(0, 0), kind(Kind::EOT), value(nullptr) {}
+
+	~Token() {
+		switch (this->kind) {
+		case Kind::NAME:
+		case Kind::NATURAL:
+		case Kind::INTEGER: delete[] this->value; 
+		default: break;
+		}
+	}
 };
 
 using TokenKind = Token::Kind;
