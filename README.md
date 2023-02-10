@@ -1,17 +1,16 @@
 # KC (K/King's Compiler)
 
+The compiler still can't compile anything atm. 
+
 ## Examples
 
 ```klang
-\\ Cool type system.
-\\ Functions are treated as variables.
-add<NumT: [Nat, Int, Real]>(first: NumT = 0, second: NumT): NumT
+add(first: Int = 0, second: Int): Int
 	= first + second;
 
-execute() -> Int = {
+execute(): Int = {
 	first: Int = 21;
 	second: Real = 14;
-	\\ Cool
 	return add(.first=first, .second=second);
 }
 ```
