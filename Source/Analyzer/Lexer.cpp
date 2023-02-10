@@ -3,7 +3,7 @@
 namespace Klang {
 
 Lexer::Lexer(const char* path)
-	: _source(path), _index(0), _position(1, 1) {
+	: _source(path), _index(0), _position(1, 0) {
 	if (!this->_source.is_open())
 		throw std::invalid_argument("The source file failed to open.");
 }
@@ -15,11 +15,12 @@ void Lexer::load(const char* path) {
 		throw std::invalid_argument("The source file is not \"good\".");
 	this->_current = this->_source.get();
 	this->_position.row = 1;
-	this->_position.column = 1;
+	this->_position.column = 0;
 	this->_index = 0;
 }
 
 Token Lexer::lex() {
+	// TODO: `std::isspace` does not work.
 	while (std::isspace(this->current()))
 		this->advance();
 	Token token = { .start = this->position() };
@@ -60,14 +61,18 @@ Token Lexer::lex() {
 				this->advance();
 			} while (this->current() == '_' || std::isdigit(this->current()) ||
 				 std::isalpha(this->current()));
+			token.value = bucket.flush();
 			token.kind = TokenKind::NAME;
-			token.value = &bucket.flush();
 		} else if (std::isdigit(this->current())) {
 			this->lexNumeric(token);
 			token.kind = TokenKind::NATURAL;
-		} else throw std::invalid_argument(__FUNCTION__);
+		} else {
+			std::cout << this->current() << '\n';
+			throw std::invalid_argument("Unkown token.");
+		}
 		token.end = this->position();
 	}
+	--token.end.column;
 	return token;
 }
 
@@ -79,7 +84,7 @@ void Lexer::lexNumeric(Token& token) {
 		bucket.put(this->current());
 		this->advance();
 	} while (this->current() == '_' || std::isdigit(this->current()));
-	token.value = &bucket.flush();
+	token.value = bucket.flush();
 }
 
 char Lexer::peek() {

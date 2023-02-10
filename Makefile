@@ -45,6 +45,7 @@ c:
 	@$(RM) $(BINNAME)
 	@echo "Deleting directories..."
 	@$(RM) -r $(BLDDIR)
+	@$(RM) ./$(BIN)
 
 .PHONY:all
 all:$(BLDDIR)/$(BIN)

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 namespace Klang {
 
 using int8 = signed char;
@@ -54,8 +56,11 @@ struct Position {
 	Position()
 		: row(0), column(0) {}
 
-	explicit Position(natptr row, natptr column)
+	explicit constexpr Position(natptr row, natptr column)
 		: row(row), column(column) {}
+
 };
 
 }
+
+std::ostream& operator<<(std::ostream& os, const Klang::Position& pos);

@@ -60,14 +60,14 @@ public:
 
 	void put(Water_T&& bit) {
 		if (this->full())
-			throw out_of_range(__FUNCTION__);
+			throw std::out_of_range(__FUNCTION__);
 		*this->_end = bit;
 		++this->_end;
 	}
 
 	void put(const Water_T& bit) {
 		if (this->full())
-			throw std::out_of_range(__FUNCTION__ );
+			throw std::out_of_range(__FUNCTION__);
 		*this->_end = bit;
 		++this->_end;
 	}
@@ -81,10 +81,10 @@ public:
 		} while (--count && !this->empty());
 	}
 
-	Water_T& flush() {
+	Water_T* flush() {
 		auto water = new Water_T[this->weight()];
 		std::copy(this->begin(), this->end(), water);
-		return *water;
+		return water;
 	}
 
 private:

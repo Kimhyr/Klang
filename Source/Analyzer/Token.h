@@ -3,6 +3,7 @@
 #include <string_view>
 #include <vector>
 #include <stdexcept>
+#include <iostream>
 
 #include "../Types.h"
 
@@ -36,13 +37,12 @@ public:
 	Position start;
 	Position end;
 	Kind kind;
-	// Using a string_view rather than a union of varying types because you would
-	// only convert to other types to simplify numeric expressions. I am not
-	// implementing optimization features for now, and, even if I am, I would not
-	// convert strings to numerics except during parsing.
-	std::string_view value;
+	const char* value;
 };
 
 using TokenKind = Token::Kind;
 
 }
+
+std::ostream& operator<<(std::ostream& os, Klang::TokenKind kind);
+std::ostream& operator<<(std::ostream& os, const Klang::Token& token);
