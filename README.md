@@ -1,4 +1,4 @@
-# KC (K/King's Compiler)
+# Klang 
 
 The compiler still can't compile anything atm. 
 
