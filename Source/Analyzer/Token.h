@@ -14,7 +14,7 @@ public:
 	static constexpr const nat16 MAX_VALUE_LENGTH = 1024;
 
 public:
-	enum class Kind: char {
+	enum Kind: char {
 		COMMENT = -128,
 		NAME,
 		NATURAL,
@@ -51,6 +51,23 @@ public:
 		default: break;
 		}
 	}
+
+public:
+	void reset() {
+		this->start.column = 0;
+		this->start.row = 0;
+		this->end.column = 0;
+		this->end.row = 0;
+		switch (this->kind) {
+		case Kind::NAME:
+		case Kind::NATURAL:
+		case Kind::INTEGER: delete[] this->value; 
+		default: break;
+		}
+		this->kind = Kind::EOT;
+		this->value = nullptr;
+	}
+
 };
 
 using TokenKind = Token::Kind;

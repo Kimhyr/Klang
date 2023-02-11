@@ -13,6 +13,7 @@ void test0() {
 			std::cout << token << std::endl;
 			if (token.kind == TokenKind::EOT)
 				break;
+			token.reset();
 		} catch (const std::exception& e) {
 			std::cout << e.what() << '\n';
 			break;

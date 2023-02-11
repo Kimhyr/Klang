@@ -28,7 +28,6 @@ void Lexer::lex(Token& token) {
 	case TokenKind::SLOSH:
 		do this->advance();
 		while (this->current() != '\n');
-		token.end = this->position();
 		token.kind = TokenKind::COMMENT;
 		break;
 	case TokenKind::PLUS:
@@ -48,7 +47,6 @@ void Lexer::lex(Token& token) {
 	case TokenKind::OPAREN:
 	case TokenKind::CPAREN:
 		token.kind = static_cast<TokenKind>(this->current());
-		token.end = this->position();
 		this->advance();
 		break;
 	default:
@@ -61,27 +59,29 @@ void Lexer::lex(Token& token) {
 				this->advance();
 			} while (this->current() == '_' || std::isdigit(this->current()) ||
 				 std::isalpha(this->current()));
+			bucket.put('\0');
 			token.value = bucket.flush();
 			token.kind = TokenKind::NAME;
 		} else if (std::isdigit(this->current())) {
 			this->lexNumeric(token);
 			token.kind = TokenKind::NATURAL;
-		} else {
-			std::cout << this->current() << '\n';
-			throw std::invalid_argument("Unkown token.");
-		}
-		token.end = this->position();
+		} else if (this->source().eof())
+			token.kind = TokenKind::EOT;
+		else throw std::invalid_argument("Unkown token.");
 	}
+	token.end = this->position();
+	--token.end.column;
 }
 
 void Lexer::lexNumeric(Token& token) {
 	Bucket<char, Token::MAX_VALUE_LENGTH> bucket;
 	do {
-		if (bucket.weight() >= bucket.capacity())
+		if (bucket.weight() + 1 >= bucket.capacity())
 			throw std::overflow_error(__FUNCTION__);
 		bucket.put(this->current());
 		this->advance();
 	} while (this->current() == '_' || std::isdigit(this->current()));
+	bucket.put('\0');
 	token.value = bucket.flush();
 }
 
