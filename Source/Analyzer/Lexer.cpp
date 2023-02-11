@@ -12,8 +12,8 @@ Lexer::Lexer(const char* path)
 void Lexer::load(const char* path) {
 	this->_source.close();
 	this->_source.open(path);
-	if (!this->_source.good())
-		throw std::invalid_argument("The source file is not \"good\".");
+	if (!this->_source.is_open())
+		throw std::invalid_argument("");
 	this->_current = this->_source.get();
 	this->_position.row = 1;
 	this->_position.column = 0;
@@ -54,7 +54,7 @@ void Lexer::lex(Token& token) {
 			Bucket<char, Token::MAX_VALUE_LENGTH> bucket;
 			do {
 				if (bucket.weight() >= bucket.capacity())
-					throw std::overflow_error(__FUNCTION__);
+					throw std::overflow_error("The bucket overflowed when trying to lex a token.");
 				bucket.put(this->current());
 				this->advance();
 			} while (this->current() == '_' || std::isdigit(this->current()) ||
@@ -77,7 +77,7 @@ void Lexer::lexNumeric(Token& token) {
 	Bucket<char, Token::MAX_VALUE_LENGTH> bucket;
 	do {
 		if (bucket.weight() + 1 >= bucket.capacity())
-			throw std::overflow_error(__FUNCTION__);
+			throw std::overflow_error("The bucket overflowed when trying to lex a token.");
 		bucket.put(this->current());
 		this->advance();
 	} while (this->current() == '_' || std::isdigit(this->current()));
