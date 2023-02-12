@@ -1,20 +1,12 @@
 #pragma once
 
 #include <fstream>
+#include <stdexcept>
 
-#include "Tokens.h"
+#include "../Bucket.h"
+#include "Token.h"
 
 namespace Klang {
-
-class LexerError
-	: public std::exception {
-public:
-	const char* what() const noexcept override {
-	
-	};
-
-	UndefinedToken token;
-};
 
 class Lexer {
 public:
@@ -28,8 +20,7 @@ public:
 	constexpr const Position& position() const noexcept { return this->_position; }
 
 public:
-	void lex(Token& token);
-	Token& lex();
+	void lex(Token& out);
 
 public:
 	void load(const char *path);

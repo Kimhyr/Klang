@@ -53,12 +53,11 @@ struct Position {
 	natptr row;
 	natptr column;
 
-	Position()
+	constexpr Position()
 		: row(0), column(0) {}
 
 	explicit constexpr Position(natptr row, natptr column)
 		: row(row), column(column) {}
-
 };
 
 }
