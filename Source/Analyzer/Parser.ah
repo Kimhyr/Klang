@@ -1,0 +1,26 @@
+#pragma once
+
+#include <stack>
+
+#include "Structs.h"
+#include "Lexer.h"
+
+namespace Klang {
+
+class Parser {
+public:
+	Parser(const char* sourcePath)
+		: _lexer(sourcePath) {}
+
+	~Parser() = default;
+
+public:
+	Program *parse();
+
+private:
+	Lexer _lexer;
+	std::stack<Token> _tokens;
+
+};
+
+}

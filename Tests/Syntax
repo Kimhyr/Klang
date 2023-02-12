@@ -1,0 +1,24 @@
+module Analyzer {
+
+enumerate Token {
+        Identifier: String,
+}
+
+unistruct MyUnion {
+        Integer: Int,
+        Natural: Nat,
+        Real: Real,
+        String: String,
+}
+
+structure Lexer {
+        source: String;
+}
+
+implement Lexer {
+        procedure lex() -> Token {
+                return Token();
+        }
+}
+
+}
