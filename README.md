@@ -13,12 +13,14 @@ The compiler still can't compile anything atm.
 ## Examples
 
 ```klang
-add(first: Int = 0, second: Int): Int
-	= first + second;
+procedure add(first: Int = 0, second: Int) -> Int {
+	return first + second;
+}
 
-execute(): Int = {
-	first: Int = 21;
-	second: Real = 14;
+\\ NOT AN OBJECT ORIENTED LANGUAGE NO KAPRISON SON ONSOFNDS
+procedure execute() -> Int {
+	object first: Int = 21;
+	object second: Real = 14;
 	return add(.first=first, .second=second);
 }
 ```
