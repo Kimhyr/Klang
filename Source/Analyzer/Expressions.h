@@ -5,6 +5,7 @@
 namespace Klang {
 
 enum class ExpressionTag: char {
+	UNDEFINED,
 	IDENTIFIER,
 	UNARY,
 	BINARY,
@@ -15,9 +16,12 @@ enum class ExpressionTag: char {
 
 struct Expression {
 public:
-	const ExpressionTag tag;
+	const ExpressionTag tag = ExpressionTag::UNDEFINED;
 	Position start;
 	Position end;
+
+public:
+	virtual ~Expression() = default;
 };
 
 template<ExpressionTag tag_T>
@@ -27,11 +31,17 @@ public:
 	const ExpressionTag tag {tag_T};
 };
 
-struct Factor: public Expression {};
-struct Type: public Expression {};
+struct Factor {};
+struct Type {};
 
 enum class IdentifierDeterminer: char {
 	OBJECT = static_cast<char>(TokenTag::OBJECT),
+};
+
+enum class IdentifierFlag: bool8 {
+	CLEAR = 0,
+	INITIALIZED = 1,
+	MUTABLE = 2,
 };
 
 struct Identifier
@@ -39,7 +49,32 @@ struct Identifier
 public:
 	IdentifierDeterminer determiner;
 	const char* name;
-	Type& type;
+	Type* type;
+	IdentifierFlag flags {IdentifierFlag::CLEAR};
+};
+
+enum class LiteralType {
+	NATURAL,
+	INTEGER,
+	REAL,
+	SYMBOL,
+	TEXT,
+};
+
+struct Literal
+	: public ExpressionBase<ExpressionTag::LITERAL>,
+	  public Factor {
+public:
+	LiteralType type;
+	union {
+		nat64 Natural;
+		int64 Integer;
+		real64 Real;
+		char Symbol;
+		const char* Text;
+		// Object* Object;
+	} value;
+	natptr size;
 };
 
 enum class UnaryOperation: char {};
@@ -66,7 +101,7 @@ struct Binary
 	  public Factor {
 public:
 	BinaryOperation operation;
-	Expression& first;
+	Expression* first;
 	Expression* second;
 };
 
@@ -104,23 +139,26 @@ struct Primitive
 	: public ExpressionBase<ExpressionTag::PRIMITIVE>,
 	  public Type {
 public:
-	
 	const PrimitiveType type;
+
+public:
+	constexpr  Primitive(PrimitiveType type)
+		: type(type) {}
 };
 
-constexpr const Primitive PtrPrimitive { .type = PrimitiveType::PTR };
-constexpr const Primitive NatPrimitive { .type = PrimitiveType::NAT };
-constexpr const Primitive Nat8Primitive { .type = PrimitiveType::NAT8 };
-constexpr const Primitive Nat16Primitive { .type = PrimitiveType::NAT16 };
-constexpr const Primitive Nat32Primitive { .type = PrimitiveType::NAT32 };
-constexpr const Primitive Nat64Primitive { .type = PrimitiveType::NAT64 };
-constexpr const Primitive IntPrimitive { .type = PrimitiveType::INT };
-constexpr const Primitive Int8Primitive { .type = PrimitiveType::INT8 };
-constexpr const Primitive Int16Primitive { .type = PrimitiveType::INT16 };
-constexpr const Primitive Int32Primitive { .type = PrimitiveType::INT32 };
-constexpr const Primitive Int64Primitive { .type = PrimitiveType::INT64 };
-constexpr const Primitive RealPrimitive { .type = PrimitiveType::REAL };
-constexpr const Primitive Real32Primitive { .type = PrimitiveType::REAL32 };
-constexpr const Primitive Real64Primitive { .type = PrimitiveType::REAL64 };
+constexpr const Primitive PTR_PRIMITIVE(PrimitiveType::PTR);
+constexpr const Primitive NAT_PRIMITIVE(PrimitiveType::NAT);
+constexpr const Primitive NAT8_PRIMITIVE(PrimitiveType::NAT8);
+constexpr const Primitive NAT16_PRIMITIVE(PrimitiveType::NAT16);
+constexpr const Primitive NAT32_PRIMITIVE(PrimitiveType::NAT32);
+constexpr const Primitive NAT64_PRIMITIVE(PrimitiveType::NAT64);
+constexpr const Primitive INT_PRIMITIVE(PrimitiveType::INT);
+constexpr const Primitive INT8_PRIMITIVE(PrimitiveType::INT8);
+constexpr const Primitive INT16_PRIMITIVE(PrimitiveType::INT16);
+constexpr const Primitive INT32_PRIMITIVE(PrimitiveType::INT32);
+constexpr const Primitive INT64_PRIMITIVE(PrimitiveType::INT64);
+constexpr const Primitive REAL_PRIMITIVE(PrimitiveType::REAL);
+constexpr const Primitive REAL32_PRIMITIVE(PrimitiveType::REAL32);
+constexpr const Primitive REAL64_PRIMITIVE(PrimitiveType::REAL64);
 
 }

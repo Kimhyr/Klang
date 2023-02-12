@@ -48,7 +48,14 @@ public:
 	TokenTag tag;
 	Position start;
 	Position end;
-	const char* value;
+	union {
+		const char* Name;
+		nat64 Natural;
+		int64 Integer;
+		real64 Real;
+		char Symbol;
+		const char* Text;
+	} value;
 
 public:
 	void reset() {
@@ -57,22 +64,16 @@ public:
 		this->start.column = 0;
 		this->end.row = 0;
 		this->end.column = 0;
-		if (this->valuable())
-			delete this->value;
+		switch (this->tag) {
+			// TODO: Test out if you can just delete `this->value.Name` because
+			// `this->value` is a union.
+		case TokenTag::NAME: delete this->value.Name; break;
+		case TokenTag::TEXT: delete this->value.Text; break;
+		default: break;
+		}
 	}
 
 public:
-	constexpr bool valuable() const noexcept {
-		switch (this->tag) {
-		case TokenTag::NAME:
-		case TokenTag::NATURAL:
-		case TokenTag::FLOAT:
-		case TokenTag::TEXT:
-			return true;
-		default: return false;
-		}
-	}
-	
 	constexpr bool isLiteral() const noexcept {
 		return this->tag >= TokenTag::NATURAL &&
 		       this->tag <= TokenTag::TEXT;

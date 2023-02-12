@@ -1,4 +1,5 @@
 #include "Analyzer/Lexer.h"
+#include "Analyzer/Expressions.h"
 
 using namespace Klang;
 
