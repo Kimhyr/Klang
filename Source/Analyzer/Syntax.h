@@ -1,11 +1,15 @@
 #pragma once
 
+#include <map>
+
 #include "Token.h"
 
 namespace Klang {
 
-enum class ExpressionTag: char {
+enum class SyntaxTag: char {
 	UNDEFINED,
+	TREE,
+	TYPE_COMPOSITION,
 	IDENTIFIER,
 	UNARY,
 	BINARY,
@@ -14,25 +18,33 @@ enum class ExpressionTag: char {
 	LITERAL,
 };
 
-struct Expression {
+struct Syntax {
 public:
-	const ExpressionTag tag = ExpressionTag::UNDEFINED;
+	const SyntaxTag tag = SyntaxTag::UNDEFINED;
 	Position start;
 	Position end;
 
 public:
-	virtual ~Expression() = default;
+	virtual ~Syntax() = default;
 };
 
-template<ExpressionTag tag_T>
-struct ExpressionBase
-	: public Expression {
+template<SyntaxTag tag_T>
+struct SyntaxBase
+	: public Syntax {
 public:
-	const ExpressionTag tag {tag_T};
+	const SyntaxTag tag {tag_T};
 };
 
 struct Factor {};
 struct Type {};
+
+struct TypeComposition
+	: public SyntaxBase<SyntaxTag::TYPE_COMPOSITION> {
+public:
+	Type* root;
+	Type* head;
+};
+
 
 enum class IdentifierDeterminer: char {
 	OBJECT = static_cast<char>(TokenTag::OBJECT),
@@ -44,13 +56,20 @@ enum class IdentifierFlag: bool8 {
 	MUTABLE = 2,
 };
 
-struct Identifier
-	: public ExpressionBase<ExpressionTag::IDENTIFIER> {
+struct IdentifierSignature {
 public:
 	IdentifierDeterminer determiner;
 	const char* name;
-	Type* type;
-	IdentifierFlag flags {IdentifierFlag::CLEAR};
+};
+
+struct Identifier
+	: public SyntaxBase<SyntaxTag::IDENTIFIER> {
+public:
+	Syntax* mother;
+	IdentifierSignature signature;
+	TypeComposition type;
+	IdentifierFlag flags;
+	Syntax* next;
 };
 
 enum class LiteralType {
@@ -62,7 +81,7 @@ enum class LiteralType {
 };
 
 struct Literal
-	: public ExpressionBase<ExpressionTag::LITERAL>,
+	: public SyntaxBase<SyntaxTag::LITERAL>,
 	  public Factor {
 public:
 	LiteralType type;
@@ -80,11 +99,11 @@ public:
 enum class UnaryOperation: char {};
 
 struct Unary
-	: public ExpressionBase<ExpressionTag::UNARY>,
+	: public SyntaxBase<SyntaxTag::UNARY>,
 	  public Factor {
 public:
 	UnaryOperation operation;
-	Factor* root;
+	Syntax* root;
 };
 
 enum class BinaryOperation: char {
@@ -97,12 +116,12 @@ enum class BinaryOperation: char {
 };
 
 struct Binary
-	: public ExpressionBase<ExpressionTag::BINARY>,
+	: public SyntaxBase<SyntaxTag::BINARY>,
 	  public Factor {
 public:
 	BinaryOperation operation;
-	Expression* first;
-	Expression* second;
+	Syntax* first;
+	Syntax* second;
 };
 
 enum class ScopeType: char {
@@ -110,12 +129,12 @@ enum class ScopeType: char {
 };
 
 struct Scope
-	: public ExpressionBase<ExpressionTag::SCOPE>,
+	: public SyntaxBase<SyntaxTag::SCOPE>,
 	  public Factor {
 public:
 	ScopeType type;
-	Expression* root;
-	Expression* head;
+	Syntax* root;
+	Syntax* head;
 };
 
 enum class PrimitiveType: char {
@@ -136,7 +155,7 @@ enum class PrimitiveType: char {
 };
 
 struct Primitive
-	: public ExpressionBase<ExpressionTag::PRIMITIVE>,
+	: public SyntaxBase<SyntaxTag::PRIMITIVE>,
 	  public Type {
 public:
 	const PrimitiveType type;
@@ -160,5 +179,40 @@ constexpr const Primitive INT64_PRIMITIVE(PrimitiveType::INT64);
 constexpr const Primitive REAL_PRIMITIVE(PrimitiveType::REAL);
 constexpr const Primitive REAL32_PRIMITIVE(PrimitiveType::REAL32);
 constexpr const Primitive REAL64_PRIMITIVE(PrimitiveType::REAL64);
+
+template<typename> struct IsOperation { static constexpr const bool value = true; };
+template<> struct IsOperation<UnaryOperation> {};
+template<> struct IsOperation<BinaryOperation> {};
+
+template<typename T>
+	requires IsOperation<T>::value
+nat8 getPrecedence(T operation) {
+	return operation;
+}
+
+
+struct SyntaxTree
+	: public SyntaxBase<SyntaxTag::TREE> {
+public:
+	Syntax* root;
+	Syntax* head;
+	std::map<Identifier, Syntax*> symbols;
+
+public:
+	SyntaxTree() noexcept
+		: root(nullptr), head(nullptr) {}
+};
+
+}
+
+namespace std {
+
+template<>
+struct hash<Klang::Identifier> {
+	size_t operator()(const Klang::Identifier& id) {
+		return  (hash<const char*>()(id.name) << 2) +
+			(static_cast<size_t>(id.determiner) >> (sizeof(size_t) * 8 - 2));
+	}
+};
 
 }
