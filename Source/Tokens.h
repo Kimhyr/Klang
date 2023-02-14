@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../Types.h"
+#include "Types.h"
 
 namespace Klang {
 
-enum class TokenTag: char {
+enum class Token_Tag {
 	UNDEFINED = -128,
 	NAME,
 	NATURAL,
@@ -45,7 +45,7 @@ public:
 	static constexpr const nat16 MAX_VALUE_LENGTH {1024};
 
 public:
-	TokenTag tag;
+	Token_Tag tag;
 	Position start;
 	Position end;
 	union {
@@ -59,7 +59,7 @@ public:
 
 public:
 	void reset() {
-		this->tag = TokenTag::UNDEFINED;
+		this->tag = Token_Tag::UNDEFINED;
 		this->start.row = 0;
 		this->start.column = 0;
 		this->end.row = 0;
@@ -67,58 +67,58 @@ public:
 		switch (this->tag) {
 			// TODO: Test out if you can just delete `this->value.Name` because
 			// `this->value` is a union.
-		case TokenTag::NAME: delete this->value.Name; break;
-		case TokenTag::TEXT: delete this->value.Text; break;
+		case Token_Tag::NAME: delete this->value.Name; break;
+		case Token_Tag::TEXT: delete this->value.Text; break;
 		default: break;
 		}
 	}
 
 public:
-	constexpr bool isLiteral() const noexcept {
-		return this->tag >= TokenTag::NATURAL &&
-		       this->tag <= TokenTag::TEXT;
+	constexpr bool is_literal() const noexcept {
+		return this->tag >= Token_Tag::NATURAL &&
+		       this->tag <= Token_Tag::TEXT;
 	}
 	
-	constexpr bool isPrimitive() const noexcept {
-		return this->tag >= TokenTag::PTR &&
-		       this->tag <= TokenTag::REAL64;
+	constexpr bool is_primitive() const noexcept {
+		return this->tag >= Token_Tag::PTR &&
+		       this->tag <= Token_Tag::REAL64;
 	}
 	
-	constexpr bool isDeterminer() const noexcept {
+	constexpr bool is_determiner() const noexcept {
 		switch (this->tag) {
-		case TokenTag::OBJECT:
+		case Token_Tag::OBJECT:
 			return true;
 		default: return false;
 		}
 	}
 
-	constexpr bool isUnary() const noexcept {
+	constexpr bool is_unary() const noexcept {
 		switch (this->tag) {
-		case TokenTag::SLOSH:
+		case Token_Tag::SLOSH:
 			return true;
 		default: return false;
 		}
 	}
 	
-	constexpr bool isBinary() const noexcept {
+	constexpr bool is_binary() const noexcept {
 		switch (this->tag) {
-		case TokenTag::COLON:
-		case TokenTag::SEMICOLON:
-		case TokenTag::EQUAL:
-		case TokenTag::PLUS:
-		case TokenTag::MINUS:
-		case TokenTag::ASTERISKS:
-		case TokenTag::SLASH:
-		case TokenTag::PERCENT:
+		case Token_Tag::COLON:
+		case Token_Tag::SEMICOLON:
+		case Token_Tag::EQUAL:
+		case Token_Tag::PLUS:
+		case Token_Tag::MINUS:
+		case Token_Tag::ASTERISKS:
+		case Token_Tag::SLASH:
+		case Token_Tag::PERCENT:
 			return true;	
 		default: return false;
 		}
 	}
 
-	constexpr bool isScope() const noexcept {
+	constexpr bool is_scope() const noexcept {
 		switch (this->tag) {
-		case TokenTag::OPAREN:
-		case TokenTag::CPAREN:
+		case Token_Tag::OPAREN:
+		case Token_Tag::CPAREN:
 			return true;
 		default: return false;
 		}

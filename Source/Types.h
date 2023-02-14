@@ -50,9 +50,11 @@ using ref = Type_T&;
 #endif
 
 struct Position {
+public:
 	natptr row;
 	natptr column;
 
+public:
 	constexpr Position()
 		: row(0), column(0) {}
 

@@ -38,8 +38,8 @@ public:
 	constexpr const Water_T* end() const noexcept { return this->_end; }
 	
 	constexpr natptr weight() const noexcept { return this->end() - this->begin(); }
-	constexpr bool empty() const noexcept { return this->begin() == this->end(); }
-	constexpr bool full() const noexcept { return this->weight() >= this->capacity(); }
+	constexpr bool is_empty() const noexcept { return this->begin() == this->end(); }
+	constexpr bool is_full() const noexcept { return this->weight() >= this->capacity(); }
 
 	constexpr Water_T& operator[](intptr index) noexcept { return this->_water[index]; }
 	constexpr Water_T& at(natptr index) {
@@ -59,26 +59,26 @@ public:
 	inline bool operator==(const Bucket& other) const noexcept { return equal(this->begin(), this->end(), other.begin()); }
 
 	void put(Water_T&& bit) {
-		if (this->full())
+		if (this->is_full())
 			throw std::out_of_range(__FUNCTION__);
 		*this->_end = bit;
 		++this->_end;
 	}
 
 	void put(const Water_T& bit) {
-		if (this->full())
+		if (this->is_full())
 			throw std::out_of_range(__FUNCTION__);
 		*this->_end = bit;
 		++this->_end;
 	}
 	
 	void pop(natptr count = 1) noexcept {
-		if (this->empty())
+		if (this->is_empty())
 			return;
 		do {
 			--this->_end;
 			this->_end->~Water_T();
-		} while (--count && !this->empty());
+		} while (--count && !this->is_empty());
 	}
 
 	Water_T* flush() {

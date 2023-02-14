@@ -20,23 +20,23 @@ void Lexer::lex(Token& token) {
 	while (std::isspace(this->current()))
 		this->advance();
 	token.start = this->position();
-	switch (static_cast<TokenTag>(this->current())) {
-	case TokenTag::SLOSH:
+	switch (static_cast<Token_Tag>(this->current())) {
+	case Token_Tag::SLOSH:
 		do this->advance();
 		while (this->current() != '\n');
-		token.tag = TokenTag::COMMENT;
+		token.tag = Token_Tag::COMMENT;
 		break;
-	case TokenTag::PLUS:
-	case TokenTag::MINUS:
-	case TokenTag::COLON:
-	case TokenTag::SEMICOLON:
-	case TokenTag::EQUAL:
-	case TokenTag::ASTERISKS:
-	case TokenTag::SLASH:
-	case TokenTag::PERCENT:
-	case TokenTag::OPAREN:
-	case TokenTag::CPAREN:
-		token.tag = static_cast<TokenTag>(this->current());
+	case Token_Tag::PLUS:
+	case Token_Tag::MINUS:
+	case Token_Tag::COLON:
+	case Token_Tag::SEMICOLON:
+	case Token_Tag::EQUAL:
+	case Token_Tag::ASTERISKS:
+	case Token_Tag::SLASH:
+	case Token_Tag::PERCENT:
+	case Token_Tag::OPAREN:
+	case Token_Tag::CPAREN:
+		token.tag = static_cast<Token_Tag>(this->current());
 		this->advance();
 		break;
 	default:
@@ -51,12 +51,12 @@ void Lexer::lex(Token& token) {
 				 std::isalpha(this->current()));
 			bucket.put('\0');
 			if (std::string("object") == bucket.water())
-				token.tag = TokenTag::OBJECT;
+				token.tag = Token_Tag::OBJECT;
 			else if (std::string("Int") == bucket.water())
-				token.tag = TokenTag::INT;
+				token.tag = Token_Tag::INT;
 			else {
 				token.value = bucket.flush();
-				token.tag = TokenTag::NAME;
+				token.tag = Token_Tag::NAME;
 			}
 		} else if (std::isdigit(this->current())) {
 			Bucket<char, Token::MAX_VALUE_LENGTH + 1> bucket;
@@ -69,11 +69,11 @@ void Lexer::lex(Token& token) {
 			} while (this->current() == '_' || std::isdigit(this->current()));
 			bucket.put('\0');
 			token.value = bucket.flush();
-			token.tag = TokenTag::NATURAL;
+			token.tag = Token_Tag::NATURAL;
 		} else if (this->_source.eof())
-			token.tag = TokenTag::EOT;
+			token.tag = Token_Tag::EOT;
 		else {
-			token.tag = TokenTag::UNDEFINED;
+			token.tag = Token_Tag::UNDEFINED;
 			this->advance();
 		}
 	}
