@@ -1,14 +1,9 @@
 # Klang 
 
-adsfjkalf
+## The symbol table
 
-The compiler still can't compile anything atm. 
 
-[ ] Analyzer
-	[x] Lexer
-	[ ] Parser
-	[ ] Checkers
-[ ] Synthesizer
+
 
 ## Examples
 
