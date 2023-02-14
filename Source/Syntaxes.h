@@ -12,6 +12,13 @@ public:
 	const Syntax_Tree_Tag tag = tag_T;
 };
 
+template<Symbol_Determiner determiner_T>
+struct Symbol_Base
+	: public Symbol {
+public:
+	const Symbol_Determiner determiner = determiner_T;
+};
+
 struct Literal_Expression
 	: public Syntax_Tree_Node_Base<Syntax_Tree_Tag::LITERAL_EXPRESSION>,
 	  public Factor {
@@ -101,7 +108,7 @@ public:
 
 struct Object_Declaration
 	: public Syntax_Tree_Node_Base<Syntax_Tree_Tag::OBJECT_DECLARATION>,
-	  public Symbol {
+	  public Symbol_Base<Symbol_Determiner::LOW> {
 public:
 	Object_Flag flags = Object_Flag::CLEAR;
 	Type_Composition type;

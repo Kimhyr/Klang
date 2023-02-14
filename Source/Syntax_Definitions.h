@@ -79,10 +79,16 @@ template<typename>
 	struct Is_Type { static constexpr const bool value = true; };
 template<> struct Is_Type<Primitive> {};
 
-struct Symbol {};
 enum class Symbol_Determiner {
 	UNDEFINED = 0,
-	OBJECT = static_cast<int>(Token_Tag::OBJECT),
+	LOW, // Procedures, constants, and objects.
+	MEDIUM, // Structs, and enums.
+	HIGH, // Modules.
+};
+
+struct Symbol {
+public:
+	const Symbol_Determiner determiner = Symbol_Determiner::UNDEFINED;
 };
 
 template<typename>
