@@ -19,6 +19,7 @@ void Lexer::load(const char* path) {
 }
 
 void Lexer::lex(Token& token) {
+Restart:
 	while (std::isspace(this->current()))
 		this->advance();
 	token.start = this->position();
@@ -29,10 +30,12 @@ void Lexer::lex(Token& token) {
 			this->lex_text(token, true);
 			break;
 		}
-		do this->advance();
-		while (this->current() != '\n');
-		token.tag = Token_Tag::COMMENT;
-		break;
+		do {
+			this->advance();
+			if (this->source().eof())
+				break;
+		} while (this->current() != '\n');
+		goto Restart;
 	case Token_Tag::PLUS:
 	case Token_Tag::MINUS:
 	case Token_Tag::COLON:

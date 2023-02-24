@@ -8,25 +8,21 @@ namespace Klang {
 
 namespace E {
 
-struct E;
+struct This;
 
 struct Program;
 
-// Separator :=
-//	E ('='|','|';'|...) E
-struct Separator;
-
 // Unary :=
-//	E:Pre_Unary_Operation E:Term |
-//	E:Term E:Post_Unary_Operation
+//	E:Pre_Unary_Operation E:This |
+//	E:This E:Post_Unary_Operation
 struct Unary;
 
 // Binary :=
-//	E:Term T:Binary_Operation E:Term
+//	E:This T:Binary_Operation E:This
 struct Binary;
 
 // Scoped :=
-//	['{'|'('|'['] E:Term ['}'|')'|']'] 
+//	['{'|'('|'['] E:This ['}'|')'|']'] 
 struct Scoped;
 
 // Literal :=
@@ -44,15 +40,14 @@ struct Object;
 //	T:Determiner O:Identifier ?(':' O:Type_Composition) (';'|'{' E '}')
 struct Type;
 
-// Term :=
+// This :=
 //	E:Unary | E:Binary | E:Scoped | E:Literal
-struct Term;
 
 }
 
 namespace O {
 
-struct O {};
+struct This {};
 
 enum class Determiner {
 	OBJECT = static_cast<int>(Token_Tag::OBJECT),
@@ -61,7 +56,7 @@ enum class Determiner {
 // Identifier :=
 //	('!'|'?') T:Name
 // object!? value: Int 
-struct Identifier: public O {
+struct Identifier: public O::This {
 	Determiner determiner;
 	std::string_view name;
 	bool is_mutable = false;
@@ -76,9 +71,8 @@ public:
 	}
 };
 
-struct Type_Composition: public O {
-	natptr size;
-	E::Type* root_type;
+struct Type_Composition: public O::This {
+	E::Type* type;
 	Type_Composition* next;
 };
 
@@ -95,18 +89,17 @@ enum Tag {
 	LITERAL,
 	OBJECT = static_cast<int>(Token_Tag::OBJECT),
 	TYPE,
-	SEPARATOR,
 };
 
-struct E {
+struct This {
 	Tag const tag = Tag::NONE;
 	Position start;
 	Position end;
-	E* next;
-	E* prior;
+	This* next;
+	This* prior;
 
 public:
-	virtual ~E() = 0;
+	virtual ~This() = 0;
 
 public:
 	constexpr bool is_assignable() const noexcept {
@@ -117,26 +110,15 @@ public:
 	};
 };
 
-struct Term: public E {};
-
-struct Separator: public E {
-	enum Type {
-		STATEMENT,
-	};
-	
-	Tag const tag = Tag::SEPARATOR;
-	Type type;
-};
-
-struct Unary: public Term {
+struct Unary: public This {
 	enum Operation: char {};
 	
 	Tag const tag = Tag::UNARY;
 	Operation operation;
-	Term* factor;
+	This* factor;
 };
 
-struct Binary: public Term {
+struct Binary: public This {
 	enum Operation: char {
 		
 	};
@@ -145,17 +127,17 @@ struct Binary: public Term {
 	Operation operation;
 };
 
-struct Scoped: public Term {
+struct Scoped: public This {
 	enum Type {
 		PAREN = static_cast<int>(Token_Tag::OPAREN),
 	};
 	
 	Tag const tag = Tag::SCOPED;
-	Term* first_term;
-	Term* last_term;
+	This* first_term;
+	This* last_term;
 };
 
-struct Literal: public Term {
+struct Literal: public This {
 	enum Type {
 		MACHINE = static_cast<int>(Token_Tag::MACHINE_LITERAL),
 		NATURAL,
@@ -175,17 +157,14 @@ struct Literal: public Term {
 	} value;
 };
 
-struct Object: public E {
+struct Object: public This {
 	Tag const tag = Tag::OBJECT;
 	O::Identifier identifier;
 	O::Type_Composition type;
 };
 
-}
+struct Program: public This {};
 
-struct Program {
-	E::E* first;
-	E::E* last;
-};
+}
 
 }

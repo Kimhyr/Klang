@@ -7,7 +7,6 @@ namespace Klang {
 enum class Token_Tag {
 	UNDEFINED = -128,
 	NAME,
-	COMMENT,
 	
 	MACHINE_LITERAL,
 	NATURAL_LITERAL,
