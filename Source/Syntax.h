@@ -10,6 +10,8 @@ namespace E {
 
 struct E;
 
+struct Program;
+
 // Separator :=
 //	E ('='|','|';'|...) E
 struct Separator;
@@ -86,12 +88,14 @@ namespace E {
 
 enum Tag {
 	NONE = 0,
+	PROGRAM,
 	UNARY,
 	BINARY,
 	SCOPED,
 	LITERAL,
 	OBJECT = static_cast<int>(Token_Tag::OBJECT),
 	TYPE,
+	SEPARATOR,
 };
 
 struct E {
@@ -103,9 +107,26 @@ struct E {
 
 public:
 	virtual ~E() = 0;
+
+public:
+	constexpr bool is_assignable() const noexcept {
+		switch (this->tag) {
+		case Tag::OBJECT: return true;
+		default: return false;
+		}
+	};
 };
 
 struct Term: public E {};
+
+struct Separator: public E {
+	enum Type {
+		STATEMENT,
+	};
+	
+	Tag const tag = Tag::SEPARATOR;
+	Type type;
+};
 
 struct Unary: public Term {
 	enum Operation: char {};
@@ -156,10 +177,15 @@ struct Literal: public Term {
 
 struct Object: public E {
 	Tag const tag = Tag::OBJECT;
-	O::Identifier* identifier;
+	O::Identifier identifier;
 	O::Type_Composition type;
 };
 
 }
+
+struct Program {
+	E::E* first;
+	E::E* last;
+};
 
 }
