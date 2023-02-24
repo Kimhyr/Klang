@@ -1,5 +1,5 @@
-#include "Analyzer/Lexer.h"
-#include "Analyzer/Expressions.h"
+#include "Lexer.h"
+#include "Syntax.h"
 
 using namespace Klang;
 
@@ -9,7 +9,7 @@ void test0() {
 		Token token;
 		lexer.lex(token);
 		std::cout << token << std::endl;
-		if (token.tag == TokenTag::EOT)
+		if (token.tag == Token_Tag::EOT)
 			break;
 		token.reset();
 	}

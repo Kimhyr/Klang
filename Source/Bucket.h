@@ -10,7 +10,7 @@ namespace Klang {
 template<typename Water_T, natptr CAPACITY_T>
 class Bucket {
 public:
-	typedef std::basic_string_view<Water_T> ViewType;
+	using View_Type = std::basic_string_view<Water_T>;
 
 public:
 	Bucket() noexcept

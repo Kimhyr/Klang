@@ -1,15 +1,12 @@
-Build/Main.obj: Source/Main.cpp Source/Analyzer/Lexer.h \
-  Source/Analyzer/../Bucket.h Source/Types.h Source/Analyzer/Token.h \
-  Source/Analyzer/../Types.h Source/Analyzer/Expressions.h
+Build/Main.obj: Source/Main.cpp Source/Lexer.h Source/Bucket.h \
+  Source/Types.h Source/Tokens.h Source/Syntax.h
 
-Source/Analyzer/Lexer.h:
+Source/Lexer.h:
 
-Source/Analyzer/../Bucket.h:
+Source/Bucket.h:
 
 Source/Types.h:
 
-Source/Analyzer/Token.h:
+Source/Tokens.h:
 
-Source/Analyzer/../Types.h:
-
-Source/Analyzer/Expressions.h:
+Source/Syntax.h:

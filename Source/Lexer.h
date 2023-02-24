@@ -2,9 +2,10 @@
 
 #include <fstream>
 #include <stdexcept>
+#include <sstream>
 
-#include "../Bucket.h"
-#include "Token.h"
+#include "Bucket.h"
+#include "Tokens.h"
 
 namespace Klang {
 
@@ -30,9 +31,12 @@ private:
 	char _current;
 	Position _position;
 
-public:
+private:
 	char peek();
 	void advance();
+
+	void lex_numeric(Token& token);
+	void lex_text(Token& token, bool is_escaped = false);
 };
 
 }

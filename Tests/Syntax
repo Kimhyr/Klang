@@ -1,22 +1,47 @@
 module Analyzer {
 
-enumerate Token {
+enum Token {
         Identifier: String,
 }
 
-unistruct MyUnion {
+union My_Union {
         Integer: Int,
         Natural: Nat,
         Real: Real,
         String: String,
 }
 
-structure Lexer {
-        source: String;
+struct Lexer[Attribute]<Template> {
+        source: String,
+}
+
+interface My_Inteface {
+        procedure do_something();
 }
 
 implement Lexer {
         procedure lex() -> Token {
+                object i: Nat = 0;
+                loop \optional expression to do at the end of the loop\ ++i {
+                        compare \condition\ 1 =>
+                                break;
+                        compare { \\ Or branched decision
+                                i == 0 =>
+                                        do_something();
+                                i > 0 {
+                                        do_something();
+                                        do_another_thing();
+                                }
+                                i < 0 => do_another_thing();
+                        }
+                }
+
+                object i: Nat = 0;
+                loop ++i {
+                        do_something();
+                        compare i >= 5 =>
+                                break;
+                }
                 return Token();
         }
 }
