@@ -42,7 +42,7 @@ r:default
 .PHONY:c
 c:
 	@echo "Deleting $(BIN) symlink..."
-	@$(RM) $(BINNAME)
+	@$(RM) $(BIN)
 	@echo "Deleting directories..."
 	@$(RM) -r $(BLDDIR)
 	@$(RM) ./$(BIN)

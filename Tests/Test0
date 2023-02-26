@@ -1,1 +1,1 @@
-object value: Int = (21 + 14) / 8 * (3 % 20) - 7;
+object value: I32 = (21 + 14) / 8 * (3 % 20) - 7;

@@ -2,7 +2,7 @@
 
 #include <string_view>
 
-#include "../Tokens.h"
+#include "Lexeme.h"
 #include "Syntax.h"
 
 namespace Klang {
@@ -12,9 +12,9 @@ namespace S {
 struct Literal: public Syntax {
 public:
 	enum Type {
-		NATURAL = static_cast<int>(Token_Tag::NATURAL_LITERAL),
-		REAL,
-		TEXT,
+		NATURAL = static_cast<int>(Lexeme::NATURAL),
+		FLOAT,
+		STRING,
 	};
 
 public:

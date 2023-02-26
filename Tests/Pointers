@@ -1,5 +1,3 @@
-procedure execute() {
-	object string: Ptr<Sym> = \"Hello, World!\0";
-	string.address;
-	string.value;
-}
+take_lambda(lambda(int, int) int) int =
+	lambda(1, 1);
+

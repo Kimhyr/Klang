@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Tokens.h"
 #include "Syntax.h"
 
 namespace Klang {
