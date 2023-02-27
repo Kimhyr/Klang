@@ -86,7 +86,8 @@ Restart:
 				buf.sputc('\0');
 			Lex_Name:
 				tag = Lexeme::NAME;
-				// TODO: Instead of `std::stringbuf`, create a buffer that is flushable...
+				// TODO: Instead of `std::stringbuf`, create a buffer that allows us to
+				// take ownership of the underlying string.
 				this->lexeme_.value.Name = new char[buf.view().length()];
 				std::copy(buf.view().begin(), buf.view().end(),
 					this->lexeme_.value.Name);
