@@ -5,7 +5,6 @@
 
 namespace Klang {
 
-// `file` is already validated.
 Lexer::Lexer(char const* file)
 	: source_(file), position_(1, 0) {
 	this->current_ = this->source_.get();
@@ -24,15 +23,17 @@ Restart:
 	while (std::isspace(this->current()))
 		this->advance();
 	this->lexeme_.start = this->position();
-	nat8 tag = Lexeme::NAME;
-	switch (static_cast<Lexeme::Tag>(this->current())) {
+	int8 tag;
+	switch (this->current()) {
 	case Lexeme::SLOSH:
-		do {
-			this->advance();
-			if (this->source().eof())
-				goto Return_EOT;
-		} while (this->current() != '\n');
-		goto Restart;
+		if (this->peek() == '\\') {
+			do {
+				this->advance();
+				if (this->source().eof())
+					goto Return_EOT;
+			} while (this->current() != '\n');
+			goto Restart;
+		}
 	case Lexeme::PLUS:
 	case Lexeme::MINUS:
 	case Lexeme::COLON:
@@ -41,9 +42,9 @@ Restart:
 	case Lexeme::ASTERISKS:
 	case Lexeme::SLASH:
 	case Lexeme::PERCENT:
-	case Lexeme::OPAREN:
-	case Lexeme::CPAREN:
-		tag = static_cast<Lexeme::Tag>(this->current());
+	case Lexeme::O_PAREN:
+	case Lexeme::C_PAREN:
+		tag = this->current();
 		this->advance();
 		break;
 	default:
@@ -66,27 +67,49 @@ Restart:
 				case 'R': tag = Lexeme::R; break;
 				default: goto Lex_Name;
 				}
-				if (len == 1)
+				if (buf.view()[1] == '\0')
 					goto Finalize;
 				switch (buf.view()[1] + buf.view()[2]) {
-				case '6' + '4': tag += 1;
-				case '3' + '2': tag += 2;
-				case '1' + '6': tag += 3;
-				case '8':	tag += 4;
+				if (tag != Lexeme::R) {
+					case '8': tag += 4; break;
+					case '1' + '6': tag += 3; break;
+				}
+				case '3' + '2': tag += 2; break;
+				case '6' + '4': tag += 1; break;
 				default: goto Lex_Name;
 				}
+				break;
 			}
 			if (buf.view() == Lexeme::OBJECT_KEYWORD)
 				tag = Lexeme::OBJECT;
 			else {
 				buf.sputc('\0');
 			Lex_Name:
+				tag = Lexeme::NAME;
+				// TODO: Instead of `std::stringbuf`, create a buffer that is flushable...
+				this->lexeme_.value.Name = new char[buf.view().length()];
 				std::copy(buf.view().begin(), buf.view().end(),
 					this->lexeme_.value.Name);
+				goto Finalize;
 			}
 		} else if (std::isdigit(this->current())) {
-			tag = Lexeme::BINARY;
-			this->lex_numeric();
+			tag = Lexeme::NATURAL;
+			std::stringstream ss;
+			do {
+				if (ss.view().length() >= Lexeme::MAX_VALUE_LENGTH)
+					throw std::overflow_error(__FUNCTION__);
+				if (this->current() == '.') {
+					if (this->lexeme_.tag == Lexeme::REAL)
+						throw std::invalid_argument(__FUNCTION__);
+					else this->lexeme_.tag = Lexeme::REAL;
+				}
+				if (this->current() != '_')
+					ss.put(this->current());
+				this->advance();
+			} while (this->current() == '_' || std::isdigit(this->current()));
+			if (tag == Lexeme::NATURAL)
+				ss >> this->lexeme_.value.Natural;
+			else ss >> this->lexeme_.value.Real;
 		} else if (this->source_.eof())
 		Return_EOT:
 			tag = Lexeme::EOT;
@@ -102,36 +125,16 @@ Finalize:
 	return this->lexeme_;
 }
 
-void Lexer::lex_numeric() {
-	std::stringstream ss;
-	do {
-		if (ss.view().length() >= Lexeme::MAX_VALUE_LENGTH)
-			throw std::overflow_error(__FUNCTION__);
-		if (this->current() == '.') {
-			if (this->lexeme_.tag == Lexeme::FLOAT)
-				throw std::invalid_argument(__FUNCTION__);
-			else this->lexeme_.tag = Lexeme::FLOAT;
-		}
-		if (this->current() != '_')
-			ss.put(this->current());
-		this->advance();
-	} while (this->current() == '_' || std::isdigit(this->current()));
-	ss.put('\0');
-	if (this->lexeme_.tag == Lexeme::BINARY)
-		ss >> this->lexeme_.value.Natural;
-	else ss >> this->lexeme_.value.Float;
-}
-
 char Lexer::peek() {
 	int peek {this->source_.peek()};
 	if (peek == EOF)
-		throw std::out_of_range(__FUNCTION__);
+		throw std::out_of_range("Fialed to peek.");
 	return peek;
 }
 
 void Lexer::advance() {
 	if (!this->source().good())
-		throw std::invalid_argument(__FUNCTION__);
+		throw std::invalid_argument("The source is not good.");
 	this->current_ = this->source_.get();
 	if (this->current() == '\n') {
 		++this->position_.row;

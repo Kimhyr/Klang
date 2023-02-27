@@ -33,8 +33,6 @@ private:
 private:
 	char peek();
 	void advance();
-
-	void lex_numeric();
 };
 
 }
