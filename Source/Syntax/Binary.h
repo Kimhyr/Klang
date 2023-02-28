@@ -6,7 +6,7 @@ namespace Klang {
 
 namespace S {
 
-struct Binary: public Syntax {
+class Binary: public Syntax {
 public:
 	enum Operation {
 		ADD = '+',
@@ -20,9 +20,13 @@ public:
 
 public:
 	Tag const tag = BINARY;
-	Syntax* first;
 	Operation operation;
+	Syntax* first;
 	Syntax* second;
+
+public:
+	constexpr Binary(Operation operation, Syntax* first) noexcept
+		: operation(operation), first(first) {}
 };
 
 }

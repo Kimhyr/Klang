@@ -9,7 +9,7 @@ namespace Klang {
 
 namespace S {
 
-struct Literal: public Syntax {
+class Literal: public Syntax {
 public:
 	enum Type {
 		NATURAL = static_cast<int>(Lexeme::NATURAL),
@@ -20,13 +20,17 @@ public:
 public:
 	Tag const tag = LITERAL;
 	Syntax* prior;
+	Syntax* next;
 	Type type;
-	union {
+	union Value {
 		natptr Natural;
 		real64 Real;
-		std::string_view Text;
+		char const* Text;
 	} value;
-	Syntax* next;
+
+public:
+	constexpr Literal(Type type, Value value, Syntax* prior = nullptr) noexcept
+		: prior(prior), type(type), value(value) {}
 };
 
 }

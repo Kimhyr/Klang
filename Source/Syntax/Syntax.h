@@ -6,7 +6,7 @@
 
 namespace Klang {
 
-struct Syntax {
+class Syntax {
 public:
 	using This_Type = Syntax;
 	
@@ -17,9 +17,8 @@ public:
 		BINARY,
 		SCOPED,
 		LITERAL,
-		
-		OBJECT,
-		TYPE,
+
+		ARTIFACT,
 	};
 
 public:
@@ -33,13 +32,12 @@ public:
 
 namespace S {
 
-struct Unary;
-struct Binary;
-struct Scoped;
-struct Literal;
+class Unary;
+class Binary;
+class Scoped;
+class Literal;
 
-struct Object;
-struct Type;
+class Artifact;
 
 struct Identifier;
 struct Type_Composition;
@@ -48,36 +46,25 @@ struct Body;
 
 struct Identifier {
 public:
-	enum Determiner {
-		OBJECT = Syntax::OBJECT,
-		PROCEDURE,
-		TYPE,
-	};
-	
-public:
 	bool is_used = false;
 	bool is_mutable = false;
-	bool is_initiated = false;
-	Determiner determiner;
+	bool is_defined = false;
 	std::string_view name;
-	union {
-		Object* Object;
-		Type* Type;
-	} underlay;
+	Artifact* underlay;
 };
 
 struct Type_Composition {
 public:
 	bool is_mutable = false;
-	std::vector<Type*> types;
+	std::vector<Artifact*> types;
 	Type_Composition* next = nullptr;
 };
 
 struct Parameter {
 public:
 	natptr count = 0;
-	Object* first = nullptr;
-	Object* last;
+	Artifact* first = nullptr;
+	Artifact* last;
 };
 
 struct Body {
@@ -88,4 +75,10 @@ public:
 };
 
 }
+
 }
+
+#include "Unary.h"
+#include "Binary.h"
+#include "Scoped.h"
+#include "Literal.h"

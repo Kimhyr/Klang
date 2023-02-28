@@ -6,7 +6,7 @@ namespace Klang {
 
 namespace S {
 
-struct Unary: public Syntax {
+class Unary: public Syntax {
 public:
 	enum Operation {
 		UNSIGN = '+',
@@ -16,9 +16,13 @@ public:
 public:
 	Tag const tag = UNARY;
 	Syntax* prior;
+	Syntax* next;
 	Operation operation;
 	Syntax* term;
-	Syntax* next;
+
+public:
+	constexpr Unary(Operation operation, Syntax* prior = nullptr, Syntax* term = nullptr) noexcept
+		: prior(prior), next(nullptr), operation(operation), term(term) {}
 };
 
 }

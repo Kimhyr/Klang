@@ -58,32 +58,32 @@ Restart:
 			} while (this->current() == '_' || std::isdigit(this->current()) ||
 				 std::isalpha(this->current()));
 			natptr len = buf.view().length();
-			if (len >= 1 && len <= 3) {
-				buf.sputc(0);
-				switch (buf.view()[0]) {
-				case 'P': tag = Lexeme::P; break;
-				case 'N': tag = Lexeme::N; break;
-				case 'I': tag = Lexeme::I; break;
-				case 'R': tag = Lexeme::R; break;
-				default: goto Lex_Name;
-				}
-				if (buf.view()[1] == '\0')
-					goto Finalize;
-				switch (buf.view()[1] + buf.view()[2]) {
-				if (tag != Lexeme::R) {
-					case '8': tag += 4; break;
-					case '1' + '6': tag += 3; break;
-				}
-				case '3' + '2': tag += 2; break;
-				case '6' + '4': tag += 1; break;
-				default: goto Lex_Name;
-				}
-				break;
-			}
 			if (buf.view() == Lexeme::OBJECT_KEYWORD)
 				tag = Lexeme::OBJECT;
 			else {
 				buf.sputc('\0');
+				// NOTE: There's probably a bitwise formula to compute this elegantly.
+				if (len >= 1 && len <= 3) {
+					switch (buf.view()[0]) {
+					case 'P': tag = Lexeme::P; break;
+					case 'N': tag = Lexeme::N; break;
+					case 'I': tag = Lexeme::I; break;
+					case 'R': tag = Lexeme::R; break;
+					default: goto Lex_Name;
+					}
+					if (buf.view()[1] == '\0')
+						goto Finalize;
+					switch (buf.view()[1] + buf.view()[2]) {
+					if (tag != Lexeme::R) {
+						case '8': tag += 4; break;
+						case '1' + '6': tag += 3; break;
+					}
+					case '3' + '2': tag += 2; break;
+					case '6' + '4': tag += 1; break;
+					default: goto Lex_Name;
+					}
+					break;
+				}
 			Lex_Name:
 				tag = Lexeme::NAME;
 				// TODO: Instead of `std::stringbuf`, create a buffer that allows us to

@@ -6,7 +6,7 @@ namespace Klang {
 
 namespace S {
 
-struct Scoped: public Syntax {
+class Scoped: public Syntax {
 public:
 	enum Priority {
 		HIGH = '{',
@@ -17,9 +17,13 @@ public:
 public:
 	Tag const tag = SCOPED;
 	Syntax* prior;
-	Priority priority;
-	Syntax* root;
 	Syntax* next;
+	Priority priority;
+	Body root;
+
+public:
+	constexpr Scoped(Priority priority, Syntax* prior = nullptr) noexcept
+		: prior(prior), next(nullptr), priority(priority) {}
 };
 
 }
