@@ -14,6 +14,8 @@ the table: the larger it is, the faster the look-up is. However, a hash table
 would need to be very large to index a large amount of identifiers, and,
 sometimes, some of the table's mass is bloat.
 
+---
+
 Modern programming languages have different scopes in which identifiers can be
 placed to prevent ambiguity, and accept organization. So we can utilize
 different scopes (the code blocks namespaces, structs, and procedures use) as
@@ -35,14 +37,19 @@ identifiers by the behavior of the look-up times:
 	scopes) are usually looked at arbitrarily, and the look-up times differ in
 	different local scopes, so we can organize them as most-looked-first and
 	reset the organization biases within the scope when exiting a local scope.
+
 *depending on the implementation, resetting the organization bias within a
 scope may not reorganize the identifiers*.
+
+---
 
 We can further organize the connections between the identifiers by the type of
 the identifiers. Values (variables, constants, et cetera) can be connected
 within their scope, just like how structs and classes would too. Note that how
 the type of an identifier is used may be ambigious to other types of
 identifiers. For example, structs and classes are used in the same way.
+
+---
 
 With all of these factors, hashing an input's key may just be an overhead
 because the size of an organized group (the connections of scopes and types)
