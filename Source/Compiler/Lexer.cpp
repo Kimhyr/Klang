@@ -1,16 +1,13 @@
 #include "Lexer.h"
 
-#include <sstream>
-#include <algorithm>
-
 namespace Klang {
 
-Lexer::Lexer(char const* file)
-	: source_(file), position_(1, 0) {
+Lexer::Lexer(S const* file)
+	: source_(file), position_({.row = 1, .column = 0}) {
 	this->current_ = this->source_.get();
 }
 
-void Lexer::load(char const* path) {
+void Lexer::load(S const* path) {
 	this->source_.close();
 	this->source_.open(path);
 	this->current_ = this->source_.get();
@@ -23,7 +20,7 @@ Restart:
 	while (std::isspace(this->current()))
 		this->advance();
 	this->lexeme_.start = this->position();
-	int8 tag;
+	I8 tag;
 	switch (this->current()) {
 	case Lexeme::SLOSH:
 		if (this->peek() == '\\') {
@@ -52,12 +49,12 @@ Restart:
 			std::stringbuf buf;
 			do {
 				if (buf.view().length() >= Lexeme::MAX_VALUE_LENGTH)
-					throw std::overflow_error(__FUNCTION__);
+					throw diagnose(Severity::ERROR, Message::BUFFER_OVERFLOW);
 				buf.sputc(this->current());
 				this->advance();
 			} while (this->current() == '_' || std::isdigit(this->current()) ||
 				 std::isalpha(this->current()));
-			natptr len = buf.view().length();
+			N len = buf.view().length();
 			if (buf.view() == Lexeme::OBJECT_KEYWORD)
 				tag = Lexeme::OBJECT;
 			else {
@@ -88,7 +85,7 @@ Restart:
 				tag = Lexeme::NAME;
 				// TODO: Instead of `std::stringbuf`, create a buffer that allows us to
 				// take ownership of the underlying string.
-				this->lexeme_.value.Name = new char[buf.view().length()];
+				this->lexeme_.value.Name = new S[buf.view().length()];
 				std::copy(buf.view().begin(), buf.view().end(),
 					this->lexeme_.value.Name);
 				goto Finalize;
@@ -98,10 +95,10 @@ Restart:
 			std::stringstream ss;
 			do {
 				if (ss.view().length() >= Lexeme::MAX_VALUE_LENGTH)
-					throw std::overflow_error(__FUNCTION__);
+					throw diagnose(Severity::ERROR, Message::BUFFER_OVERFLOW);
 				if (this->current() == '.') {
 					if (this->lexeme_.tag == Lexeme::REAL)
-						throw std::invalid_argument(__FUNCTION__);
+						throw diagnose(Severity::ERROR, Message::UNKNOWN_TOKEN);
 					else this->lexeme_.tag = Lexeme::REAL;
 				}
 				if (this->current() != '_')
@@ -115,8 +112,8 @@ Restart:
 		Return_EOT:
 			tag = Lexeme::EOT;
 		else {
-			tag = Lexeme::UNDEFINED;
 			this->advance();
+			throw diagnose(Severity::ERROR, Message::UNKNOWN_TOKEN);
 		}
 	}
 Finalize:
@@ -127,7 +124,7 @@ Finalize:
 }
 
 char Lexer::peek() {
-	int peek {this->source_.peek()};
+	I32 peek {this->source_.peek()};
 	if (peek == EOF)
 		throw std::out_of_range("Fialed to peek.");
 	return peek;

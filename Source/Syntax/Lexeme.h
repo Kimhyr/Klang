@@ -1,12 +1,13 @@
 #pragma once
 
+#include "../Doctor.h"
 #include "../Types.h"
 
 namespace Klang {
 
 struct Lexeme {
 public:
-	enum Tag: int8 {
+	enum Tag: I8 {
 		UNDEFINED = -127,
 		NAME,
 
@@ -40,20 +41,20 @@ public:
 	};
 
 public:
-	static constexpr nat16 const MAX_VALUE_LENGTH {1024};
+	static constexpr ::Klang::N16 MAX_VALUE_LENGTH {1024};
 	
-	static constexpr char const* OBJECT_KEYWORD = "object";
+	static constexpr S const* OBJECT_KEYWORD {"object"};
 
 public:
 	Position start;
 	Position end;
 	Tag tag;
 	union {
-		char Undefined;
-		char* Name;
-		nat64 Natural;
-		real64 Real;
-		char* String;
+		S Undefined;
+		S* Name;
+		::Klang::N64 Natural;
+		::Klang::R64 Real;
+		S* String;
 	} value;
 };
 
