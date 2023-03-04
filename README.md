@@ -38,7 +38,7 @@ identifiers by the behavior of the look-up times:
 	different local scopes, so we can organize them as most-looked-first and
 	reset the organization biases within the scope when exiting a local scope.
 
-*depending on the implementation, resetting the organization bias within a
+*Depending on the implementation, resetting the organization bias within a
 scope may not reorganize the identifiers*.
 
 ---
@@ -66,11 +66,11 @@ definitely more efficient--, but this is how I came up and implemented mine.
 ## Examples
 
 ```klang
-type Day = $[enumerate(type: I), omit(lexeme.: value)] {
+type Day = $[enumerate(Type: I), omit(lexeme.: value)] {
 	sunday; monday; tuesday; thrusday; friday; saturday
 };
 
-type Pair(First_T, Second_T): Object = $omit(lexeme.: value) = {
+type Pair(First_T, Second_T): Object = $omit(lexeme.: value) {
 	type Self_T = Pair(First_T, Second_T);
 
 	first!: First_T;
