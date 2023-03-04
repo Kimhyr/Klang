@@ -67,29 +67,33 @@ definitely more efficient--, but this is how I came up and implemented mine.
 
 ```klang
 type Day = $[enumerate(Type: I), omit(lexeme.: value)] {
-	sunday; monday; tuesday; thrusday; friday; saturday
+	sunday; monday;
+	tuesday; thrusday;
+	friday; saturday
 };
 
-type Pair(First_T, Second_T): Object = $omit(lexeme.: value) {
-	type Self_T = Pair(First_T, Second_T);
+type Pair(First: type, Second: type): Object
+		= $omit(lexeme.: value) {
+	type Self = Pair(First, Second);
 
-	first!: First_T;
-	second!: Second_T;
+	first!: First;
+	second!: Second;
 
-	create!(first: First_T, second: Second_T): Self_T =
-		Self_T { first, second };
+	Object.create!(first: First, second: Second): Self =
+		Self { first, second };
 
-	destroy!?() = {
-		$compare First_T::Object =>
+	Object.destroy!?() = {
+		\\ Checks whether `First` inherits the `Object` trait. 
+		$compare First :: Object =>
 			.first.destroy();
-		$compare Second_T::Object =>
+		$compare Second :: Object =>
 			.second.destroy();
 	};
 };
 
 type Number = I | N | R;
 
-value add(pair: Pair(Number, Number)): .pair::Pair.First_T =
+value add(pair: Pair(Number, Number)): type(.pair).First =
 	first + second;
 
 value execute(): I = {
