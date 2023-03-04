@@ -16,8 +16,11 @@ enum class Severity {
 };
 
 Severity diagnose(Severity type, std::string_view&& note);
+Severity diagnose(Severity type, Position const& position, std::string_view&& note);
+Severity diagnose(Severity type, Position const& position, std::string_view&& view,
+		  std::string_view&& note);
 Severity diagnose(Severity type, Span const& span, std::string_view&& view,
-	      		std::string_view&& note);
+		  std::string_view&& note);
 }
 
 std::ostream& operator<<(std::ostream& os, Klang::Severity x);

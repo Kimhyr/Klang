@@ -49,13 +49,14 @@ Restart:
 			std::stringbuf buf;
 			do {
 				if (buf.view().length() >= Lexeme::MAX_VALUE_LENGTH)
-					throw diagnose(Severity::ERROR, Message::BUFFER_OVERFLOW);
+					throw diagnose(Severity::ERROR, this->lexeme_.start, buf.view(),
+						       Message::BUFFER_OVERFLOW("lex an identifier."));
 				buf.sputc(this->current());
 				this->advance();
 			} while (this->current() == '_' || std::isdigit(this->current()) ||
 				 std::isalpha(this->current()));
 			N len = buf.view().length();
-			if (buf.view() == Lexeme::OBJECT_KEYWORD)
+			if (buf.view() == Lexeme::String::LITERAL_OBJECT)
 				tag = Lexeme::OBJECT;
 			else {
 				buf.sputc('\0');
@@ -95,10 +96,12 @@ Restart:
 			std::stringstream ss;
 			do {
 				if (ss.view().length() >= Lexeme::MAX_VALUE_LENGTH)
-					throw diagnose(Severity::ERROR, Message::BUFFER_OVERFLOW);
+					throw diagnose(Severity::ERROR, Message::BUFFER_OVERFLOW("lex a number."));
 				if (this->current() == '.') {
 					if (this->lexeme_.tag == Lexeme::REAL)
-						throw diagnose(Severity::ERROR, Message::UNKNOWN_TOKEN);
+						throw diagnose(
+							Severity::ERROR, this->lexeme_.start, ss.view(),
+							Message::LEX_FAILED(Lexeme::REAL, "it has more than 1 `.` (dot lexeme)."));
 					else this->lexeme_.tag = Lexeme::REAL;
 				}
 				if (this->current() != '_')
@@ -113,7 +116,8 @@ Restart:
 			tag = Lexeme::EOT;
 		else {
 			this->advance();
-			throw diagnose(Severity::ERROR, Message::UNKNOWN_TOKEN);
+			throw diagnose(Severity::ERROR, this->lexeme_.start,
+				       Message::UNKNOWN_TOKEN(this->current()));
 		}
 	}
 Finalize:
@@ -126,13 +130,13 @@ Finalize:
 char Lexer::peek() {
 	I32 peek {this->source_.peek()};
 	if (peek == EOF)
-		throw std::out_of_range("Fialed to peek.");
+		throw diagnose(Severity::ERROR, Message::OUT_OF_RANGE("trying to peek source."));
 	return peek;
 }
 
 void Lexer::advance() {
 	if (!this->source().good())
-		throw std::invalid_argument("The source is not good.");
+		throw diagnose(Severity::ERROR, "The source is not good.");
 	this->current_ = this->source_.get();
 	if (this->current() == '\n') {
 		++this->position_.row;

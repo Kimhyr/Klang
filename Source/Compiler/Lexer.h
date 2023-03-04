@@ -4,7 +4,6 @@
 #include <stdexcept>
 #include <sstream>
 #include <algorithm>
-#include <>
 
 #include "../Syntax/Lexeme.h"
 #include "../Doctor.h"
@@ -13,13 +12,30 @@ namespace Klang {
 
 namespace Message {
 
-constexpr S const* BUFFER_OVERFLOW = "Buffer overflow.";
-constexpr S const* UNKNOWN_TOKEN = "Unkown token.";
-constexpr S const* (*FAILED_TO_LEX)(Lexeme) = [](Lexeme l) {
-	constexpr N8 prefix_length = 0;
-	static std::string str = "Failed to lex ";
-	str.resize(prefix_length);
-	return "";
+static std::stringstream STRING;
+
+constexpr std::string_view (*OUT_OF_RANGE)(S const* from) = [](S const* from) -> std::string_view {
+	STRING.str("Out of range from ");
+	STRING << from;
+	return STRING.view();
+};
+
+constexpr std::string_view (*BUFFER_OVERFLOW)(S const* action) = [](S const* action) -> std::string_view {
+	STRING.str("Buffer overflown when trying to ");
+	STRING << action;
+	return STRING.view();
+};
+
+constexpr std::string_view (*UNKNOWN_TOKEN)(S token) = [](S token) -> std::string_view {
+	STRING.str("The string \"");
+	STRING << token << "\" is not a token.";
+	return STRING.view();
+};
+
+constexpr std::string_view (*LEX_FAILED)(Lexeme::Tag tag, S const* cause) = [](Lexeme::Tag tag, S const* cause) -> std::string_view {
+	STRING.str("Failed to lex ");
+	STRING << Lexeme::tag_to_string(tag) << " because " << cause;
+	return STRING.view();
 };
 
 }
