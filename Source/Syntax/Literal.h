@@ -23,8 +23,8 @@ public:
 	Syntax* next;
 	Type type;
 	union Value {
-		natptr Natural;
-		real64 Real;
+		N Natural;
+		R Real;
 		char const* Text;
 	} value;
 

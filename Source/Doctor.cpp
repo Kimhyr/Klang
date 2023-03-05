@@ -1,24 +1,13 @@
 #include "Doctor.h"
 
-namespace Klang {
-
-void diagnose(Diagnosis_Type severity, Span span, std::string_view&& view,
-	      std::string_view&& note) {
-	std::cout << "\e[" << static_cast<I>(severity) << 'm'
-		  << severity << " at " << span << ":\e[0m\n"
-		  << view << "\n"
-		  << note << '\n';
-}
-	
-};
-
-std::ostream& operator<<(std::ostream& os, Klang::Diagnosis_Type x) {
+std::ostream& operator<<(std::ostream& os, Klang::Severity x) {
 	using namespace Klang;
 	switch (x) {
-	case Diagnosis_Type::ERROR: os << "Error"; break;
-	case Diagnosis_Type::WARNING: os << "Warning";break;
-	case Diagnosis_Type::NOTE: os << "Note"; break;
+	case Severity::ERROR: os << "\e[91mError"; break;
+	case Severity::WARNING: os << "\e[93mWarning";break;
+	case Severity::NOTE: os << "\e[92mNote"; break;
 	}
+	os << "\e[0m";
 	return os;
 }
 std::ostream& operator<<(std::ostream& os, Klang::Position const& x) {

@@ -8,7 +8,7 @@ namespace S {
 
 class Artifact: public Syntax {
 public:
-	enum Determiner: int8 {
+	enum Determiner: I8 {
 		OBJECT = -127,
 		PROCEDURE,
 		P = 'P' + 3,

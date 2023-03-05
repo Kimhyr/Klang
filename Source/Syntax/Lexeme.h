@@ -45,40 +45,41 @@ public:
 	static constexpr ::Klang::N16 MAX_VALUE_LENGTH {1024};
 	
 struct String {
-	static constexpr S const* LITERAL_OBJECT = "object";
+	static constexpr C const* LITERAL_OBJECT = "object";
 
-	static constexpr S const* UNDEFINED = "UNDEFINED";
-	static constexpr S const* NAME = "NAME";
-	static constexpr S const* NATURAL = "NATURAL";
-	static constexpr S const* REAL = "REAL";
-	static constexpr S const* STRING = "STRING";
-	static constexpr S const* P = "P";
-	static constexpr S const* N = "N";
-	static constexpr S const* N64 = "N64";
-	static constexpr S const* N32 = "N32";
-	static constexpr S const* N16 = "N16";
-	static constexpr S const* N8 = "N8";
-	static constexpr S const* I = "I";
-	static constexpr S const* I64 = "I64";
-	static constexpr S const* I32 = "I32";
-	static constexpr S const* I16 = "I16";
-	static constexpr S const* I8 = "I8";
-	static constexpr S const* R = "R";
-	static constexpr S const* R64 = "R64";
-	static constexpr S const* R32 = "R32";
-	static constexpr S const* OBJECT = "OBJECT";
-	static constexpr S const* EOT = "EOT";
-	static constexpr S const* SLOSH = "SLOSH";
-	static constexpr S const* COLON = "COLON";
-	static constexpr S const* SEMICOLON = "SEMICOLON";
-	static constexpr S const* EQUAL = "EQUAL";
-	static constexpr S const* PLUS = "PLUS";
-	static constexpr S const* MINUS = "MINUS";
-	static constexpr S const* ASTERISKS = "ASTERISKS";
-	static constexpr S const* SLASH = "SLASH";
-	static constexpr S const* PERCENT = "PERCENT";
-	static constexpr S const* O_PAREN = "O_PAREN";
-	static constexpr S const* C_PAREN = "C_PAREN";
+	static constexpr C const* UNDEFINED = "UNDEFINED";
+	static constexpr C const* NAME = "NAME";
+	static constexpr C const* NATURAL = "NATURAL";
+	static constexpr C const* REAL = "REAL";
+	static constexpr C const* STRING = "STRING";
+	static constexpr C const* P = "P";
+	static constexpr C const* N = "N";
+	static constexpr C const* N64 = "N64";
+	static constexpr C const* N32 = "N32";
+	static constexpr C const* N16 = "N16";
+	static constexpr C const* N8 = "N8";
+	static constexpr C const* I = "I";
+	static constexpr C const* I64 = "I64";
+	static constexpr C const* I32 = "I32";
+	static constexpr C const* I16 = "I16";
+	static constexpr C const* I8 = "I8";
+	static constexpr C const* R = "R";
+	static constexpr C const* R64 = "R64";
+	static constexpr C const* R32 = "R32";
+	static constexpr C const* OBJECT = "OBJECT";
+	static constexpr C const* EOT = "EOT";
+	static constexpr C const* DOT = "DOT";
+	static constexpr C const* SLOSH = "SLOSH";
+	static constexpr C const* COLON = "COLON";
+	static constexpr C const* SEMICOLON = "SEMICOLON";
+	static constexpr C const* EQUAL = "EQUAL";
+	static constexpr C const* PLUS = "PLUS";
+	static constexpr C const* MINUS = "MINUS";
+	static constexpr C const* ASTERISKS = "ASTERISKS";
+	static constexpr C const* SLASH = "SLASH";
+	static constexpr C const* PERCENT = "PERCENT";
+	static constexpr C const* O_PAREN = "O_PAREN";
+	static constexpr C const* C_PAREN = "C_PAREN";
 };
 
 public:
@@ -86,20 +87,18 @@ public:
 	Position end;
 	Tag tag;
 	union {
-		S Undefined;
-		S* Name;
+		C Undefined;
+		C* Name;
 		::Klang::N64 Natural;
 		::Klang::R64 Real;
-		S* String;
+		C* String;
 	} value;
-
-public:
-	static S const* tag_to_string(Tag tag);
-	inline S const* tag_to_string() {
-		return Lexeme::tag_to_string(this->tag);
-	}
 };
+
+using Lexeme_Tag = Lexeme::Tag;
+
+C const* to_string(Lexeme_Tag tag);
 
 }
 
-std::ostream& operator<<(std::ostream& os, Klang::Lexeme const& token);
+std::ostream& operator<<(std::ostream& os, Klang::Lexeme const& lexeme);

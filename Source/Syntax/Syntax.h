@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string_view>
 
 #include "../Types.h"
 
@@ -46,30 +47,30 @@ struct Body;
 
 struct Identifier {
 public:
-	bool is_used = false;
-	bool is_mutable = false;
-	bool is_defined = false;
+	B is_used = false;
+	B is_mutable = false;
+	B is_defined = false;
 	std::string_view name;
 	Artifact* underlay;
 };
 
 struct Type_Composition {
 public:
-	bool is_mutable = false;
-	std::vector<Artifact*> types;
+	B is_mutable = false;
+	Artifact* type;
 	Type_Composition* next = nullptr;
 };
 
 struct Parameter {
 public:
-	natptr count = 0;
+	N count = 0;
 	Artifact* first = nullptr;
 	Artifact* last;
 };
 
 struct Body {
 public:
-	natptr count = 0;
+	N count = 0;
 	Syntax* first = nullptr;
 	Syntax* last;
 };

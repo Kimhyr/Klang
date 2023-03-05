@@ -23,10 +23,10 @@ using B16 = N16;
 using B32 = N32;
 using B64 = N64;
 
-using S = char;
-using S8 = char;
-using S16 = char16_t;
-using S32 = char32_t;
+using C = char;
+using C8 = char;
+using C16  = char16_t;
+using C32 = char32_t;
 
 #if defined(__x86_64__)
 	using I = I64;

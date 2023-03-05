@@ -2,12 +2,12 @@
 
 namespace Klang {
 
-Lexer::Lexer(S const* file)
+Lexer::Lexer(C const* file)
 	: source_(file), position_({.row = 1, .column = 0}) {
 	this->current_ = this->source_.get();
 }
 
-void Lexer::load(S const* path) {
+V Lexer::load(C const* path) {
 	this->source_.close();
 	this->source_.open(path);
 	this->current_ = this->source_.get();
@@ -60,7 +60,7 @@ Restart:
 				tag = Lexeme::OBJECT;
 			else {
 				buf.sputc('\0');
-				// NOTE: There's probably a bitwise formula to compute this elegantly.
+				// NOTE: There's probably a bitwise formula to elegantly compute this.
 				if (len >= 1 && len <= 3) {
 					switch (buf.view()[0]) {
 					case 'P': tag = Lexeme::P; break;
@@ -86,7 +86,7 @@ Restart:
 				tag = Lexeme::NAME;
 				// TODO: Instead of `std::stringbuf`, create a buffer that allows us to
 				// take ownership of the underlying string.
-				this->lexeme_.value.Name = new S[buf.view().length()];
+				this->lexeme_.value.Name = new C[buf.view().length()];
 				std::copy(buf.view().begin(), buf.view().end(),
 					this->lexeme_.value.Name);
 				goto Finalize;
@@ -127,14 +127,14 @@ Finalize:
 	return this->lexeme_;
 }
 
-char Lexer::peek() {
+C Lexer::peek() {
 	I32 peek {this->source_.peek()};
 	if (peek == EOF)
 		throw diagnose(Severity::ERROR, Message::OUT_OF_RANGE("trying to peek source."));
 	return peek;
 }
 
-void Lexer::advance() {
+V Lexer::advance() {
 	if (!this->source().good())
 		throw diagnose(Severity::ERROR, "The source is not good.");
 	this->current_ = this->source_.get();
