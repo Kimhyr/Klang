@@ -7,24 +7,26 @@
 #include <stdexcept>
 #include <memory>
 
+#include "../Syntax/Identifier.h"
+#include "../Syntax/Artifact.h"
+
 namespace Klang {
 
-template<std::equality_comparable Key_T, typename Value_T>
-class Symbol_Table {
+class Symbol_Tree {
 public:
-	using This_Type = Symbol_Table;
-	using Key_Type = Key_T;
-	using Value_Type = Value_T;
+	using This_Type = Symbol_Tree;
+	using Key_Type = S::Identifier;
+	using Value_Type = S::Artifact;
 
 public:
 	class Symbol {
-		friend class Symbol_Table<Key_T, Value_T>;
+		friend class Symbol_Tree;
 	
 	public:
 		using This_Type = Symbol;
-		using Key_Type = Key_T;
-		using Value_Type = Value_T;
-		using Bias_Type = unsigned char;
+		using Key_Type = Symbol_Tree::Key_Type;
+		using Value_Type = Symbol_Tree::Value_Type;
+		using Bias_Type = N8;
 	
 	public:
 		Symbol() = delete;
@@ -118,6 +120,13 @@ public:
 				}
 			}
 		}
+
+		void kill_children() {
+			for (This_Type* next; this->child_; this->child_ = next) {
+				next = this->child_->next_;
+				delete this->child_;
+			}
+		};
 	};
 
 public:
@@ -126,14 +135,14 @@ public:
 	using Append_If_Type = bool (*)(Symbol_Type const& entry, Symbol_Type const& child);
 
 public:
-	Symbol_Table() = default;
-	Symbol_Table(Symbol&&) = delete;
-	Symbol_Table(Symbol const&) = delete;
+	Symbol_Tree() = default;
+	Symbol_Tree(Symbol&&) = delete;
+	Symbol_Tree(Symbol const&) = delete;
 
-	Symbol_Table& operator=(Symbol_Table&&) = delete;
-	Symbol_Table& operator=(Symbol_Table const&) = delete;
+	Symbol_Tree& operator=(Symbol_Tree&&) = delete;
+	Symbol_Tree& operator=(Symbol_Tree const&) = delete;
 	
-	~Symbol_Table() noexcept {
+	~Symbol_Tree() noexcept {
 		delete this->root_;
 	}
 
@@ -191,6 +200,6 @@ private:
 };
 
 template<std::equality_comparable Key_T, typename Value_T>
-using Symbol = typename Symbol_Table<Key_T, Value_T>::Symbol;
+using Symbol = typename Symbol_Tree<Key_T, Value_T>::Symbol;
 
 }

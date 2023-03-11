@@ -1,38 +1,46 @@
 #pragma once
 
-#include <string_view>
-
-#include "Lexeme.h"
 #include "Syntax.h"
 
-namespace Klang {
-
-namespace S {
+namespace Klang::S {
 
 class Literal: public Syntax {
 public:
-	enum Type {
-		NATURAL = static_cast<int>(Lexeme::NATURAL),
-		FLOAT,
+	enum Tag: I8 {
+		NATURAL = Syntax::NATURAL,
+		REAL,
 		STRING,
 	};
-
-public:
-	Tag const tag = LITERAL;
-	Syntax* prior;
-	Syntax* next;
-	Type type;
+	
+	Syntax_Tag const tag;
 	union Value {
 		N Natural;
 		R Real;
-		char const* Text;
+		String String {};
 	} value;
 
 public:
-	constexpr Literal(Type type, Value value, Syntax* prior = nullptr) noexcept
-		: prior(prior), type(type), value(value) {}
+	constexpr Literal(Tag type, String&& value) noexcept
+		: tag(static_cast<Syntax_Tag>(type)) {
+		this->value.String = std::move(value);
+	}
+
+	constexpr Literal(Tag type, N natural) noexcept
+		: tag(static_cast<Syntax_Tag>(type)) {
+		this->value.Natural = natural;
+	} 
+
+	constexpr Literal(Tag type, R value) noexcept
+		: tag(static_cast<Syntax_Tag>(type)) {
+		this->value.Real = value;
+	} 
+
+	~Literal() noexcept {
+		if (this->tag == static_cast<Syntax_Tag>(STRING))
+			delete[] this->value.String.string;
+	}
 };
 
-}
+using Literal_Tag = Literal::Tag;
 
 }

@@ -32,7 +32,7 @@ C const* to_string(Lexeme_Tag tag) {
 	case Lexeme::EQUAL:	return Lexeme::String::EQUAL;
 	case Lexeme::PLUS:	return Lexeme::String::PLUS;
 	case Lexeme::MINUS:	return Lexeme::String::MINUS;
-	case Lexeme::ASTERISKS:	return Lexeme::String::ASTERISKS;
+	case Lexeme::ASTERISK:	return Lexeme::String::ASTERISK;
 	case Lexeme::SLASH:	return Lexeme::String::SLASH;
 	case Lexeme::PERCENT:	return Lexeme::String::PERCENT;
 	case Lexeme::O_PAREN:	return Lexeme::String::O_PAREN;
@@ -44,12 +44,12 @@ C const* to_string(Lexeme_Tag tag) {
 
 std::ostream& operator<<(std::ostream& os, Klang::Lexeme const& lexeme) {
 	using namespace Klang;
-	os << "Token " << to_string(lexeme.tag);
+	os << "Lexeme " << to_string(lexeme.tag);
 	switch (lexeme.tag) {
-	case Lexeme::NAME:	os << ' ' << Lexeme::String::NAME << ' ' << lexeme.value.Name; break;
-	case Lexeme::NATURAL:	os << ' ' << Lexeme::String::NATURAL << ' ' << lexeme.value.Natural; break;
-	case Lexeme::REAL:	os << ' ' << Lexeme::String::REAL << ' ' << lexeme.value.Real; break;
-	case Lexeme::STRING:	os << ' ' << Lexeme::String::STRING << ' ' << lexeme.value.String; break;
+	case Lexeme::NATURAL:	os << ' ' << lexeme.value.Natural; break;
+	case Lexeme::REAL:	os << ' ' << lexeme.value.Real; break;
+	case Lexeme::NAME:
+	case Lexeme::STRING:	os << ' ' << lexeme.value.String.string; break;
 	default: break;
 	}
 	return os;

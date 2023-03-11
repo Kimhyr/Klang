@@ -6,9 +6,11 @@
 
 void test0() {
 	using namespace Klang;
-	Lexer lexer("/home/k/Projects/Klang/Tests/Test0");
+	std::ifstream file("/home/k/Projects/Klang/Tests/Test0");
+	Lexer lexer(std::move(file));
 	for (;;) {
-		Lexeme lexeme = lexer.lex();
+		Lexeme lexeme;
+		lexer.lex(lexeme);
 		std::cout << lexeme << std::endl;
 		if (lexeme.tag == Lexeme::EOT)
 			break;

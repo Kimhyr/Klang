@@ -31,12 +31,12 @@ public:
 		SLOSH = '\\',
 		COLON = ':',
 		SEMICOLON = ';',
-		EQUAL = '=',
 		PLUS = '+',
 		MINUS = '-',
-		ASTERISKS = '*',
+		ASTERISK = '*',
 		SLASH = '/',
 		PERCENT = '%',
+		EQUAL = '=',
 		O_PAREN = '(',
 		C_PAREN = ')',
 	};
@@ -75,7 +75,7 @@ struct String {
 	static constexpr C const* EQUAL = "EQUAL";
 	static constexpr C const* PLUS = "PLUS";
 	static constexpr C const* MINUS = "MINUS";
-	static constexpr C const* ASTERISKS = "ASTERISKS";
+	static constexpr C const* ASTERISK = "ASTERISK";
 	static constexpr C const* SLASH = "SLASH";
 	static constexpr C const* PERCENT = "PERCENT";
 	static constexpr C const* O_PAREN = "O_PAREN";
@@ -88,10 +88,9 @@ public:
 	Tag tag;
 	union {
 		C Undefined;
-		C* Name;
 		::Klang::N64 Natural;
 		::Klang::R64 Real;
-		C* String;
+		Klang::String String {}; // Also Name
 	} value;
 };
 

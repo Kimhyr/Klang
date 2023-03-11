@@ -2,29 +2,24 @@
 
 #include "Syntax.h"
 
-namespace Klang {
-
-namespace S {
+namespace Klang::S {
 
 class Unary: public Syntax {
 public:
-	enum Operation {
-		UNSIGN = '+',
-		SIGN = '-',
+	enum Tag: I8 {
+		POSITIVE = Syntax::POSITIVE,
+		NEGATIVE,
 	};
 
 public:
-	Tag const tag = UNARY;
-	Syntax* prior;
-	Syntax* next;
-	Operation operation;
-	Syntax* term;
+	Syntax_Tag const tag;
+	Syntax* child;
 
 public:
-	constexpr Unary(Operation operation, Syntax* prior = nullptr, Syntax* term = nullptr) noexcept
-		: prior(prior), next(nullptr), operation(operation), term(term) {}
+	constexpr Unary(Unary::Tag tag) noexcept
+		: tag(static_cast<Syntax_Tag>(tag)) {}
 };
 
-}
+using Unary_Tag = Unary::Tag;
 
-}
+};

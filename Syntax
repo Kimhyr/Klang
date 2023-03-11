@@ -1,0 +1,23 @@
+artifact name type parameter E
+	('object'|'function'|'type') name (':' type)~('[' parameter ']') ('=' E ';'|'{' E* '}')
+
+object my_object: I = a + b;
+
+function my_function[parameter: I]: I => parameter;
+
+function my_function2: I [param: I] {
+	return object i: I = 0 + parameter;
+}
+
+define my_function2 function
+cast my_function2 I
+define param object
+cast param I
+parameter my_function2 param
+define i object
+cast i I
+add parameter 0
+assign i parameter
+check i cast my_function2
+true return i
+error

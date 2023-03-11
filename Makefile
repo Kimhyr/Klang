@@ -35,6 +35,11 @@ dirs:
 	@mkdir -p $(dir $(OBJS))
 	@mkdir -p $(BLDDIR)
 
+.PHONY:k
+k:
+	@$(MAKE) default
+	@$(MAKE) c
+
 .PHONY:r
 r:default
 	./$(BIN)

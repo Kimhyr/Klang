@@ -4,6 +4,13 @@ namespace Klang {
 
 Lexer::Lexer(C const* file)
 	: source_(file), position_({.row = 1, .column = 0}) {
+	if (!this->source_.good())
+		throw diagnose(Severity::ERROR, "File could not open.");
+	this->current_ = this->source_.get();
+}
+
+Lexer::Lexer(std::ifstream&& file)
+	: source_(std::move(file)), position_({.row = 1, .column = 0}) {
 	this->current_ = this->source_.get();
 }
 
@@ -15,12 +22,17 @@ V Lexer::load(C const* path) {
 	this->position_.column = 0;
 }
 
-Lexeme Lexer::lex() {
+V Lexer::lex(Lexeme& out) {
 Restart:
 	while (std::isspace(this->current()))
 		this->advance();
-	this->lexeme_.start = this->position();
+	out.start = this->position();
 	I8 tag;
+	if (this->source_.eof()) {
+	Return_EOT:
+		tag = Lexeme::EOT;
+		goto Finalize;
+	}
 	switch (this->current()) {
 	case Lexeme::SLOSH:
 		if (this->peek() == '\\') {
@@ -36,7 +48,7 @@ Restart:
 	case Lexeme::COLON:
 	case Lexeme::SEMICOLON:
 	case Lexeme::EQUAL:
-	case Lexeme::ASTERISKS:
+	case Lexeme::ASTERISK:
 	case Lexeme::SLASH:
 	case Lexeme::PERCENT:
 	case Lexeme::O_PAREN:
@@ -49,7 +61,7 @@ Restart:
 			std::stringbuf buf;
 			do {
 				if (buf.view().length() >= Lexeme::MAX_VALUE_LENGTH)
-					throw diagnose(Severity::ERROR, this->lexeme_.start, buf.view(),
+					throw diagnose(Severity::ERROR, out.start, buf.view(),
 						       Message::BUFFER_OVERFLOW("lex an identifier."));
 				buf.sputc(this->current());
 				this->advance();
@@ -84,11 +96,7 @@ Restart:
 				}
 			Lex_Name:
 				tag = Lexeme::NAME;
-				// TODO: Instead of `std::stringbuf`, create a buffer that allows us to
-				// take ownership of the underlying string.
-				this->lexeme_.value.Name = new C[buf.view().length()];
-				std::copy(buf.view().begin(), buf.view().end(),
-					this->lexeme_.value.Name);
+				out.value.String = buf.view();
 				goto Finalize;
 			}
 		} else if (std::isdigit(this->current())) {
@@ -98,47 +106,36 @@ Restart:
 				if (ss.view().length() >= Lexeme::MAX_VALUE_LENGTH)
 					throw diagnose(Severity::ERROR, Message::BUFFER_OVERFLOW("lex a number."));
 				if (this->current() == '.') {
-					if (this->lexeme_.tag == Lexeme::REAL)
+					if (out.tag == Lexeme::REAL)
 						throw diagnose(
-							Severity::ERROR, this->lexeme_.start, ss.view(),
+							Severity::ERROR, out.start, ss.view(),
 							Message::LEX_FAILED(Lexeme::REAL, "it has more than 1 `.` (dot lexeme)."));
-					else this->lexeme_.tag = Lexeme::REAL;
+					else out.tag = Lexeme::REAL;
 				}
 				if (this->current() != '_')
 					ss.put(this->current());
 				this->advance();
 			} while (this->current() == '_' || std::isdigit(this->current()));
 			if (tag == Lexeme::NATURAL)
-				ss >> this->lexeme_.value.Natural;
-			else ss >> this->lexeme_.value.Real;
-		} else if (this->source_.eof())
-		Return_EOT:
-			tag = Lexeme::EOT;
-		else {
+				ss >> out.value.Natural;
+			else ss >> out.value.Real;
+		} else {
 			this->advance();
-			throw diagnose(Severity::ERROR, this->lexeme_.start,
+			throw diagnose(Severity::ERROR, out.start,
 				       Message::UNKNOWN_TOKEN(this->current()));
 		}
 	}
 Finalize:
-	this->lexeme_.tag = static_cast<Lexeme::Tag>(tag);
-	this->lexeme_.end = this->position();
-	--this->lexeme_.end.column;
-	return this->lexeme_;
-}
-
-C Lexer::peek() {
-	I32 peek {this->source_.peek()};
-	if (peek == EOF)
-		throw diagnose(Severity::ERROR, Message::OUT_OF_RANGE("trying to peek source."));
-	return peek;
+	out.tag = static_cast<Lexeme::Tag>(tag);
+	out.end = this->position();
+	--out.end.column;
 }
 
 V Lexer::advance() {
 	if (!this->source().good())
 		throw diagnose(Severity::ERROR, "The source is not good.");
 	this->current_ = this->source_.get();
-	if (this->current() == '\n') {
+	if (this->current() == '\r' && this->peek() == '\n') {
 		++this->position_.row;
 		this->position_.column = 0;
 	}

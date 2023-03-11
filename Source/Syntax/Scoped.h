@@ -2,30 +2,24 @@
 
 #include "Syntax.h"
 
-namespace Klang {
-
-namespace S {
+namespace Klang::S {
 
 class Scoped: public Syntax {
 public:
-	enum Priority {
-		HIGH = '{',
-		MIDDLE = '(',
-		LOW = '[',
+	enum Tag: I8 {
+		PARENTHESIS = Syntax_Tag::PARENTHESIS,
 	};
 
 public:
-	Tag const tag = SCOPED;
-	Syntax* prior;
-	Syntax* next;
-	Priority priority;
-	Body root;
+	Syntax_Tag const tag;
+	Syntax* first;
+	Syntax* last;
 
 public:
-	constexpr Scoped(Priority priority, Syntax* prior = nullptr) noexcept
-		: prior(prior), next(nullptr), priority(priority) {}
+	constexpr Scoped(Tag type) noexcept
+		: tag(static_cast<Syntax_Tag>(type)) {}
 };
 
-}
+using Scoped_Tag = Scoped::Tag;
 
 }

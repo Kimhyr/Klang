@@ -66,38 +66,32 @@ definitely more efficient--, but this is how I came up and implemented mine.
 ## Examples
 
 ```klang
-type Day = $[enumerate(Type: I), omit(lexeme.: value)] {
-	sunday; monday;
-	tuesday; thrusday;
-	friday; saturday
+\\ `I` is the integer type.
+\\ I is equavalent to the max size of an integer for a given CPU arch..
+value my_value: I = 21 + 14;
+
+
+\\ Data types:
+type All_Types =
+	V | T  | @T  |                   \\ No type, any type, and pointer type.
+	I | I8 | I16 | I32 | I64 | \\ Integer number types.
+	N | N8 | N16 | N32 | N64 | \\ Natural number types.
+	R            | R32 | R64   \\ Real number types.
+
+value ptr: @I = @my_value; \\ Get the address of `my_value`, then copy it to
+                           \\ `ptr`.
+#ptr += 1; \\ Dereference `ptr`, then copy an incremented value of `ptr` to the
+           \\ value of `ptr`.
+
+\\ A procedure:
+value my_procedure(a: I, b: I): I = a + b;
+
+value less -> V = {
+	my_procedure(21, 14);
 };
 
-type Pair(First: type, Second: type): Object
-		= $omit(lexeme.: value) {
-	type Self = Pair(First, Second);
+\\ A procedure that takes a procedure as a parameter.
+value take_procedure(procedure: V): 
 
-	first!: First;
-	second!: Second;
 
-	Object.create!(first: First, second: Second): Self =
-		Self { first, second };
-
-	Object.destroy!?() = {
-		\\ Checks whether `First` inherits the `Object` trait. 
-		$compare First :: Object =>
-			.first.destroy();
-		$compare Second :: Object =>
-			.second.destroy();
-	};
-};
-
-type Number = I | N | R;
-
-value add(pair: Pair(Number, Number)): type(.pair).First =
-	first + second;
-
-value execute(): I = {
-	value sum: I = add(1, 2);
-	return sum;
-};
 ```

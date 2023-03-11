@@ -2,33 +2,26 @@
 
 #include "Syntax.h"
 
-namespace Klang {
-
-namespace S {
+namespace Klang::S {
 
 class Binary: public Syntax {
 public:
-	enum Operation {
-		ADD = '+',
-		SUBTRACT = '-',
-		MULTIPLY = '*',
-		DIVIDE = '/',
-		MOD = '%',
-
-		SEPARATE = ';',
+	enum Tag: I8 {
+		ADDITION = Syntax::ADDITION,
+		SUBTRACTION = Syntax::SUBTRACTION,
+		MULTIPLICATION = Syntax::MULTIPLICATION,
+		DIVISION = Syntax::DIVISION,
+		MODULUS = Syntax::MODULUS,
 	};
 
 public:
-	Tag const tag = BINARY;
-	Operation operation;
-	Syntax* first;
-	Syntax* second;
+	Syntax_Tag const tag;
 
 public:
-	constexpr Binary(Operation operation, Syntax* first) noexcept
-		: operation(operation), first(first) {}
+	constexpr Binary(Tag tag) noexcept
+		: tag(static_cast<Syntax_Tag>(tag)) {}
 };
 
-}
+using Binary_Tag = Binary::Tag;
 
 }
