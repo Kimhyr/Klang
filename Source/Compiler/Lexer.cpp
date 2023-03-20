@@ -1,34 +1,34 @@
-#include "Lexer.h"
+#include "Compiler/Lexer.hpp"
 
 namespace Klang {
 
-Lexer::Lexer(C const* file)
-	: source_(file), position_({.row = 1, .column = 0}) {
-	if (!this->source_.good())
+Lexer::Lexer(char const* file)
+	: m_source(file), m_position({.row = 1, .column = 0}) {
+	if (!this->m_source.good())
 		throw diagnose(Severity::ERROR, "File could not open.");
-	this->current_ = this->source_.get();
+	this->m_current = this->m_source.get();
 }
 
 Lexer::Lexer(std::ifstream&& file)
-	: source_(std::move(file)), position_({.row = 1, .column = 0}) {
-	this->current_ = this->source_.get();
+	: m_source(std::move(file)), m_position({.row = 1, .column = 0}) {
+	this->m_current = this->m_source.get();
 }
 
-V Lexer::load(C const* path) {
-	this->source_.close();
-	this->source_.open(path);
-	this->current_ = this->source_.get();
-	this->position_.row = 1;
-	this->position_.column = 0;
+void Lexer::load(char const* path) {
+	this->m_source.close();
+	this->m_source.open(path);
+	this->m_current = this->m_source.get();
+	this->m_position.row = 1;
+	this->m_position.column = 0;
 }
 
-V Lexer::lex(Lexeme& out) {
+void Lexer::lex(Lexeme& out) {
 Restart:
 	while (std::isspace(this->current()))
 		this->advance();
 	out.start = this->position();
-	I8 tag;
-	if (this->source_.eof()) {
+	std::int8_t tag;
+	if (this->m_source.eof()) {
 	Return_EOT:
 		tag = Lexeme::EOT;
 		goto Finalize;
@@ -51,8 +51,8 @@ Restart:
 	case Lexeme::ASTERISK:
 	case Lexeme::SLASH:
 	case Lexeme::PERCENT:
-	case Lexeme::O_PAREN:
-	case Lexeme::C_PAREN:
+	case Lexeme::LPAREN:
+	case Lexeme::RPAREN:
 		tag = this->current();
 		this->advance();
 		break;
@@ -67,7 +67,7 @@ Restart:
 				this->advance();
 			} while (this->current() == '_' || std::isdigit(this->current()) ||
 				 std::isalpha(this->current()));
-			N len = buf.view().length();
+			std::size_t len = buf.view().length();
 			if (buf.view() == Lexeme::String::LITERAL_OBJECT)
 				tag = Lexeme::OBJECT;
 			else {
@@ -131,15 +131,7 @@ Finalize:
 	--out.end.column;
 }
 
-V Lexer::advance() {
-	if (!this->source().good())
-		throw diagnose(Severity::ERROR, "The source is not good.");
-	this->current_ = this->source_.get();
-	if (this->current() == '\r' && this->peek() == '\n') {
-		++this->position_.row;
-		this->position_.column = 0;
-	}
-	++this->position_.column;
+void Lexer::advance() {
 }
 
 }

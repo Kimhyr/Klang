@@ -1,17 +1,17 @@
-#include "Parser.h"
+#include "Compiler/Parser.hpp"
 
 namespace Klang {
 
-Parser::Parser(C const* file)
-	: file_(file), lexer_(file) {
-	this->lexer_.lex(this->lexeme_);
+Parser::Parser(char const* file)
+	: m_file(file), m_lexer(file) {
+	this->m_lexer.lex(this->lexeme_);
 	if (this->lexeme_.tag == Lexeme::EOT)
 		throw diagnose(Severity::ERROR, "File is empty.");
-} 
+}
 
 Syntax* Parser::parse() {
 	switch (this->lexeme_.tag) {
-	case Lexeme::O_PAREN:
+	case Lexeme::LPAREN:
 	case Lexeme::
 	default: break;
 	}

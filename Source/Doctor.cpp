@@ -1,11 +1,11 @@
-#include "Doctor.h"
+#include "Doctor.hpp"
 
 std::ostream& operator<<(std::ostream& os, Klang::Severity x) {
 	using namespace Klang;
 	switch (x) {
-	case Severity::ERROR: os << "\e[91mError"; break;
-	case Severity::WARNING: os << "\e[93mWarning";break;
-	case Severity::NOTE: os << "\e[92mNote"; break;
+	case Severity::ERROR: os << "\x1b[91mError"; break;
+	case Severity::WARNING: os << "\x1b[93mWarning";break;
+	case Severity::NOTE: os << "\x1b[92mNote"; break;
 	}
 	os << "\e[0m";
 	return os;

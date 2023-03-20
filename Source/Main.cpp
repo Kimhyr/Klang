@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "Compiler/Lexer.h"
+#include "Compiler/Lexer.hpp"
 
 void test0() {
 	using namespace Klang;

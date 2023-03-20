@@ -1,14 +1,15 @@
-#include "Lexeme.h"
+#include "Syntax/Lexeme.hpp"
 
 namespace Klang {
 
-C const* to_string(Lexeme_Tag tag) {
+char const* to_string(Lexeme_Tag tag) {
 	switch (tag) {
 	case Lexeme::UNDEFINED:	return Lexeme::String::UNDEFINED;
 	case Lexeme::NAME:	return Lexeme::String::NAME;
 	case Lexeme::NATURAL:	return Lexeme::String::NATURAL;
 	case Lexeme::REAL:	return Lexeme::String::REAL;
 	case Lexeme::STRING:	return Lexeme::String::STRING;
+	case Lexeme::OBJECT:	return Lexeme::String::OBJECT;
 	case Lexeme::P:		return Lexeme::String::P;
 	case Lexeme::N:		return Lexeme::String::N;
 	case Lexeme::N64:	return Lexeme::String::N64;
@@ -23,20 +24,19 @@ C const* to_string(Lexeme_Tag tag) {
 	case Lexeme::R:		return Lexeme::String::R;
 	case Lexeme::R64:	return Lexeme::String::R64;
 	case Lexeme::R32:	return Lexeme::String::R32;
-	case Lexeme::OBJECT:	return Lexeme::String::OBJECT;
 	case Lexeme::EOT:	return Lexeme::String::EOT;
 	case Lexeme::DOT:	return Lexeme::String::DOT;
 	case Lexeme::SLOSH:	return Lexeme::String::SLOSH;
 	case Lexeme::COLON:	return Lexeme::String::COLON;
 	case Lexeme::SEMICOLON:	return Lexeme::String::SEMICOLON;
-	case Lexeme::EQUAL:	return Lexeme::String::EQUAL;
 	case Lexeme::PLUS:	return Lexeme::String::PLUS;
 	case Lexeme::MINUS:	return Lexeme::String::MINUS;
 	case Lexeme::ASTERISK:	return Lexeme::String::ASTERISK;
 	case Lexeme::SLASH:	return Lexeme::String::SLASH;
 	case Lexeme::PERCENT:	return Lexeme::String::PERCENT;
-	case Lexeme::O_PAREN:	return Lexeme::String::O_PAREN;
-	case Lexeme::C_PAREN:	return Lexeme::String::C_PAREN;
+	case Lexeme::EQUAL:	return Lexeme::String::EQUAL;
+	case Lexeme::LPAREN:	return Lexeme::String::LPAREN;
+	case Lexeme::RPAREN:	return Lexeme::String::RPAREN;
 	}
 }
 
