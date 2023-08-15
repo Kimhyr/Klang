@@ -1,0 +1,7 @@
+-std=c++23
+-Weverything
+-Wno-c++98-compat
+-Wno-pre-c++20-compat-pedantic
+-Wno-switch-enum
+-I.
+-Iinclude

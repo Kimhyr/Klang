@@ -1,3 +1,0 @@
-take_lambda(lambda(int, int) int) int =
-	lambda(1, 1);
-

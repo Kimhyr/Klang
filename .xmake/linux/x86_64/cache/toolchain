@@ -1,0 +1,12 @@
+{
+    tool_target_hack_linux_x86_64_cxx = {
+        toolname = "clang",
+        toolchain_info = {
+            arch = "x86_64",
+            plat = "linux",
+            name = "clang",
+            cachekey = "clang_arch_x86_64_plat_linux"
+        },
+        program = "/usr/bin/clang"
+    }
+}
